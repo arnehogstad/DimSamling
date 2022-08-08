@@ -1,0 +1,10 @@
+.toolArea{
+  margin-top: 50px;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #e7e7e7;
+}
+
+.hiddenTool{
+  display: none;
+}

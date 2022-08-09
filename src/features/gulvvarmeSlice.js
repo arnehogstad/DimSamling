@@ -3,8 +3,12 @@ import { createSlice } from '@reduxjs/toolkit'
 export const gulvvarmeSlice = createSlice({
   name: 'gulvvarme',
   initialState: {
-    name: "Test",
-    value: 0,
+    projectName: "",
+    units: [],
+    currentUnitId: "",
+    showResult: false,
+    showModal: false,
+
   },
   reducers: {
     increment: (state) => {

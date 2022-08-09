@@ -1,0 +1,113 @@
+.result-part{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.result-header{
+  background-color: white;
+  width: 100%;
+  display: flex;
+  padding: 20px 15px 20px 15px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.result-header-headline h4{
+  margin:0;
+}
+
+.result-header-headline p{
+  margin: 5px 0 0 0;
+}
+
+.result-header-headline{
+  width: 85%;
+  display: flex;
+  flex-direction: column;
+}
+
+.result-header-actionbutton{
+  width: 15%;
+  min-width: 260px;
+}
+
+.result-header-actionbutton h4 {
+  margin:0 0 10px 0;
+}
+
+.add-to-basket-button{
+  width:100%;
+  height: 35px;
+  font-size: 12px;
+  padding: 0 20px;
+  background-color: #fbab18;
+  color:#000;
+  border-style: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+}
+
+.add-to-basket-button:hover{
+  background-color: #dc9004;
+  color:#000;
+}
+
+.result-header-line{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+
+.toggleContentsButton{
+  margin-top: 10px;
+  background: transparent;
+  border-style: none;
+  text-decoration:underline;
+  padding: 0;
+}
+
+.toggleContentsButton:hover{
+  cursor: pointer;
+}
+
+.result-article-line-wrapper{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 0;
+  font-size: 14px;
+  border-top: 1px solid lightgrey;
+}
+
+.result-article-line{
+  padding: 0px 15px 0px 15px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  line-height: 2;
+  border-bottom: 1px solid lightgrey;
+}
+
+.result-article-line-datapoint, .result-article-line-headline{
+  display: flex;
+  width: 25%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.topline{
+  background-color: lightgrey;
+}
+.text-center{
+
+  justify-content:  center;
+}
+.result-article-line-headline{
+  font-weight: bold;
+}

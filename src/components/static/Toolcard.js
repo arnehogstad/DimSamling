@@ -12,7 +12,12 @@ export default function Toolcard(props){
 
 
   return(
-    <div className= {showTool === props.toolid || showTool === 'all' ? "toolCard" : "hiddenCard"}
+    <div className=
+      {showTool === 'all' && props.toolid === 'all' ? "hiddenCard" :
+      showTool !== 'all' && props.toolid === 'all' ? "toolCard" :
+      showTool === props.toolid || showTool === 'all' ?
+      "toolCard" : "hiddenCard"
+    }
       onClick = {() => dispatch(showOne(props.toolid))}
     >
       <div className="cardTitle">{props.toolName}</div>

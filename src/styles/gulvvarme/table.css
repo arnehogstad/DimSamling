@@ -1,0 +1,80 @@
+
+table{
+  border-spacing:0;
+  border-collapse: collapse;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+td{
+  border-style: solid;
+  border-width: thin;
+  border-color: black;
+  padding: 0;
+}
+
+.tableDiv-overskrift{
+  display: flex;
+  height: 40px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align:center;
+  flex-direction:column;
+  background-color: lightgray;
+}
+
+.tableDiv-tabell{
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 360px;
+  width: 100%;
+  overflow-y: auto;
+
+}
+
+.button-col{
+  width: 20px;
+}
+
+.floor-col{
+  width: 18%;
+}
+
+.room-name-col{
+  width: 14%;
+}
+.cc-col{
+  width: 10%;
+}
+.area-col, .circuit-col{
+  width: 8%;
+
+}
+
+.pipe-type-col{
+  width: 42% ;
+}
+
+.button-col-img{
+  width: 20px;
+}
+
+.tableDiv-tabell input, .tableDiv-tabell select{
+  border: none;
+  outline: none;
+  width: 100%;
+  background: transparent;
+  padding-left: 5px;
+}
+
+.text-center{
+  text-align: center;
+}
+
+.ghostCell{
+  border: none;
+  background: white;
+}

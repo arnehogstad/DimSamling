@@ -1,0 +1,180 @@
+.inputArea{
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  margin-top: 50px;
+  background-color: white;
+  min-height: 400px;
+  height: 40%;
+
+}
+
+.tableDiv{
+    height: 100%;
+    width: 65%;
+    float: left;
+    display:inline-block;
+    border-width: 0 4px 0 0;
+    border-style: solid;
+    border-color: lightgray;
+}
+
+.radioButtonDiv{
+    width: 20%;
+    float: left;
+    height: 100%;
+}
+
+.unitListDiv{
+  width: 15%;
+  float: left;
+  height: 100%;
+  border-width: 0 4px 0 0;
+  border-style: solid;
+  border-color: lightgray;
+
+}
+
+
+.unitListDiv-overskrift{
+    width: 100%;
+    display: flex;
+    height: 40px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    vertical-align: bottom;
+    background-color: lightgray;
+
+}
+.unitListDiv-overskrift-tekst{
+    float:left;
+    margin-left: auto;
+    align-self: center;
+}
+
+.radioButtonDiv-overskrift{
+    width: 100%;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    vertical-align: bottom;
+    background-color: lightgray;
+
+}
+
+
+
+.unitListDiv-overskrift-knapp{
+    float:left;
+    margin-left: auto;
+    margin-right: 5px;
+    align-self: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkgrey;
+}
+
+.unitListDiv-overskrift-knapp:hover{
+  background-color: darkgrey;
+}
+
+.unitListDiv-overskrift-knapp:active{
+  background-color: lightgray;
+}
+
+
+.delete-btn {
+    display: none;
+    background: none;
+    border: none;
+}
+
+.unit-list-item:hover > .delete-btn {
+    display: block;
+}
+
+.trash-icon {
+    cursor: pointer;
+}
+
+ .gg-trash {
+    box-sizing: border-box;
+    position: relative;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 10px;
+    height: 12px;
+    border: 2px solid transparent;
+    box-shadow:
+        0 0 0 2px,
+        inset -2px 0 0,
+        inset 2px 0 0;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    margin-top: 4px;
+    margin-right: 10px;
+}
+
+.gg-trash::after,
+.gg-trash::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute
+}
+
+.gg-trash::after {
+    background: currentColor;
+    border-radius: 3px;
+    width: 16px;
+    height: 2px;
+    top: -4px;
+    left: -5px
+}
+
+.gg-trash::before {
+    width: 10px;
+    height: 4px;
+    border: 2px solid;
+    border-bottom: transparent;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    top: -7px;
+    left: -2px
+}
+
+.unit-list-item {
+  overflow: hidden;
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5px;
+  font-size: 14px;
+  font-weight: normal;
+  height: 40px;
+}
+
+.selected-unit-list-item{
+  background-color: #ececec;
+  font-weight: bold;
+}
+
+
+.unit-list-item--delete {
+    display: none;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+.unit-list-item:hover .unit-list-item--delete {
+    display: block;
+}
+
+.unitListDiv-liste{
+  height: 360px;
+  overflow-y: auto;
+}

@@ -1,8 +1,9 @@
 import React from 'react'
 import Topbar from './components/static/Topbar'
 import Toolcard from './components/static/Toolcard'
+import Footer from './components/static/Footer'
 import Counter from './components/tools/Counter'
-import Gulvvarme from './components/tools/Gulvvarme'
+import Gulvvarme from './components/tools/gulvvarme/Gulvvarme'
 import Ekspansjonskar from './components/tools/Ekspansjonskar'
 import Varmebehov from './components/tools/Varmebehov'
 import Kjølebehov from './components/tools/Kjølebehov'
@@ -17,19 +18,19 @@ export default function App() {
   "Ekspansjonskarsvelger",
   "Beregning varmebehov",
   "Beregning kjølebehov",
-  "Estimat andre greier"
+  "Estimat andre greier",
+  "Tilbake til alle verktøy"
   ]
   //genererer ID til alle verktøy
-  const toolId = toolNames.map((name) =>
+  const toolId = toolNames.map((name,index) =>
     nanoid()
   )
-
 
   const toolElements = toolNames.map((name,index) =>
     <Toolcard
       toolName={name}
       key = {index}
-      toolid = {toolId[index]}
+      toolid = {index+1 === toolNames.length ?  'all' : toolId[index]}
       picName = {name}
     />
   )
@@ -37,14 +38,17 @@ export default function App() {
   return (
     <div className="App">
         <Topbar />
-        <div className="toolList">
-          {toolElements}
+        <div className="contentWrapper">
+          <div className="toolList">
+            {toolElements}
+          </div>
+          <Gulvvarme toolId={toolId[0]} />
+          <Ekspansjonskar toolId={toolId[1]}/>
+          <Varmebehov toolId={toolId[2]}/>
+          <Kjølebehov toolId={toolId[3]}/>
+          <Diverse toolId={toolId[4]}/>
         </div>
-        <Gulvvarme toolId={toolId[0]} />
-        <Ekspansjonskar toolId={toolId[1]}/>
-        <Varmebehov toolId={toolId[2]}/>
-        <Kjølebehov toolId={toolId[3]}/>
-        <Diverse toolId={toolId[4]}/>
+        <Footer />
     </div>
   );
 }

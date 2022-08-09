@@ -1,0 +1,101 @@
+
+main {
+    padding: 0;
+}
+
+.main--title {
+    margin: 0;
+    font-size: 39px;
+    letter-spacing: -0.05em;
+}
+.container{
+  font-family: Roboto,Arial,Helvetica Neue,Helvetica,sans-serif;
+}
+.main--facts {
+    margin-top: 46px;
+    max-width: 400px;
+}
+
+.main--facts > li {
+    line-height: 19px;
+    padding-block: 10px;
+}
+
+.main--facts > li::marker {
+    font-size: 1.4rem;
+    color: #61DAFB;
+}
+
+.current-placement{
+  color: #333;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  font-size: 12px;
+}
+
+.nav-pos{
+  display: inline-flex;
+  padding-right: 10px;
+  letter-spacing: 1px;
+}
+
+.nav-pos-active{
+  font-weight: 600;
+}
+
+.tool-description{
+  line-height: 2;
+  font-size: 14px;
+  padding-top: 50px;
+  letter-spacing: 1px;
+}
+
+.addUnitPrompt{
+  font-size: 20px;
+  background-color: #eeeeee;
+}
+.addUnitPrompt-line{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+
+}
+
+.button-line-div{
+  margin-left: auto;
+  margin-right:auto;
+  display: flex;
+  margin-top: 10px;
+  width:80%;
+}
+.handlingsKnapp{
+  height: 50px;
+  margin-right: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: white;
+  color: black;
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 2px;
+  padding: 0;
+  margin-bottom: 15px;
+  width: calc((98% - 50px) / 6);
+  align-self: center;
+  border: 1px solid #e7e7e7;
+
+}
+
+.handlingsKnapp:hover{
+  opacity: 1;
+  background-color: black;
+  color: white;
+}
+.handlingsKnapp:active{
+  opacity: 1;
+  background-color: #2a2a2a;
+  color: white;
+}

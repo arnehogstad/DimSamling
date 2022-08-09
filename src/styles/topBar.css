@@ -19,3 +19,94 @@
     width: 72px;
     height: 30px;
 }
+
+
+nav{
+  background-color: black;
+  padding:0;
+  display: block;
+  height: 120px;
+}
+
+.nav--logo_text, .nav--title {
+    margin: 0;
+}
+
+.nav-top{
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  height: 75px;
+  padding-top: 20px;
+}
+.nav--icon {
+    margin-right: 7px;
+    padding-top: 5px;
+    width: auto;
+    height: auto;
+}
+
+.search-box{
+  display: inline-flex;
+  justify-content: center;
+  vertical-align: top;
+  height: 40px;
+  margin-left: 30px;
+  justify-content: flex-start;
+  background-color: white;
+  width: 350px;
+}
+
+.search-field{
+  width: 80%;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  border-style: none;
+  margin-left: 20px;
+  outline: none;
+}
+
+.search--icon{
+  height: 30px;
+  margin: auto;
+  background-color: white;
+}
+
+.nav-bottom{
+  display: inline-flex;
+  color: white;
+  margin-left: 10%;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  height: 44px;
+}
+
+.site-section{
+  padding-right: 20px;
+  margin-top: 10px;
+  border: 0;
+  border-color: black;
+}
+
+.site-section:hover{
+  border: 0;
+  border-bottom: 5px;
+  border-style: solid;
+  border-color: #fbab18;
+  -webkit-transition: border-color 500ms linear;
+-ms-transition: border-color 500ms linear;
+transition: border-color 500ms linear;
+}
+
+.footer{
+  background-color: black;
+  padding:0;
+  display: block;
+  height: 120px;
+}
+
+.footer-img-container{
+  margin-left: 10%;
+  padding-top: 40px;
+}

@@ -1,6 +1,5 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-
 import Toolinfo from './components/Toolinfo'
 import Unit from './components/Unit'
 import Result from './components/Result'
@@ -8,7 +7,7 @@ import ButtonLine from './components/ButtonLine'
 import Modal from './components/Modal'
 import { nanoid } from 'nanoid'
 import mockDatabase from "./components/mockDatabase.js"
-
+//CSS-files importeres her for å holde prosjektoppsummeringen ryddigere
 import "../../../styles/gulvvarme/style.css";
 import "../../../styles/gulvvarme/main.css";
 import "../../../styles/gulvvarme/result.css";

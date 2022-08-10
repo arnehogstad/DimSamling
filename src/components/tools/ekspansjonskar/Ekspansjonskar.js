@@ -18,8 +18,13 @@ export default function Ekspansjonskar(props){
     turtemp: 45,
     returtemp: 30,
     fluid: "Vann",
-    ekspansjon: 0
   })
+  const [expansion, setExpansion] = React.useState({
+    ekspansjon: 0,
+    nytteeffekt: 0,
+    minimumVolum: 0
+  })
+
   //state of Result
   const [showResult,setShowResult] = React.useState(false)
   //endrer inndata
@@ -27,11 +32,19 @@ export default function Ekspansjonskar(props){
     const {name, value} = event.target
     setData(oldData => (
         {...data,
-        [name]:name === "fluid" ? value : parseFloat(value),
-        ekspansjon: data.ekspansjon+10
+        [name]:name === "fluid" ? value : parseFloat(value)
       }
     ))
   }
+
+  //endrer beregnet ekspansjon
+  function updateExpansion(){
+    let tempObj=calcExpansion()
+    console.log(tempObj);
+    setExpansion(tempObj)
+  }
+
+
 
   //mock database for testing calulation etc
   const dataBase = mockDatabase.Ekspansjonsdata
@@ -60,22 +73,45 @@ export default function Ekspansjonskar(props){
     let highIndex =  dataBase.Temperatur.findIndex((temp) => temp >= meanTempHigh)
     let lowIndex =  dataBase.Temperatur.findIndex((temp) => temp >= meanTempLow)
     //beregner stor og liten ekspansjon
-    let tempExpHigh = Math.round(data.vannvolum*tempFluidArr[highIndex])
-    let tempExpLow = Math.round(data.vannvolum*tempFluidArr[lowIndex])
+    let tempExpHigh = Math.ceil(data.vannvolum*tempFluidArr[highIndex])
+    let tempExpLow = Math.ceil(data.vannvolum*tempFluidArr[lowIndex])
+    //interpolerer for å finne faktisk ekspansjon
+    let tempExp = 0
+    if (meanTempLow === meanTempHigh){
+      tempExp = tempExpHigh
+    }else{
+      tempExp = (meanTemp-meanTempLow)/(meanTempHigh-meanTempLow)*(tempExpHigh-tempExpLow)+(tempExpLow)
+    }
+    //results for the object
+    let expansion = data.vannvolum === 0 ? 0 : Math.round((tempExp + safetyMargin)*10)/10
+    let usablePercentage = calcUsablePercentage()
+    let minVolum = Math.ceil(expansion/usablePercentage)
 
+    let returnObj = {
+      ekspansjon: expansion,
+      nytteeffekt: usablePercentage,
+      minimumVolum: minVolum
+    }
 
-    console.log(highIndex);
-    console.log(lowIndex);
-    console.log(tempFluidArr[highIndex]);
-    console.log(tempFluidArr[lowIndex]);
-    console.log(tempExpHigh);
-    console.log(tempExpLow);
+    return returnObj
+  }
 
-    //console.log(tempExpHigh);
+  function calcUsablePercentage(){
+    //statisk trykk
+    let staticSafetyMargin = 0.2
+    let staticP = parseFloat(data.ladetrykk+staticSafetyMargin)
+    //blåsetrykk
+    let valveSafetyMargin = 0.5
+    let safetyValveP = parseFloat(data.sikkerhetsventil-valveSafetyMargin)
+    //atmosfæreisk trykk
+    let atmosP = 1
+    //ekspansjonskarets nytteeffekt
+    let usablePercentage = (Math.ceil(((safetyValveP+atmosP-(staticP+atmosP))/(safetyValveP+atmosP))*100)/100)
+    return usablePercentage
   }
 
   React.useEffect(()=>{
-    calcExpansion()
+    updateExpansion()
     if(showResult === true){
       setShowResult(false)
     }
@@ -93,9 +129,7 @@ export default function Ekspansjonskar(props){
           fluidListe={fluidListe}
         />
         <Beregning
-          data={data}
-          setData={setData}
-
+          expansion={expansion}
         />
         <Produkter
           data={data}

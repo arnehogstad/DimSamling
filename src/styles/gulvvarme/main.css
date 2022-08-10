@@ -60,7 +60,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 200px;
+  height: 100px;
 
 }
 
@@ -68,7 +68,7 @@ main {
   margin-left: auto;
   margin-right:auto;
   display: flex;
-  margin-top: 10px;
+  margin-top: 20px;
   width:80%;
 }
 .handlingsKnapp{
@@ -82,7 +82,7 @@ main {
   font-size: 12px;
   letter-spacing: 2px;
   padding: 0;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   width: calc((98% - 50px) / 6);
   align-self: center;
   border: 1px solid #e7e7e7;

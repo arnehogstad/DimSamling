@@ -1,8 +1,8 @@
 import React from 'react'
 
 export default function Beregning(props){
-  const ekspansjon = props.inndata === undefined ? 0 : props.inndata.ekspansjon
-
+  const ekspansjon = props.data === undefined ? 0 : props.data.ekspansjon
+  
 
   return(
     <div className="ekspansjonskar-beregning">

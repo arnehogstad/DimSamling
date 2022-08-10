@@ -16,11 +16,6 @@ export default function Inndata(props){
   const trykkListe = trykkValg.map((trykk) =>(
     <option key={trykk} value={trykk}>{trykk}</option>
   ))
-  const fluidValg = ["Vann","HX35","Glykol 5%","Glykol 10%","Glykol 15%","Glykol 20%","Glykol 25%","Glykol 30%","Glykol 35%","Glykol 40%","Glykol 45%","Glykol 50%"]
-  //dropdownverdier
-  const fluidListe = fluidValg.map((fluid) =>(
-    <option key={fluid} value={fluid}>{fluid}</option>
-  ))
 
   return(
     <div className="ekspansjonskar-inndataArea">
@@ -105,12 +100,12 @@ export default function Inndata(props){
         </div>
         <div className="ekspansjonskar-inndataVerdi">
           <select
-            name="ladetrykk"
+            name="fluid"
             className="ekspansjonskar-select"
             value={props.data.fluid}
             onChange={props.updateData}
             >
-            {fluidListe}
+            {props.fluidListe}
           </select>
         </div>
       </div>

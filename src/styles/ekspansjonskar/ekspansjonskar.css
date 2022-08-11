@@ -6,14 +6,16 @@
 .ekspansjonskar-inndatalinje{
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  margin-left: calc(50% - 300px);
   margin-bottom: 5px;
   height: 30px;
 }
 .ekspansjonskar-inndataTittel{
   padding: 5px;
+  /*
   background-color: white;
   border: 1px solid #c7c7c7;
+  */
   width: 300px;
   text-align: right;
   font-weight: bold;
@@ -39,12 +41,15 @@
 .ekspansjonskar-select:focus{
   border: none;
 }
+
 .ekspansjonskar-beregning{
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  line-height: 22px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-content: center;
   flex-wrap: wrap;
+
 }

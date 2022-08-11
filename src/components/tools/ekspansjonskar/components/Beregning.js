@@ -6,7 +6,11 @@ export default function Beregning(props){
   const minVolum = props.expansion.minimumVolum
   return(
     <div className="ekspansjonskar-beregning">
-      Total ekspansjon er estimert til {ekspansjon} L, karutnyttelse er {nytteEffekt} %. Anbefalt minimum karstørrelse: {minVolum} L
+      <ul>
+        <li>Total ekspansjon er estimert til {ekspansjon} L </li>
+        <li>Karutnyttelse er {nytteEffekt} %</li>
+        <li>Anbefalt minimum karstørrelse: {minVolum} L</li>
+      </ul>
     </div>
 
   )

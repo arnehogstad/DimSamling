@@ -2,11 +2,10 @@ import React from 'react'
 import Topbar from './components/static/Topbar'
 import Toolcard from './components/static/Toolcard'
 import Footer from './components/static/Footer'
-import Counter from './components/tools/Counter'
 import Gulvvarme from './components/tools/gulvvarme/Gulvvarme'
 import Ekspansjonskar from './components/tools/ekspansjonskar/Ekspansjonskar'
 import Varmebehov from './components/tools/Varmebehov'
-import Kjølebehov from './components/tools/Kjølebehov'
+import Kjølebehov from './components/tools/Kjølebehov/Kjølebehov'
 import Diverse from './components/tools/Diverse'
 import { nanoid } from 'nanoid'
 
@@ -35,6 +34,7 @@ export default function App() {
     />
   )
 
+  
   return (
     <div className="App">
         <Topbar />

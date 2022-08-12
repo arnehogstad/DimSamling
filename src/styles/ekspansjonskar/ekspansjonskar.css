@@ -38,6 +38,10 @@
   padding-right: 15px;
 }
 
+.inndata-disabled{
+  background-color: #e7e7e7;
+}
+
 .ekspansjonskar-select:focus{
   border: none;
 }

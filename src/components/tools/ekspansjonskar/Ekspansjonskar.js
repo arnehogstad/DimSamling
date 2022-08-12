@@ -295,7 +295,7 @@ export default function Ekspansjonskar(props){
         <Produkter
           products={Ekspansjonskar}
           expansion={expansion}
-          type={beregningsType !== "tappveann" ? "varme" : "tappevann"}
+          type={beregningsType !== "tappevann" ? "varme" : "tappevann"}
           showResult = {showResult}
           setShowResult = {setShowResult}
         />

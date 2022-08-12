@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { showAll, showOne } from '../../features/toolSlice'
+import { show } from '../../features/toolSlice'
 
 export default function Toolcard(props){
   //connecting to the store
@@ -14,11 +14,11 @@ export default function Toolcard(props){
   return(
     <div className=
       {showTool === 'all' && props.toolid === 'all' ? "hiddenCard" :
-      showTool !== 'all' && props.toolid === 'all' ? "toolCard" :
-      showTool === props.toolid || showTool === 'all' ?
+      showTool !== 'all' && props.toolid === 'all' ? "toolCardBack" :
+      showTool === 'all' ?
       "toolCard" : "hiddenCard"
     }
-      onClick = {() => dispatch(showOne(props.toolid))}
+      onClick = {() => dispatch(show(props.toolid))}
     >
       <div className="cardTitle">{props.toolName}</div>
       <div className="cardInfo">

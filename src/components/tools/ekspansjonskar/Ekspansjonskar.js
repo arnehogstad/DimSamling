@@ -18,8 +18,8 @@ export default function Ekspansjonskar(props){
     ladetrykk: 0.5,
     sikkerhetsventil:2.5,
     vannvolum: 0,
-    turtemp: 45,
-    returtemp: 30,
+    turtemp: 42,
+    returtemp: 35,
     fluid: "Vann",
   })
 

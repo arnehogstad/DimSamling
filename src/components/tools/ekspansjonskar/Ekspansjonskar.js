@@ -36,7 +36,10 @@ export default function Ekspansjonskar(props){
   const [expansion, setExpansion] = React.useState({
     ekspansjon: 0,
     nytteeffekt: 0,
-    minimumVolum: 0
+    minimumVolum: 0,
+    arbeidsTrykk: 0,
+    arbeidsTemp: 0,
+    sikkerhetsTrykk:0
   })
 
   //state of Result
@@ -120,7 +123,10 @@ export default function Ekspansjonskar(props){
     let returnObj = {
       ekspansjon: expansion,
       nytteeffekt: usablePercentage,
-      minimumVolum: minVolum
+      minimumVolum: minVolum,
+      arbeidsTrykk: dataVarme.ladetrykk,
+      arbeidsTemp: dataVarme.returtemp,
+      sikkerhetsTrykk:dataVarme.sikkerhetsventil
     }
 
     return returnObj
@@ -156,7 +162,10 @@ export default function Ekspansjonskar(props){
     let returnObj = {
       ekspansjon: expansion,
       nytteeffekt: usablePercentage,
-      minimumVolum: minVolum
+      minimumVolum: minVolum,
+      arbeidsTrykk: dataTappevann.ladetrykk,
+      arbeidsTemp: dataTappevann.temperatur,
+      sikkerhetsTrykk:dataTappevann.sikkerhetsventil
     }
 
     return returnObj
@@ -191,7 +200,32 @@ export default function Ekspansjonskar(props){
   //oppdaterer beregningsType
   function updateBeregningsType(event){
     setBeregningsType(event.target.value)
-    if (event.target.value === "varme"){
+    if (event.target.value !== "tappevann"){
+        if (event.target.value === "varme"){
+          setDataVarme(oldDataVarme => (
+              {...oldDataVarme,
+                turtemp: 42,
+                returtemp: 35,
+                fluid: "Vann",
+              }
+          ))
+        }else if(event.target.value === "varmeopptak"){
+          setDataVarme(oldDataVarme => (
+              {...oldDataVarme,
+                turtemp: 3,
+                returtemp: 0,
+                fluid: "HX35",
+              }
+          ))
+        }else{
+          setDataVarme(oldDataVarme => (
+              {...oldDataVarme,
+                turtemp: 7,
+                returtemp: 12,
+                fluid: "Vann",
+              }
+          ))
+        }
       updateExpansionVarme()
     }else{
       updateExpansionTappevann()
@@ -212,6 +246,9 @@ export default function Ekspansjonskar(props){
       setShowResult(false)
     }
   },[dataTappevann])
+  React.useEffect(()=>{
+    setShowResult(false)
+  },[beregningsType])
 
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
@@ -222,7 +259,7 @@ export default function Ekspansjonskar(props){
         </div>
         <div className="ekspansjonskar-inndatalinje">
           <div className="ekspansjonskar-inndataTittel">
-            Type ekspansjonskar
+            Anleggstype
           </div>
           <div className="ekspansjonskar-inndataVerdi">
             <select
@@ -231,13 +268,15 @@ export default function Ekspansjonskar(props){
               value={beregningsType}
               onChange={(event) => updateBeregningsType(event)}
               >
-              <option key="varme" value="varme">Varme-/kjøleanlegg</option>
+              <option key="varme" value="varme">Varmeanlegg</option>
+              <option key="kjøle" value="kjøle">Kjøleanlegg</option>
+              <option key="varmeopptak" value="varmeopptak">Varmeopptak</option>
               <option key="tappevann" value="tappevann">Tappevann</option>
             </select>
           </div>
         </div>
         <>
-        {beregningsType === "varme" ?
+        {beregningsType !== "tappevann" ?
           <InndataVarme
             data={dataVarme}
             updateData={updateDataVarme}
@@ -256,6 +295,7 @@ export default function Ekspansjonskar(props){
         <Produkter
           products={Ekspansjonskar}
           expansion={expansion}
+          type={beregningsType !== "tappveann" ? "varme" : "tappevann"}
           showResult = {showResult}
           setShowResult = {setShowResult}
         />

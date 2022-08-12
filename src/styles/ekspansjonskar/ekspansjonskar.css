@@ -55,5 +55,33 @@
   flex-direction: column;
   align-content: center;
   flex-wrap: wrap;
+}
 
+.ekspansjonskar-resultatLinje{
+  display: flex;
+  background-color: white;
+  border-top: 1px solid #c7c7c7;
+  line-height: 30px;
+  white-space:nowrap;
+
+}
+.ekspansjonskar-resultatOverskrift{
+  display: flex;
+  background-color: #d7d7d7;
+}
+.ekspansjonskar-resultatcelle{
+  padding: 5px;
+}
+
+.eksp-resultat-large{
+  width: 350px;
+  text-indent: 10px;
+}
+.eksp-resultat-medium{
+  width: 150px;
+  text-align: center;
+}
+.eksp-resultat-small{
+  width: 100px;
+  text-align: center;
 }

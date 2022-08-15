@@ -5,6 +5,7 @@ import Unit from './components/Unit'
 import Result from './components/Result'
 import ButtonLine from './components/ButtonLine'
 import Modal from './components/Modal'
+import Banner from '../../../components/static/Banner'
 import { nanoid } from 'nanoid'
 import mockDatabase from "./components/mockDatabase.js"
 //CSS-files importeres her for å holde prosjektoppsummeringen ryddigere
@@ -240,6 +241,7 @@ export default function Gulvvarme(props){
 
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+      <Banner />
       <div className="container">
           <Toolinfo />
           <Modal

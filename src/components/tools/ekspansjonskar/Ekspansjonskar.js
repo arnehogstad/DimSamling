@@ -3,6 +3,7 @@ import InndataVarme from './components/InndataVarme'
 import InndataTappevann from './components/InndataTappevann'
 import Beregning from './components/Beregning'
 import Produkter from './components/Produkter'
+import Banner from '../../../components/static/Banner'
 import mockDatabase from "./components/mockDatabase.js"
 import { useSelector } from 'react-redux'
 //CSS-files importeres her for å holde prosjektoppsummeringen ryddigere
@@ -252,6 +253,9 @@ export default function Ekspansjonskar(props){
 
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+      <div className="toolBanner">
+        <Banner />
+      </div>
       <div className="dataArea">
         <div className="toolInfo">
           Finn passende ekspansjonskar ved å legge inn anleggsinformasjon<br></br>

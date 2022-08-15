@@ -17,8 +17,7 @@ export default function App() {
   "Ekspansjonskarsvelger",
   "Beregning varmebehov",
   "Beregning kjølebehov",
-  "Estimat andre greier",
-  "Tilbake til alle verktøy"
+  "Estimat andre greier"
   ]
   //genererer ID til alle verktøy
   const toolId = toolNames.map((name,index) =>
@@ -29,12 +28,12 @@ export default function App() {
     <Toolcard
       toolName={name}
       key = {index}
-      toolid = {index+1 === toolNames.length ?  'all' : toolId[index]}
+      toolid = {toolId[index]}
       picName = {name}
     />
   )
 
-  
+
   return (
     <div className="App">
         <Topbar />

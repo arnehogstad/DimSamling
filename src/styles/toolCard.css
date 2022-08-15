@@ -1,9 +1,10 @@
 .toolCard{
   height: 200px;
   width: 200px;
-  margin: 20px;
+  margin: 20px 20px 20px 20px;
   background-color: white;
   box-shadow: 0px 0px 10px 2px #d7d7d7;
+
 }
 
 .toolCardBack{
@@ -26,11 +27,6 @@
   padding-top: 5px;
 }
 
-.toolList{
-  display: flex;
-  width: 100%;
-}
-
 .cardPic{
   width: 80%;
   height: 80%;
@@ -39,4 +35,12 @@
 
 .hiddenCard{
   display: none;
+}
+
+.banner{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
 }

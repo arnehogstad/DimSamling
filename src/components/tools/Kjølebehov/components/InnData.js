@@ -4,18 +4,18 @@ import {Byggeårs, Byggtypes } from "./data"
 export default function InnData() {
     const [formData, setFormData] = React.useState(
         {
-            Navn: "", 
-            Referanse: "", 
+            Navn: "",
+            Referanse: "",
             ByggType: "Småhus",
             Byggeår: "2017-nå",
             MaksT:32,
             ØnsketT:21
         }
     )
-    
-    
+
+
     function handleChange(event) {
-        
+
         const {name, value} = event.target
         setFormData(prevFormData => {
             return {
@@ -25,7 +25,7 @@ export default function InnData() {
         })
         console.log(formData.MaksT*2)
     }
-    
+
     return (
         <form className="form">
           <label>Prosjekt Navn:
@@ -35,7 +35,7 @@ export default function InnData() {
                 name="Navn"
                 value={formData.Navn}
             /></label>
-            
+
             <label>ABK Referanse:
             <input
                 type="text"
@@ -43,10 +43,10 @@ export default function InnData() {
                 name="Referanse"
                 value={formData.Referanse}
             /></label>
-            
+
             <label htmlFor="ByggType">Bygg Type:</label>
-            <select 
-                id="ByggType" 
+            <select
+                id="ByggType"
                 value={formData.ByggType}
                 onChange={handleChange}
                 name="ByggType"
@@ -57,8 +57,8 @@ export default function InnData() {
             </select>
 
             <label htmlFor="Byggeår">Bygge år:</label>
-            <select 
-                id="Byggeår" 
+            <select
+                id="Byggeår"
                 value={formData.Byggeår}
                 onChange={handleChange}
                 name="Byggeår"
@@ -76,7 +76,7 @@ export default function InnData() {
                 name="MaksT"
                 value={formData.MaksT}
             /></label>
-          
+
 
           <label>Ønsket Intern Temperatur:
             <input

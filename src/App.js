@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Topbar from './components/static/Topbar'
 import Toolcard from './components/static/Toolcard'
 import Footer from './components/static/Footer'
@@ -9,7 +10,9 @@ import Kjølebehov from './components/tools/Kjølebehov/Kjølebehov'
 import Diverse from './components/tools/Diverse'
 import { nanoid } from 'nanoid'
 
+
 export default function App() {
+  //status om man skal vie tool-list eller ikke
 
   //liste over verktøy
   const toolNames = [
@@ -23,6 +26,7 @@ export default function App() {
   const toolId = toolNames.map((name,index) =>
     nanoid()
   )
+
 
   const toolElements = toolNames.map((name,index) =>
     <Toolcard
@@ -38,7 +42,7 @@ export default function App() {
     <div className="App">
         <Topbar />
         <div className="contentWrapper">
-          <div className="toolList">
+          <div className= "toolList" >
             {toolElements}
           </div>
           <Gulvvarme toolId={toolId[0]} />

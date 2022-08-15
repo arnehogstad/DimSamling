@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import InnData from './components/InnData'
-import "./Kjølebehov.css"
+import "../../../styles/kjølebehov/kjølebehov.css"
 
 export default function Kjølebehov(props){
   const showTool = useSelector((state) => state.tool.visibleId)

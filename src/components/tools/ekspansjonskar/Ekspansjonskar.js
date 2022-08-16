@@ -254,7 +254,7 @@ export default function Ekspansjonskar(props){
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
       <div className="toolBanner">
-        <Banner />
+        <Banner title={props.toolName} />
       </div>
       <div className="dataArea">
         <div className="toolInfo">

@@ -6,7 +6,7 @@ export default function Diverse(props){
   const showTool = useSelector((state) => state.tool.visibleId)
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
-    <Banner />
+    <Banner title={props.toolName} />
       <div className="toolInfo">
         Test av render Diverse ved bruk av redux
       </div>

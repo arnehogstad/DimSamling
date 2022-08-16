@@ -8,23 +8,27 @@ export default function Banner(props){
   const dispatch = useDispatch()
 
   //getting the picture for the card
-  let tempPic = require(`../../images/Tilbake til alle verktøy.png`)
-
+  let tempPic = require(`../../images/${props.title.replaceAll(" ","-")}.png`)
 
   return(
-    <div className="banner">
-      <div className="toolCard"
+    <div className="banner"
+      style={{
+        backgroundImage: `url(${tempPic})`,
+        backgroundPosition: 'center',
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+
+      <div className="toolCardBack"
         onClick = {() => dispatch(show('all'))}
       >
-        <div className="cardTitle">Tilbake til alle verktøy</div>
-        <div className="cardInfo">
-          <img
-            className="cardPic"
-            //src = {picTest}
-            src = {tempPic}
-          />
-        </div>
+        <div> &larr; TILBAKE TIL ALLE VERKTØY </div>
       </div>
+      <div className="toolHeadLine">
+        {props.title}
+      </div>
+      <div className="filler"></div>
     </div>
   )
 

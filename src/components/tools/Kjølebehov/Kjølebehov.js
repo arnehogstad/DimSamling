@@ -11,7 +11,7 @@ export default function Kjølebehov(props){
 
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
-      <Banner />
+      <Banner title={props.toolName} />
       <div className="toolInfo">
         <InnData/>
       </div>

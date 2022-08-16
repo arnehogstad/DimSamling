@@ -45,11 +45,26 @@ export default function App() {
           <div className= "toolList" >
             {toolElements}
           </div>
-          <Gulvvarme toolId={toolId[0]} />
-          <Ekspansjonskar toolId={toolId[1]}/>
-          <Varmebehov toolId={toolId[2]}/>
-          <Kjølebehov toolId={toolId[3]}/>
-          <Diverse toolId={toolId[4]}/>
+          <Gulvvarme
+            toolId={toolId[0]}
+            toolName={toolNames[0]}
+          />
+          <Ekspansjonskar
+            toolId={toolId[1]}
+            toolName={toolNames[1]}
+          />
+          <Varmebehov
+            toolId={toolId[2]}
+            toolName={toolNames[2]}
+          />
+          <Kjølebehov
+            toolId={toolId[3]}
+            toolName={toolNames[3]}
+          />
+          <Diverse
+            toolId={toolId[4]}
+            toolName={toolNames[4]}
+          />
         </div>
         <Footer />
     </div>

@@ -241,7 +241,7 @@ export default function Gulvvarme(props){
 
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
-      <Banner />
+      <Banner title={props.toolName} />
       <div className="container">
           <Toolinfo />
           <Modal

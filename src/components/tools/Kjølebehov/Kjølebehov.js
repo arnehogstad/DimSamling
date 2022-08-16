@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import InnData from './components/InnData'
+import Banner from '../../../components/static/Banner'
 import "./Kjølebehov.css"
 
 export default function Kjølebehov(props){
@@ -10,6 +11,7 @@ export default function Kjølebehov(props){
 
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+      <Banner title={props.toolName} />
       <div className="toolInfo">
         <InnData/>
       </div>

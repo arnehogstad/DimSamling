@@ -8,16 +8,12 @@ export default function Toolcard(props){
   const dispatch = useDispatch()
 
   //getting the picture for the card
-  let tempPic = require(`../../images/${props.picName}.png`)
+  let tempPic = require(`../../images/${props.picName.replaceAll(" ","-")}.png`)
 
 
   return(
     <div className=
-      {showTool === 'all' && props.toolid === 'all' ? "hiddenCard" :
-      showTool !== 'all' && props.toolid === 'all' ? "toolCardBack" :
-      showTool === 'all' ?
-      "toolCard" : "hiddenCard"
-    }
+      {showTool === 'all' ? "toolCard" : "hiddenCard"}
       onClick = {() => dispatch(show(props.toolid))}
     >
       <div className="cardTitle">{props.toolName}</div>

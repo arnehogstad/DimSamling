@@ -15,3 +15,21 @@ input,select {
     border-radius: 5px;
     display: block;
 }
+
+
+.handlingsKnapp {
+    height: 50px;
+    margin-right: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: white;
+    color: black;
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 0;
+    margin-bottom: 20px;
+    
+    align-self: center;
+    border: 1px solid #e7e7e7;
+}

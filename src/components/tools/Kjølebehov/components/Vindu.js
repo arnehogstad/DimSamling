@@ -26,7 +26,8 @@ export default function InnData() {
             return {
                 ...prev,
                 [name]: value,
-            }
+                effekt: solEffect(vinduData.vinduRettning, Avsjkerming[vinduData.avskjerming], vinduData.vinduArealet)
+              }
         })
     }
 
@@ -45,15 +46,7 @@ export default function InnData() {
 
 
     function saveVindu() {
-
-        
-        setVinduData(prev => {
-            return {
-                ...prev,
-                effekt: solEffect(vinduData.vinduRettning, Avsjkerming[vinduData.avskjerming], vinduData.vinduArealet)
-            }
-        })
-        
+             
         setVindus(prev => [...prev, { vinduData }])
 
         }
@@ -67,7 +60,7 @@ export default function InnData() {
             <td>{item.vinduData.effekt}</td>
         </tr>
     )))
-},[vinduData])
+},[vindus])
 
     return (
         <div>

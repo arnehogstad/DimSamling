@@ -33,9 +33,16 @@ export default function InnData() {
     }
 
     function solEffect(vinduRettning,avskjerming, vinduArealet) {
-      let last =100
-      
-        console.log(Avsjkerming(avskjerming))
+     
+        let last =100
+        if (vinduRettning === "Sør") {
+           last= (44+7*32)*vinduArealet*avskjerming 
+        }else if (vinduRettning === "Vest-Øst"){
+            last = (11)*vinduArealet*avskjerming*32
+        }else if(vinduRettning === "Nord"){
+            last= (6)*vinduArealet*avskjerming*32
+        }
+        console.log(Avsjkerming[avskjerming])
         setVinduData(prev => {
              return {...prev,
                 effekt:last  }
@@ -45,7 +52,7 @@ export default function InnData() {
     
     function saveVindu() {
         console.log(vinduData)
-       solEffect(vinduData.vinduRettning,vinduData.avskjerming,vinduData.vinduArealet)
+       solEffect(vinduData.vinduRettning,Avsjkerming[vinduData.avskjerming],vinduData.vinduArealet)
           
        
        setVindus(prev => [...prev, { vinduData }])

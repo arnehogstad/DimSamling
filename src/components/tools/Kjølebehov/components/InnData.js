@@ -1,25 +1,35 @@
 import React from "react"
-import {Byggeårs, Byggtypes } from "./data"
+import { Byggeårs, Byggtypes, UData } from "./data"
+import * as beregn from "./beregn"
+
 
 export default function InnData() {
-    const [formData, setFormData] = React.useState(
-        {
-            Navn: "", 
-            Referanse: "", 
-            ByggType: "Småhus",
-            Byggeår: "2017-nå",
-            MaksT:32,
-            ØnsketT:21,
-            bra:200,
-            takhøyde:3,
-            takmotloft:0,
-            taktemp:50,
-            gulvmotluft:0,
-            veggmotnabo:0
-            }
-    )
-    
-    
+  const [formData, setFormData] = React.useState(
+    {
+      Navn: "",
+      Referanse: "",
+      ByggType: "Småhus",
+      Byggeår: "2017-nå",
+      MaksT: 32,
+      ØnsketT: 21,
+      bra: 200,
+      takhøyde: 3,
+      takmotloft: 0,
+      taktemp: 50,
+      gulvmotluft: 0,
+      veggmotnabo: 0,
+      gjennvinn: 80
+    }
+  )
+
+  //console.log(beregn.Infiltrasjon(formData.Byggeår,formData.takhøyde,formData.bra,formData.MaksT,formData.ØnsketT))
+  //console.log(beregn.Ventilasjon(formData.Byggeår,formData.ByggType,formData.bra,formData.MaksT,formData.ØnsketT,formData.gjennvinn))
+  //console.log(beregn.Vegg_trans(formData.Byggeår,formData.bra,formData.veggmotnabo,formData.takhøyde,formData.MaksT,formData.ØnsketT))
+  //console.log(beregn.Tak_trans(formData.Byggeår,formData.bra,formData.takmotloft,formData.MaksT,formData.ØnsketT))
+  //console.log(beregn.loft_trans(formData.Byggeår,formData.takmotloft,formData.taktemp,formData.ØnsketT))
+  console.log(beregn.gulv_trans(formData.Byggeår, formData.gulvmotluft, formData.MaksT, formData.ØnsketT))
+
+
   function handleChange(event) {
 
     const { name, value } = event.target
@@ -29,7 +39,6 @@ export default function InnData() {
         [name]: value
       }
     })
-    console.log(formData.MaksT * 2)
   }
 
   return (
@@ -92,13 +101,6 @@ export default function InnData() {
           value={formData.ØnsketT}
         /></label>
 
-      <label>Ønsket Intern Temperatur:
-        <input
-          type="number"
-          onChange={handleChange}
-          name="ØnsketT"
-          value={formData.ØnsketT}
-        /></label>
 
       <label>Arealet BRA [m]:
         <input
@@ -120,7 +122,7 @@ export default function InnData() {
         <input
           type="number"
           onChange={handleChange}
-          name="takhøyde"
+          name="takmotloft"
           value={formData.takmotloft}
         /></label>
 
@@ -140,7 +142,7 @@ export default function InnData() {
           value={formData.gulvmotluft}
         /></label>
 
-      
+
       <label>Vegg mot nabo [m]:
         <input
           type="number"
@@ -149,7 +151,13 @@ export default function InnData() {
           value={formData.veggmotnabo}
         /></label>
 
-
+      <label>Gjennvinner Virknningsgrad [m]:
+        <input
+          type="number"
+          onChange={handleChange}
+          name="gjennvinn"
+          value={formData.gjennvinn}
+        /></label>
 
     </form>
   )

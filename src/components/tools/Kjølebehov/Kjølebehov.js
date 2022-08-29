@@ -3,19 +3,33 @@ import { useSelector } from 'react-redux'
 import InnData from './components/InnData'
 import Vindu from "./components/Vindu"
 import "../../../styles/kjølebehov/kjølebehov.css"
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 
-export default function Kjølebehov(props){
+export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
 
   ////////
 
-  return(
-    <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+  return (
+    <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
       <div className="toolInfo">
-       {/* <InnData/>*/}
-        <Vindu/>
+
+        <Tabs>
+          <TabList>
+            <Tab>Inn Data</Tab>
+            <Tab>Vinduer</Tab>
+          </TabList>
+
+          <TabPanel>
+            <InnData />
+          </TabPanel>
+          <TabPanel>
+            <Vindu />
+          </TabPanel>
+        </Tabs>
       </div>
-  </div>
-)
+    </div>
+  )
 
 }

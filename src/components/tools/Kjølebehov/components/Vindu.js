@@ -65,10 +65,11 @@ export default function InnData() {
     //calls on the soleffect function to add the effet the effekt (last) to the vinduData after the data is taken in
     useEffect(() => {
         solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)
-       
-        totalEffekt=totalEffekt+vinduData.effekt }
-    
-    , [vinduData.vinduArealet, vinduData.avskjerming, vinduData.vinduRettning])
+
+        totalEffekt = totalEffekt + vinduData.effekt
+    }
+
+        , [vinduData.vinduArealet, vinduData.avskjerming, vinduData.vinduRettning])
 
     //maps the data from vindus (all the windows) to the jsx
     useEffect(() => {
@@ -136,7 +137,7 @@ export default function InnData() {
                         <th>Last [W]</th>
                     </tr>
                     {vinduTable}
-                                            </table>
+                </table>
             </div>
         </div>
     )

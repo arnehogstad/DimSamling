@@ -1,8 +1,8 @@
-import React , { useEffect } from "react"
+import React, { useEffect } from "react"
 
 
-export default function Ovrigelast() {
-    const [last, setLast] = React.useState( {
+export default function Ovrigelast(props) {
+    const [last, setLast] = React.useState({
         navn: "Øvrigelast",
         effekt: 0
     })
@@ -39,9 +39,8 @@ export default function Ovrigelast() {
     }, [lasts])
 
 
-
-   let totalEffekt = lasts.reduce((a, b) => a +parseInt(b.effekt), 0)
-
+    /// add the effekt to the total effekt 
+    let ovrige_Effekt =  [ lasts.reduce((a, b) => a + parseInt(b.effekt), 0) ]
     return (
         <div>
             <label>Last Navn:
@@ -68,7 +67,13 @@ export default function Ovrigelast() {
                 </tr>
                 {lastsTable}
             </table>
-            <p>Total øvrige last: {totalEffekt} w</p>
+            <p>Total øvrige last: {ovrige_Effekt} W</p>
+
+
+            
+            <button className="handlingsKnapp" onClick={() => props.last_data(ovrige_Effekt)}>Oppdater lista</button>
+
+
         </div>
     )
 }

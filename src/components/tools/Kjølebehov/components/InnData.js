@@ -3,7 +3,7 @@ import { Byggeårs, Byggtypes, UData } from "./data"
 import * as beregn from "./beregn"
 
 
-export default function InnData() {
+export default function InnData(props) {
   const [formData, setFormData] = React.useState(
     {
       Navn: "",
@@ -22,13 +22,7 @@ export default function InnData() {
     }
   )
 
-  //console.log(beregn.Infiltrasjon(formData.Byggeår,formData.takhøyde,formData.bra,formData.MaksT,formData.ØnsketT))
-  //console.log(beregn.Ventilasjon(formData.Byggeår,formData.ByggType,formData.bra,formData.MaksT,formData.ØnsketT,formData.gjennvinn))
-  //console.log(beregn.Vegg_trans(formData.Byggeår,formData.bra,formData.veggmotnabo,formData.takhøyde,formData.MaksT,formData.ØnsketT))
-  //console.log(beregn.Tak_trans(formData.Byggeår,formData.bra,formData.takmotloft,formData.MaksT,formData.ØnsketT))
-  //console.log(beregn.loft_trans(formData.Byggeår,formData.takmotloft,formData.taktemp,formData.ØnsketT))
-  //console.log(beregn.gulv_trans(formData.Byggeår, formData.gulvmotluft, formData.MaksT, formData.ØnsketT))
-//console.log(beregn.utstyr(formData.ByggType,formData.bra))
+
 
   function handleChange(event) {
 
@@ -41,7 +35,31 @@ export default function InnData() {
     })
   }
 
+
+  let luft_effekt = {
+    infiltrasjon: (beregn.Infiltrasjon(formData.Byggeår, formData.takhøyde, formData.bra, formData.MaksT, formData.ØnsketT)),
+    ventilasjon: (beregn.Ventilasjon(formData.Byggeår, formData.ByggType, formData.bra, formData.MaksT, formData.ØnsketT, formData.gjennvinn))
+  }
+
+
+  let trans_effekt = {
+    vegg: beregn.Vegg_trans(formData.Byggeår, formData.bra, formData.veggmotnabo, formData.takhøyde, formData.MaksT, formData.ØnsketT),
+    tak: beregn.Tak_trans(formData.Byggeår, formData.bra, formData.takmotloft, formData.MaksT, formData.ØnsketT),
+    loft: beregn.loft_trans(formData.Byggeår, formData.takmotloft, formData.taktemp, formData.ØnsketT),
+    gulv: beregn.gulv_trans(formData.Byggeår, formData.gulvmotluft, formData.MaksT, formData.ØnsketT)
+
+  }
+  let annet_effekt = {
+    utstyr: beregn.utstyr(formData.ByggType, formData.bra),
+    personer: beregn.personer(formData.ByggType, formData.bra)
+  }
+
+
+let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,trans_effekt.gulv,trans_effekt.loft,trans_effekt.tak,trans_effekt.vegg,annet_effekt.personer,annet_effekt.utstyr]
+
+
   return (
+    <div>
     <form className="form">
       <label>Prosjekt Navn:
         <input
@@ -160,5 +178,7 @@ export default function InnData() {
         /></label>
 
     </form>
+    <button className="handlingsKnapp" onClick={() => props.last_data(effekt)}>Oppdater lista</button>
+</div>
   )
 }

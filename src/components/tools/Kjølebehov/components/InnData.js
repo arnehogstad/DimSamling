@@ -27,8 +27,8 @@ export default function InnData() {
   //console.log(beregn.Vegg_trans(formData.Byggeår,formData.bra,formData.veggmotnabo,formData.takhøyde,formData.MaksT,formData.ØnsketT))
   //console.log(beregn.Tak_trans(formData.Byggeår,formData.bra,formData.takmotloft,formData.MaksT,formData.ØnsketT))
   //console.log(beregn.loft_trans(formData.Byggeår,formData.takmotloft,formData.taktemp,formData.ØnsketT))
-  console.log(beregn.gulv_trans(formData.Byggeår, formData.gulvmotluft, formData.MaksT, formData.ØnsketT))
-
+  //console.log(beregn.gulv_trans(formData.Byggeår, formData.gulvmotluft, formData.MaksT, formData.ØnsketT))
+//console.log(beregn.utstyr(formData.ByggType,formData.bra))
 
   function handleChange(event) {
 

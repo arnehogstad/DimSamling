@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 
 
+
 export default function Ovrigelast(props) {
     const [last, setLast] = React.useState({
         navn: "Øvrigelast",
@@ -33,7 +34,7 @@ export default function Ovrigelast(props) {
             <tr>
                 <td>{item.navn}</td>
                 <td>{item.effekt}</td>
-                <td><button onClick={() => handleDelete(item)}>Delete</button></td>
+                <td><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
             </tr>
         )))
     }, [lasts])
@@ -43,6 +44,8 @@ export default function Ovrigelast(props) {
     let ovrige_Effekt =  [ lasts.reduce((a, b) => a + parseInt(b.effekt), 0) ]
     return (
         <div>
+
+            <form className="formInnData">
             <label>Last Navn:
                 <input
                     type="text"
@@ -51,27 +54,31 @@ export default function Ovrigelast(props) {
                     value={last.navn}
                 /></label>
 
-            <label>Effekt [w]:
+            <label>Effekt [W]:
                 <input
                     type="number"
                     onChange={handleChange}
                     name="effekt"
                     value={last.effekt}
                 /></label>
-            <button className="handlingsKnapp" onClick={saveData}>Lagre last</button>
-
-            <table className="table">
+            
+           </form>
+           <button className="handlingsKnapp" onClick={saveData}>Lagre last</button>
+            <div className="table">
+            <table >
                 <tr>
                     <th>Last Navn</th>
                     <th>Effekt [W]</th>
+                    <th>Fjern</th>
                 </tr>
                 {lastsTable}
             </table>
+            </div>
             <p>Total øvrige last: {ovrige_Effekt} W</p>
 
 
             
-            <button className="handlingsKnapp" onClick={() => props.last_data(ovrige_Effekt)}>Oppdater lista</button>
+            <button className="handlingsKnapp" onClick={() => props.ovrige_data(ovrige_Effekt)}>Oppdater lista</button>
 
 
         </div>

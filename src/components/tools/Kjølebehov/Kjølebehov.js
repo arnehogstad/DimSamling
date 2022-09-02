@@ -1,4 +1,4 @@
-import {React,  useState } from 'react'
+import { React, useState } from 'react'
 import { useSelector } from 'react-redux'
 import InnData from './components/InnData'
 import Vindu from "./components/Vindu"
@@ -11,10 +11,19 @@ import Oversikt from './components/Oversikt'
 export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
 
-  const [lasts, setLasts] = useState([]);
 
+  //To move data up a compnonet from a child component for the data in InnData.js
+  const [lasts, setLasts] = useState([]);
   const last_data = (last) => { setLasts(last) }
-  
+
+//To move data up a compnonet from a child component for the data in Øvrigelast.js
+  const [ovriges, setOvriges] = useState([]);
+  const ovrige_data = (ovrige) => { setOvriges(ovrige) }
+
+//To move data up a compnonet from a child component for the data in Vindus.js
+const [vindus, setVindus] = useState([]);
+const vindu_data = (vindu) => { setVindus(vindu) }  
+
   return (
     <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
       <div className="toolInfo">
@@ -27,18 +36,20 @@ export default function Kjølebehov(props) {
           </TabList>
 
           <TabPanel>
-            <InnData last_data={last_data}/>
+            <InnData last_data={last_data} />
           </TabPanel>
           <TabPanel>
-            <Vindu />
+            <Vindu   vindu_data={vindu_data} />
           </TabPanel>
           <TabPanel>
-            <Ovrigelast last_data={last_data} />
+            <Ovrigelast ovrige_data={ovrige_data} />
           </TabPanel>
         </Tabs>
       </div>
-      <Oversikt />
-      <p>{lasts[1]}</p>
+
+      
+      <Oversikt lasts={lasts} ovrige={ovriges} vindus={vindus}/>
+      
     </div>
   )
 

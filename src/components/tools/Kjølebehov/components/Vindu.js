@@ -2,13 +2,13 @@ import React, { useEffect } from "react"
 import { vindu_rettning, Avsjkermings } from "./data"
 
 
-export default function InnData() {
+export default function InnData(props) {
     const [vinduData, setVinduData] = React.useState(
         {
             vinduArealet: 1,
             avskjerming: "Uten Avskjerming",
             vinduRettning: "Sør",
-            effekt: 12
+            effekt: 268
         }
     )
 
@@ -28,6 +28,12 @@ export default function InnData() {
         })
 
     }
+
+
+    const handleDelete = (item) => {
+        setVindus(vindus.filter(i => i !== item))
+    }
+
     //Writes the effect to the vinduData  //32 should be changed to get data from Inndata
     function solEffect(vinduRettning, avskjerming, vinduArealet) {
 
@@ -35,7 +41,7 @@ export default function InnData() {
             setVinduData(prev => {
                 return {
                     ...prev,
-                    effekt: (44 + 7 * 32) * vinduArealet * avskjerming
+                    effekt: Math.round((44 + 7 * 32) * vinduArealet * avskjerming)
                 }
             })
             //
@@ -43,33 +49,28 @@ export default function InnData() {
             setVinduData(prev => {
                 return {
                     ...prev,
-                    effekt: (11) * vinduArealet * avskjerming * 32
+                    effekt: Math.round((11) * vinduArealet * avskjerming * 32)
                 }
             })
         } else if (vinduRettning === "Nord") {
             setVinduData(prev => {
                 return {
                     ...prev,
-                    effekt: (6) * vinduArealet * avskjerming * 32
+                    effekt: Math.round((6) * vinduArealet * avskjerming * 32)
                 }
             })
         }
 
     }
 
-
-    let totalEffekt = 0
-    //logs the data from vinduData(the curret page) toa matrix of all windows
+    //logs the data from vinduData(the current page) to a matrix of all windows
     function saveVindu() { setVindus(prev => [...prev, { vinduData }]) }
 
-    //calls on the soleffect function to add the effet the effekt (last) to the vinduData after the data is taken in
+    //calls on the soleffect function to add the effekt the effekt (last) to the vinduData after the data is taken in
     useEffect(() => {
-        solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)
-
-        totalEffekt = totalEffekt + vinduData.effekt
-    }
-
-        , [vinduData.vinduArealet, vinduData.avskjerming, vinduData.vinduRettning])
+        solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)  
+      
+    }, [vinduData.vinduArealet, vinduData.avskjerming, vinduData.vinduRettning])
 
     //maps the data from vindus (all the windows) to the jsx
     useEffect(() => {
@@ -79,14 +80,17 @@ export default function InnData() {
                 <td>{item.vinduData.avskjerming}</td>
                 <td>{item.vinduData.vinduRettning}</td>
                 <td>{item.vinduData.effekt}</td>
+                <td><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
             </tr>
         )))
     }, [vindus])
 
+let total_effekt = [vindus.reduce((a, b) => a + parseInt(b.vinduData.effekt), 0)]
+    console.log(vindus)
     return (
         <div>
 
-            <form>
+            <form className="formInnData">
 
                 <label htmlFor="avskjerming">Avsjkerming:</label>
                 <select
@@ -139,6 +143,8 @@ export default function InnData() {
                     {vinduTable}
                 </table>
             </div>
+
+            <button className="handlingsKnapp" onClick={() => props.vindu_data(total_effekt)}>Oppdater oversikt</button>
         </div>
     )
 }

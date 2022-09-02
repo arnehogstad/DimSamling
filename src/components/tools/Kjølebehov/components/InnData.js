@@ -1,6 +1,7 @@
 import React from "react"
 import { Byggeårs, Byggtypes, UData } from "./data"
 import * as beregn from "./beregn"
+import "../../../../styles/kjølebehov/kjølebehov.css"
 
 
 export default function InnData(props) {
@@ -55,12 +56,12 @@ export default function InnData(props) {
   }
 
 
-let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,trans_effekt.gulv,trans_effekt.loft,trans_effekt.tak,trans_effekt.vegg,annet_effekt.personer,annet_effekt.utstyr]
+let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,trans_effekt.tak,trans_effekt.loft,trans_effekt.gulv,annet_effekt.utstyr,annet_effekt.personer]
 
 
   return (
-    <div>
-    <form className="form">
+    <div className="formInnData">
+    <form >
       <label>Prosjekt Navn:
         <input
           type="text"
@@ -169,7 +170,7 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
           value={formData.veggmotnabo}
         /></label>
 
-      <label>Gjennvinner Virknningsgrad [m]:
+      <label>Gjennvinner Virknningsgrad [%]:
         <input
           type="number"
           onChange={handleChange}
@@ -178,7 +179,7 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
         /></label>
 
     </form>
-    <button className="handlingsKnapp" onClick={() => props.last_data(effekt)}>Oppdater lista</button>
+    <button className="handlingsKnapp" onClick={() => props.last_data(effekt)}>Oppdater oversikt</button>
 </div>
   )
 }

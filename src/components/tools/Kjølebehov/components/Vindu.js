@@ -68,32 +68,33 @@ export default function InnData(props) {
 
     //calls on the soleffect function to add the effekt the effekt (last) to the vinduData after the data is taken in
     useEffect(() => {
-        solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)  
-      
+        solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)
+
     }, [vinduData.vinduArealet, vinduData.avskjerming, vinduData.vinduRettning])
 
     //maps the data from vindus (all the windows) to the jsx
     useEffect(() => {
         setVinduTable(vindus.map((item) => (
             <tr>
-                <td>{item.vinduData.vinduArealet}</td>
-                <td>{item.vinduData.avskjerming}</td>
-                <td>{item.vinduData.vinduRettning}</td>
-                <td>{item.vinduData.effekt}</td>
-                <td><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
+                <td className="tbel">{item.vinduData.vinduArealet}</td>
+                <td className="tbel">{item.vinduData.avskjerming}</td>
+                <td className="tbel">{item.vinduData.vinduRettning}</td>
+                <td className="tbel">{item.vinduData.effekt}</td>
+                <td className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
             </tr>
         )))
     }, [vindus])
 
-let total_effekt = [vindus.reduce((a, b) => a + parseInt(b.vinduData.effekt), 0)]
+    let total_effekt = [vindus.reduce((a, b) => a + parseInt(b.vinduData.effekt), 0)]
     console.log(vindus)
     return (
         <div>
 
             <form className="formInnData">
 
-                <label htmlFor="avskjerming">Avsjkerming:</label>
+                <label className="label" htmlFor="avskjerming">Avsjkerming:</label>
                 <select
+                    className="select"
                     id="avskjerming"
                     value={vinduData.avskjerming}
                     onChange={handleChange}
@@ -104,8 +105,9 @@ let total_effekt = [vindus.reduce((a, b) => a + parseInt(b.vinduData.effekt), 0)
                     ))}
                 </select>
 
-                <label htmlFor="vinduRettning">Vindu Rettning:</label>
+                <label className="label" htmlFor="vinduRettning">Vindu Rettning:</label>
                 <select
+                    className="select"
                     id="vinduRettning"
                     value={vinduData.vinduRettning}
                     onChange={handleChange}
@@ -116,8 +118,9 @@ let total_effekt = [vindus.reduce((a, b) => a + parseInt(b.vinduData.effekt), 0)
                     ))}
                 </select>
 
-                <label>Vindu Arealet [m2]:
+                <label className="label">Vindu Arealet [m2]:
                     <input
+                        className="input"
                         type="number"
                         onChange={handleChange}
                         name="vinduArealet"
@@ -135,16 +138,16 @@ let total_effekt = [vindus.reduce((a, b) => a + parseInt(b.vinduData.effekt), 0)
             <div className="table">
                 <table>
                     <tr>
-                        <th>Vindu Arealet [m2]</th>
-                        <th>Avskjerming</th>
-                        <th>Vindu Rettning</th>
-                        <th>Last [W]</th>
+                        <th className="tbel">Vindu Arealet [m2]</th>
+                        <th className="tbel">Avskjerming</th>
+                        <th className="tbel">Vindu Rettning</th>
+                        <th className="tbel">Last [W]</th>
                     </tr>
                     {vinduTable}
                 </table>
             </div>
 
-            <button className="handlingsKnapp" onClick={() => props.vindu_data(total_effekt)}>Oppdater oversikt</button>
+            <button className="handlingsKnapp" onClick={() => props.vindu_data(total_effekt)}>Lagre Data og gå videre</button>
         </div>
     )
 }

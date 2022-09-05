@@ -62,24 +62,27 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
   return (
     <div className="formInnData">
     <form >
-      <label>Prosjekt Navn:
+      <label className="label">Prosjekt Navn:
         <input
+        className="input"
           type="text"
           onChange={handleChange}
           name="Navn"
           value={formData.Navn}
         /></label>
 
-      <label>ABK Referanse:
+      <label className="label">ABK Referanse:
         <input
+        className="input"
           type="text"
           onChange={handleChange}
           name="Referanse"
           value={formData.Referanse}
         /></label>
 
-      <label htmlFor="ByggType">Bygg Type:</label>
+      <label className="label" htmlFor="ByggType">Bygg Type:</label>
       <select
+        className="select"
         id="ByggType"
         value={formData.ByggType}
         onChange={handleChange}
@@ -90,8 +93,9 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
         ))}
       </select>
 
-      <label htmlFor="Byggeår">Bygge år:</label>
+      <label className="label" htmlFor="Byggeår">Bygge år:</label>
       <select
+       className="select"
         id="Byggeår"
         value={formData.Byggeår}
         onChange={handleChange}
@@ -103,8 +107,9 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
       </select>
 
 
-      <label>Maks mulig ute Temperatur:
+      <label className="label">Maks mulig ute Temperatur:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="MaksT"
@@ -112,8 +117,9 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
         /></label>
 
 
-      <label>Ønsket Intern Temperatur:
+      <label className="label">Ønsket Intern Temperatur:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="ØnsketT"
@@ -121,40 +127,45 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
         /></label>
 
 
-      <label>Arealet BRA [m]:
+      <label className="label">Arealet BRA [m]:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="bra"
           value={formData.bra}
         /></label>
 
-      <label>Tak høyde [m]:
+      <label className="label">Tak høyde [m]:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="takhøyde"
           value={formData.takhøyde}
         /></label>
 
-      <label>Tak mot loft [m]:
+      <label className="label">Tak mot loft [m]:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="takmotloft"
           value={formData.takmotloft}
         /></label>
 
-      <label>Loft Temperatur [C]:
+      <label className="label">Loft Temperatur [C]:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="taktemp"
           value={formData.taktemp}
         /></label>
 
-      <label>Gulv mot  fri luft [C]:
+      <label className="label">Gulv mot  fri luft [C]:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="gulvmotluft"
@@ -162,16 +173,18 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
         /></label>
 
 
-      <label>Vegg mot nabo [m]:
+      <label className="label">Vegg mot nabo [m]:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="veggmotnabo"
           value={formData.veggmotnabo}
         /></label>
 
-      <label>Gjennvinner Virknningsgrad [%]:
+      <label className="label">Gjennvinner Virknningsgrad [%]:
         <input
+        className="input"
           type="number"
           onChange={handleChange}
           name="gjennvinn"
@@ -179,7 +192,7 @@ let effekt=[luft_effekt.infiltrasjon,luft_effekt.ventilasjon,trans_effekt.vegg,t
         /></label>
 
     </form>
-    <button className="handlingsKnapp" onClick={() => props.last_data(effekt)}>Oppdater oversikt</button>
+    <button className="handlingsKnapp" onClick={() => props.last_data(effekt)}>Lagre date</button>
 </div>
   )
 }

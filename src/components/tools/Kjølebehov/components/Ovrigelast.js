@@ -32,9 +32,9 @@ export default function Ovrigelast(props) {
     useEffect(() => {
         setLastsTable(lasts.map((item) => (
             <tr>
-                <td>{item.navn}</td>
-                <td>{item.effekt}</td>
-                <td><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
+                <td className="tbel">{item.navn}</td>
+                <td className="tbel">{item.effekt}</td>
+                <td className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
             </tr>
         )))
     }, [lasts])
@@ -46,16 +46,18 @@ export default function Ovrigelast(props) {
         <div>
 
             <form className="formInnData">
-            <label>Last Navn:
+            <label className="label">Last Navn:
                 <input
+                    className="input"
                     type="text"
                     onChange={handleChange}
                     name="navn"
                     value={last.navn}
                 /></label>
 
-            <label>Effekt [W]:
+            <label className="label">Effekt [W]:
                 <input
+                    className="input"
                     type="number"
                     onChange={handleChange}
                     name="effekt"
@@ -67,9 +69,9 @@ export default function Ovrigelast(props) {
             <div className="table">
             <table >
                 <tr>
-                    <th>Last Navn</th>
-                    <th>Effekt [W]</th>
-                    <th>Fjern</th>
+                    <th className="tbel">Last Navn</th>
+                    <th className="tbel">Effekt [W]</th>
+                    <th className="tbel">Fjern</th>
                 </tr>
                 {lastsTable}
             </table>
@@ -78,7 +80,7 @@ export default function Ovrigelast(props) {
 
 
             
-            <button className="handlingsKnapp" onClick={() => props.ovrige_data(ovrige_Effekt)}>Oppdater lista</button>
+            <button className="handlingsKnapp" onClick={() => props.ovrige_data(ovrige_Effekt)}>Ferdigstill beregning</button>
 
 
         </div>

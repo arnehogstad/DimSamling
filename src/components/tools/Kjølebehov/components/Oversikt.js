@@ -8,7 +8,7 @@ export default function Oversikt(props) {
        <td className="tbel">{item}</td>
     ))
 let total= props.ovrige[0]+props.vindus[0]+props.lasts.reduce((a, b) => a + parseInt(b), 0)
-   
+
 return (
         <div className="oversikt">
 
@@ -44,7 +44,8 @@ return (
             
             <h2>Total last er: {total} W </h2>
 
-            <button onClick={()=>print(props.vindus)}>Print to PDF</button>
+
+            <button onClick={()=>print( total,props.ovrige[0])}>Print to PDF</button>
 
         </div>
     )

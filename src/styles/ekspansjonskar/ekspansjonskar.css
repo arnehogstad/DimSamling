@@ -9,6 +9,7 @@
   margin-left: calc(50% - 300px);
   margin-bottom: 5px;
   height: 30px;
+  
 }
 .ekspansjonskar-inndataTittel{
   padding: 5px;
@@ -20,6 +21,7 @@
   text-align: right;
   font-weight: bold;
   margin-right: 5px;
+  
 
 }
 .ekspansjonskar-inndataVerdi{
@@ -27,6 +29,7 @@
   background-color: white;
   border: 1px solid #c7c7c7;
   width: 150px;
+  
 }
 
 .ekspansjonskar-input,.ekspansjonskar-select{
@@ -36,6 +39,7 @@
   outline-width: 0;
   text-align: center;
   padding-right: 15px;
+  
 }
 
 .inndata-disabled{

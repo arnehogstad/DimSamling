@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-
+import React from "react"
+import print from "./print"
 
 
 export default function Oversikt(props) {
@@ -43,6 +43,8 @@ return (
             <h3>Øvriger last er {props.ovrige} W</h3>
             
             <h2>Total last er: {total} W </h2>
+
+            <button onClick={()=>print(props.vindus)}>Print to PDF</button>
 
         </div>
     )

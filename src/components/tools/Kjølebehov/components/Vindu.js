@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { vindu_rettning, Avsjkermings } from "./data"
 
 
-export default function InnData(props) {
+export default function Vindu(props) {
     const [vinduData, setVinduData] = React.useState(
         {
             vinduArealet: 1,
@@ -137,13 +137,15 @@ export default function InnData(props) {
 
             <div className="table">
                 <table>
-                    <tr>
+                    <thead>
+                        <tr>
                         <th className="tbel">Vindu Arealet [m2]</th>
                         <th className="tbel">Avskjerming</th>
                         <th className="tbel">Vindu Rettning</th>
                         <th className="tbel">Last [W]</th>
-                    </tr>
-                    {vinduTable}
+                        </tr>
+                        </thead>
+                        <tbody>{vinduTable}</tbody>
                 </table>
             </div>
 

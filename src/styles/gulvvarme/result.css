@@ -33,6 +33,8 @@
 .result-header-actionbutton{
   width: 15%;
   min-width: 260px;
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .result-header-actionbutton h4 {

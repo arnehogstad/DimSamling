@@ -471,7 +471,6 @@ function ResultForUnit(props){
     <div>
       <ResultHeader
         unit = {props.unit}
-        netCost = "1 234,50"
         showProducts = {showProducts}
         toggleShowProducts = {() => setShowProducts(!showProducts)}
       />
@@ -489,9 +488,6 @@ function ResultForUnit(props){
           </div>
           <div className="result-article-line-headline text-center">
             Benevning
-          </div>
-          <div className="result-article-line-headline text-center">
-            Nettopris
           </div>
         </div>
         {lineElements}
@@ -522,11 +518,8 @@ function ResultHeader(props){
           </p>
         </div>
         <div className="result-header-actionbutton">
-          <h4>
-            Nettopris: kr {props.netCost}
-          </h4>
           <button className="add-to-basket-button">
-            <span>Legg til i handlekurven</span>
+            <span>Last ned handleliste</span>
           </button>
         </div>
       </div>
@@ -561,9 +554,6 @@ function ResultArticleLines(props){
       </div>
       <div className="result-article-line-datapoint text-center">
         {props.article.artdim}
-      </div>
-      <div className="result-article-line-datapoint text-center">
-        kr. 99,-
       </div>
     </div>
   )

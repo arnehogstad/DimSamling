@@ -79,8 +79,7 @@ export default function Ovrigelast(props) {
             <p>Total øvrige last: {ovrige_Effekt} W</p>
 
 
-            
-            <button className="handlingsKnapp" onClick={() => props.ovrige_data(ovrige_Effekt)}>Ferdigstill beregning</button>
+             <button className="handlingsKnapp" onClick={() => props.ovrige_data(ovrige_Effekt)}>Ferdigstill beregning</button>
 
 
         </div>

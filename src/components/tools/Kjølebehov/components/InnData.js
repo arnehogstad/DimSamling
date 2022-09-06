@@ -65,8 +65,7 @@ export default function InnData(props) {
   return (
     <div className="formInnData">
 
-      <form >
-
+      <form>
         <label className="label">Prosjekt Navn:
           <input
             className="input"
@@ -97,17 +96,6 @@ export default function InnData(props) {
             <option value={item}>{item}</option>
           ))}
         </select>
-
-<<<<<<< HEAD
-            <label htmlFor="Byggeår">Bygge år:</label>
-            <select
-                id="Byggeår"
-                value={formData.Byggeår}
-                onChange={handleChange}
-                name="Byggeår"
-            >
-            {Byggeårs.map((item) => (
-=======
         <label className="label" htmlFor="Byggeår">Bygge år:</label>
         <select
           className="select"
@@ -117,22 +105,9 @@ export default function InnData(props) {
           name="Byggeår"
         >
           {Byggeårs.map((item) => (
->>>>>>> ehsanUtvikling
             <option value={item}>{item}</option>
           ))}
         </select>
-
-
-<<<<<<< HEAD
-            <label>Maks mulig ute Temperatur:
-            <input
-                type="number"
-                onChange={handleChange}
-                name="MaksT"
-                value={formData.MaksT}
-            /></label>
-
-=======
         <label className="label">Maks mulig ute Temperatur:
           <input
             className="input"
@@ -141,9 +116,6 @@ export default function InnData(props) {
             name="MaksT"
             value={formData.MaksT}
           /></label>
->>>>>>> ehsanUtvikling
-
-
         <label className="label">Ønsket Intern Temperatur:
           <input
             className="input"

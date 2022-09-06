@@ -13,7 +13,7 @@ export default function Banner(props){
   return(
     <div className="banner"
       style={{
-        backgroundImage: `url(${tempPic})`,
+        backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(${tempPic})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat'

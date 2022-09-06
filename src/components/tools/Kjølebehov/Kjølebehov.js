@@ -1,4 +1,5 @@
 import { React, useState } from 'react'
+import Banner from '../../../components/static/Banner'
 import { useSelector } from 'react-redux'
 import InnData from './components/InnData'
 import Vindu from "./components/Vindu"
@@ -23,9 +24,10 @@ export default function Kjølebehov(props) {
   const [ovriges, setOvriges] = useState([]);
   const ovrige_data = (ovrige) => { setOvriges(ovrige) }
 
-  
+
   return (
-    <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+    <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+      <Banner title={props.toolName} />
       <div className="toolInfo">
 
         {lasts.length === 0 ? <InnData last_data={last_data} /> : null}
@@ -34,8 +36,8 @@ export default function Kjølebehov(props) {
 
 
         {ovriges.length !== 0 ? <Oversikt lasts={lasts} ovrige={ovriges} vindus={vindus} /> : null}
-        
-        
+
+
       </div>
     </div>
   )

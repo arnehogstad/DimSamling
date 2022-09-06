@@ -5,6 +5,7 @@ export default function InndataTappevann(props){
   //inndatafelter
   const inndataFelter = [
     "Nettvannstrykk [bar]",
+    "Ladetrykk [bar]",
     "Blåsetrykk sikkerhetsventil [bar]",
     "Totalt vannvolum [l]",
     "Settpunkt tappevann [°C]",
@@ -24,9 +25,9 @@ export default function InndataTappevann(props){
         <div className="ekspansjonskar-inndataVerdi">
           <select
             className="ekspansjonskar-select"
-            name="ladetrykk"
+            name="nettvann"
             onChange={props.updateData}
-            value={props.data.ladetrykk}
+            value={props.data.nettvann}
             >
             {trykkListe}
           </select>
@@ -35,6 +36,20 @@ export default function InndataTappevann(props){
       <div className="ekspansjonskar-inndatalinje">
         <div className="ekspansjonskar-inndataTittel">
           {inndataFelter[1]}
+        </div>
+        <div className="ekspansjonskar-inndataVerdi inndata-disabled">
+          <input
+            className="ekspansjonskar-input inndata-disabled"
+            name="nettvann"
+            value={props.data.ladetrykk}
+            disabled
+            >
+          </input>
+        </div>
+      </div>
+      <div className="ekspansjonskar-inndatalinje">
+        <div className="ekspansjonskar-inndataTittel">
+          {inndataFelter[2]}
         </div>
         <div className="ekspansjonskar-inndataVerdi">
           <select
@@ -49,7 +64,7 @@ export default function InndataTappevann(props){
       </div>
       <div className="ekspansjonskar-inndatalinje">
         <div className="ekspansjonskar-inndataTittel">
-          {inndataFelter[2]}
+          {inndataFelter[3]}
         </div>
         <div className="ekspansjonskar-inndataVerdi">
           <input
@@ -64,21 +79,6 @@ export default function InndataTappevann(props){
       </div>
       <div className="ekspansjonskar-inndatalinje">
         <div className="ekspansjonskar-inndataTittel">
-          {inndataFelter[3]}
-        </div>
-        <div className="ekspansjonskar-inndataVerdi">
-          <input
-            type="number"
-            min="0"
-            className="ekspansjonskar-input"
-            name="turtemp"
-            value={props.data.turtemp}
-            onChange={props.updateData}
-          />
-        </div>
-      </div>
-      <div className="ekspansjonskar-inndatalinje">
-        <div className="ekspansjonskar-inndataTittel">
           {inndataFelter[4]}
         </div>
         <div className="ekspansjonskar-inndataVerdi">
@@ -86,25 +86,10 @@ export default function InndataTappevann(props){
             type="number"
             min="0"
             className="ekspansjonskar-input"
-            name="returtemp"
-            value={props.data.returtemp}
+            name="temperatur"
+            value={props.data.temperatur}
             onChange={props.updateData}
           />
-        </div>
-      </div>
-      <div className="ekspansjonskar-inndatalinje">
-        <div className="ekspansjonskar-inndataTittel">
-          {inndataFelter[5]}
-        </div>
-        <div className="ekspansjonskar-inndataVerdi">
-          <select
-            name="fluid"
-            className="ekspansjonskar-select"
-            value={props.data.fluid}
-            onChange={props.updateData}
-            >
-            {props.fluidListe}
-          </select>
         </div>
       </div>
     </div>

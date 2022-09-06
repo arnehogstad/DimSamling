@@ -65,8 +65,7 @@ export default function InnData(props) {
   return (
     <div className="formInnData">
 
-      <form >
-
+      <form>
         <label className="label">Prosjekt Navn:
           <input
             className="input"
@@ -97,7 +96,6 @@ export default function InnData(props) {
             <option value={item}>{item}</option>
           ))}
         </select>
-
         <label className="label" htmlFor="Byggeår">Bygge år:</label>
         <select
           className="select"
@@ -110,8 +108,6 @@ export default function InnData(props) {
             <option value={item}>{item}</option>
           ))}
         </select>
-
-
         <label className="label">Maks mulig ute Temperatur:
           <input
             className="input"
@@ -120,8 +116,6 @@ export default function InnData(props) {
             name="MaksT"
             value={formData.MaksT}
           /></label>
-
-
         <label className="label">Ønsket Intern Temperatur:
           <input
             className="input"

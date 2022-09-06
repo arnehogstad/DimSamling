@@ -84,6 +84,7 @@ main {
   padding: 0;
   margin-bottom: 20px;
   width: calc((98% - 50px) / 6);
+  min-width: 120px;
   align-self: center;
   border: 1px solid #e7e7e7;
 

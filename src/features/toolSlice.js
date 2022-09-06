@@ -6,16 +6,13 @@ export const toolSlice = createSlice({
     visibleId: 'all'
   },
   reducers: {
-    showAll: (state) => {
-      state.visibleId = 'all'
-    },
-    showOne: (state,action) => {
+    show: (state,action) => {
       state.visibleId = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { showAll, showOne } = toolSlice.actions
+export const { show } = toolSlice.actions
 
 export default toolSlice.reducer

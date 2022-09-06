@@ -4,9 +4,9 @@ export default function InndataVarme(props){
 
   //inndatafelter
   const inndataFelter = [
-    "Ladetrykk [bar]",
+    "Statisk trykk [bar]",
     "Blåsetrykk sikkerhetsventil [bar]",
-    "Totalt vannvolum [l]",
+    "Totalt systemvolum [l]",
     "Turledningstemperatur [°C]",
     "Returledningstemperatur [°C]",
     "Type væske"

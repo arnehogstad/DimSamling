@@ -101,6 +101,8 @@ export default function Result(props){
         var tempSkapDb = skapDb.påVegg
       }else if(tempUnit.fordelerskap === "I vegg"){
         var tempSkapDb = skapDb.iVegg
+      }else if(tempUnit.fordelerskap === "I vegg inkl fordeler"){
+        var tempSkapDb = skapDb.iVeggMedFordeler
       }else{
         var tempSkapDb = false
       }
@@ -266,9 +268,10 @@ export default function Result(props){
         edgeCaseCountArr[i].nstokk : 1,
         artdim: "stk"
       }
-
-      //returns the stokk
-      returArr.push(tempStokk)
+      if(skapDb.Name !== "iVeggMedFordeler"){
+        //returns the stokk
+        returArr.push(tempStokk)
+      }
       //getting fordelerskap
       if (skapDb !== false){
         let tempSkap = {

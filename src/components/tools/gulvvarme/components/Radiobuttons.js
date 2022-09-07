@@ -60,6 +60,17 @@ export default function Radiobuttons(props){
 
         <input
              type="radio"
+             id={`I vegg inkl fordeler ${props.unitId}`}
+             name={`fordelerskap${props.unitId}`}
+             value="I vegg inkl fordeler"
+             checked={props.unit.fordelerskap === "I vegg inkl fordeler"}
+             onChange={(event) => props.radioButtonClick(event, props.unitId)}
+         />
+        <label htmlFor={`I vegg inkl fordeler${props.unitId}`}>I vegg inkl fordeler (vanntett)</label>
+        <br />
+
+        <input
+             type="radio"
              id={`Uten skap ${props.unitId}`}
              name={`fordelerskap${props.unitId}`}
              value="Uten skap"

@@ -44,7 +44,7 @@ export default function Ovrigelast(props) {
     let lastPrint = lasts.map((item) => (Object.values(item)))
 
     /// add the effekt to the total effekt 
-    //let ovrige_Effekt =  [ lasts.reduce((a, b) => a + parseInt(b.effekt), 0) ]
+    let ovrige_Effekt =  [ lasts.reduce((a, b) => a + parseInt(b.effekt), 0) ]
     return (
         <div>
 

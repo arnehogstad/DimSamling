@@ -60,6 +60,7 @@ td{
 
 .button-col-img{
   width: 20px;
+  vertical-align: middle;
 }
 
 .tableDiv-tabell input, .tableDiv-tabell select{

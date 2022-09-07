@@ -1041,11 +1041,11 @@ export default {
 				2220160
 			],
 			"benevning": [
-				"",
-				"",
+				"m",
 				"stk",
-				"",
-				""
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1105,11 +1105,11 @@ export default {
 				2220160
 			],
 			"benevning": [
-				"",
-				"",
+				"m",
 				"stk",
-				"",
-				""
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1167,10 +1167,10 @@ export default {
 				2220365
 			],
 			"benevning": [
-				"",
-				"",
-				"",
-				""
+				"m",
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1216,11 +1216,11 @@ export default {
 				2220365
 			],
 			"benevning": [
-				"",
-				"",
-				"",
-				"",
-				""
+				"m",
+				"stk",
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1268,11 +1268,11 @@ export default {
 				2220365
 			],
 			"benevning": [
-				"",
-				"",
-				"",
-				"",
-				""
+				"m",
+				"stk",
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1322,12 +1322,12 @@ export default {
 				2220365
 			],
 			"benevning": [
-				"",
-				"",
-				"",
-				"",
-				"",
-				""
+				"m",
+				"stk",
+				"stk",
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1377,11 +1377,11 @@ export default {
 				2220365
 			],
 			"benevning": [
-				"",
-				"",
-				"",
-				"",
-				""
+				"m",
+				"stk",
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1431,12 +1431,12 @@ export default {
 				2220365
 			],
 			"benevning": [
-				"",
-				"",
-				"",
-				"",
-				"",
-				""
+				"m",
+				"stk",
+				"stk",
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",
@@ -1486,11 +1486,11 @@ export default {
 				2220365
 			],
 			"benevning": [
-				"",
-				"",
-				"",
-				"",
-				""
+				"m",
+				"stk",
+				"stk",
+				"stk",
+				"stk"
 			],
 			"beregningsmetode": [
 				"pr kvm",

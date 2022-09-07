@@ -1,11 +1,12 @@
 import React, { useEffect } from "react"
-
+import { nanoid } from "@reduxjs/toolkit"
 
 
 export default function Ovrigelast(props) {
     const [last, setLast] = React.useState({
         navn: "Øvrigelast",
-        effekt: 0
+        effekt: 0,
+        
     })
     const [lasts, setLasts] = React.useState([])
     const [lastsTable, setLastsTable] = React.useState([])
@@ -39,9 +40,11 @@ export default function Ovrigelast(props) {
         )))
     }, [lasts])
 
+  console.log(Object.values(lasts))
+    let lastPrint = lasts.map((item) => (Object.values(item)))
 
     /// add the effekt to the total effekt 
-    let ovrige_Effekt =  [ lasts.reduce((a, b) => a + parseInt(b.effekt), 0) ]
+    //let ovrige_Effekt =  [ lasts.reduce((a, b) => a + parseInt(b.effekt), 0) ]
     return (
         <div>
 
@@ -66,6 +69,9 @@ export default function Ovrigelast(props) {
             
            </form>
            <button className="handlingsKnapp" onClick={saveData}>Lagre last</button>
+           
+           {lasts.length !== 0 ? (
+            <>
             <div className="table">
             <table >
                 <tr>
@@ -77,9 +83,10 @@ export default function Ovrigelast(props) {
             </table>
             </div>
             <p>Total øvrige last: {ovrige_Effekt} W</p>
+            </>
+           ) : null}
 
-
-             <button className="handlingsKnapp" onClick={() => props.ovrige_data(ovrige_Effekt)}>Ferdigstill beregning</button>
+             <button className="handlingsKnapp" onClick={() => props.ovrige_data(lastPrint)}>Ferdigstill beregning</button>
 
 
         </div>

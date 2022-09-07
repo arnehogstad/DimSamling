@@ -1,5 +1,6 @@
 import React, { useEffect } from "react"
 import { vindu_rettning, Avsjkermings } from "./data"
+import * as beregn from "./beregn"
 
 
 export default function Vindu(props) {
@@ -8,7 +9,8 @@ export default function Vindu(props) {
             vinduArealet: 1,
             avskjerming: "Uten Avskjerming",
             vinduRettning: "Sør",
-            effekt: 268
+            strål: 268,
+            trans: 100
         }
     )
 
@@ -36,12 +38,19 @@ export default function Vindu(props) {
 
     //Writes the effect to the vinduData  //32 should be changed to get data from Inndata
     function solEffect(vinduRettning, avskjerming, vinduArealet) {
+        
+        setVinduData(prev => {
+            return {
+                ...prev,
+                trans: beregn.Vindu_trans(props.innDatas.Byggeår,vinduArealet,props.innDatas.MaksT,props.innDatas.ØnsketT),
+            }
+        })
 
         if (vinduRettning === "Sør") {
             setVinduData(prev => {
                 return {
                     ...prev,
-                    effekt: Math.round((44 + 7 * 32) * vinduArealet * avskjerming)
+                    strål: Math.round((44 + 7 * 32) * vinduArealet * avskjerming)
                 }
             })
             //
@@ -49,14 +58,14 @@ export default function Vindu(props) {
             setVinduData(prev => {
                 return {
                     ...prev,
-                    effekt: Math.round((11) * vinduArealet * avskjerming * 32)
+                    strål: Math.round((11) * vinduArealet * avskjerming * 32)
                 }
             })
         } else if (vinduRettning === "Nord") {
             setVinduData(prev => {
                 return {
                     ...prev,
-                    effekt: Math.round((6) * vinduArealet * avskjerming * 32)
+                    strål: Math.round((6) * vinduArealet * avskjerming * 32)
                 }
             })
         }
@@ -66,7 +75,7 @@ export default function Vindu(props) {
     //logs the data from vinduData(the current page) to a matrix of all windows
     function saveVindu() { setVindus(prev => [...prev, { vinduData }]) }
 
-    //calls on the soleffect function to add the effekt the effekt (last) to the vinduData after the data is taken in
+    //calls on the soleffect function to add the strål the strål (last) to the vinduData after the data is taken in
     useEffect(() => {
         solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)
 
@@ -79,14 +88,15 @@ export default function Vindu(props) {
                 <td className="tbel">{item.vinduData.vinduArealet}</td>
                 <td className="tbel">{item.vinduData.avskjerming}</td>
                 <td className="tbel">{item.vinduData.vinduRettning}</td>
-                <td className="tbel">{item.vinduData.effekt}</td>
+                <td className="tbel">{item.vinduData.trans}</td>
+                <td className="tbel">{item.vinduData.strål}</td>
                 <td className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
             </tr>
         )))
     }, [vindus])
 
-    let total_effekt = [vindus.reduce((a, b) => a + parseInt(b.vinduData.effekt), 0)]
-    console.log(vindus)
+    let total_strål = [vindus.reduce((a, b) => a + parseInt(b.vinduData.strål), 0)]
+
     return (
         <div>
 
@@ -134,22 +144,24 @@ export default function Vindu(props) {
 
 
 
-
-            <div className="table">
-                <table>
-                    <thead>
-                        <tr>
-                        <th className="tbel">Vindu Arealet [m2]</th>
-                        <th className="tbel">Avskjerming</th>
-                        <th className="tbel">Vindu Rettning</th>
-                        <th className="tbel">Last [W]</th>
-                        </tr>
+            {vindus.length !== 0 ? (
+                <div className="table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="tbel">Vindu Arealet [m2]</th>
+                                <th className="tbel">Avskjerming</th>
+                                <th className="tbel">Vindu Rettning</th>
+                                <th className="tbel">Transmission last [W]</th>
+                                <th className="tbel">Sol Strål [W]</th>
+                            </tr>
                         </thead>
                         <tbody>{vinduTable}</tbody>
-                </table>
-            </div>
+                    </table>
+                </div>
+            ) : null}
 
-            <button className="handlingsKnapp" onClick={() => props.vindu_data(total_effekt)}>Lagre Data og gå videre</button>
+            <button className="handlingsKnapp" onClick={() => props.vindu_data(total_strål)}>Neste Steg</button>
         </div>
     )
 }

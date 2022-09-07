@@ -30,7 +30,7 @@ export default function Result(props){
         unitArea = parseFloat(unitArea + 1*tempRoom.area)
         unitZones = parseFloat(unitZones + 1)
         unitCircuits = parseFloat(unitCircuits + 1*tempRoom.circuits)
-        unitCircuitArray.push([tempRoom.circuits,tempRoom.floor])
+        unitCircuitArray.push([tempRoom.circuits,tempRoom.floor.replace(' - betong').replace(' - bjelkelag')])
         unitWetRooms = parseFloat(unitWetRooms + 1*tempRoom.wetroom)
         //gets temp pipe package for room
         let tempItems = props.dataBase.gulvvarmePakker[tempRoom.pipetype]

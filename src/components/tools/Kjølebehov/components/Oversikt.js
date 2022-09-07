@@ -1,5 +1,5 @@
 import React from "react"
-import print from "./print"
+
 
 
 export default function Oversikt(props) {
@@ -45,8 +45,7 @@ return (
             <h2>Total last er: {total} W </h2>
 
 
-            <button onClick={()=>print( total,props.ovrige[0])}>Print to PDF</button>
-
+            
         </div>
     )
 }

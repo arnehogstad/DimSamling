@@ -53,6 +53,8 @@ export default function Modal(props){
           <DeleteUnitModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
+            units={props.units}
+            currentUnitId = {props.currentUnitId}
             findCurrentUnit = {props.findCurrentUnit}
             deleteUnit={props.deleteUnit}
             toggleVisibility = {toggleVisibility}
@@ -71,16 +73,24 @@ export default function Modal(props){
 
 
 function DeleteUnitModal(props){
-  const [newNameUnit,setNewNameUnit] = React.useState({
-    name: props.findCurrentUnit().unitName,
-    unitid: props.currentUnitId
+  const [unitToDel,setunitToDel] = React.useState({
+    name: props.units.length > 0 ? props.findCurrentUnit().unitName : "",
+    unitId: props.units.length > 0 ? props.findCurrentUnit().unitId : "",
   })
 
   function delUnit(){
     //props.setProjectName(newProjectName.newname)
     props.setShowModal({show:false,modalName:""})
-
+    props.deleteUnit(unitToDel.unitId)
   }
+
+  //Listener on changes in selected unit, changes unitToDel
+  React.useEffect(()=>{
+    setunitToDel(
+        {name: props.units.length > 0 ? props.findCurrentUnit().unitName : "",
+        unitId: props.units.length > 0 ? props.findCurrentUnit().unitId : ""}
+    )
+  },[props.currentUnitId])
 
   return (
     <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
@@ -104,7 +114,7 @@ function DeleteUnitModal(props){
                 name="name"
                 type="search"
                 autoComplete="off"
-                value={newNameUnit.name}
+                value={unitToDel.name}
                 disabled= {true}
               />
             </div>
@@ -129,7 +139,6 @@ function RenameUnitModal(props){
   const [newNameUnit,setNewNameUnit] = React.useState({
     oldname: props.findCurrentUnit().unitName,
     newname:"",
-    unitid: props.currentUnitId
   })
 
   function updateUnitName(){

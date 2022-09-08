@@ -124,8 +124,8 @@ export default function Gulvvarme(props){
   }
 
   //function deleting unit
-  function deleteUnit(event, unitId){
-    event.stopPropagation()
+  function deleteUnit(unitId){
+
     setUnits(oldUnits => oldUnits.filter(unit => unit.unitId!== unitId))
   }
 
@@ -270,6 +270,7 @@ export default function Gulvvarme(props){
             changeNameUnit={changeNameUnit}
             findCurrentUnit={findCurrentUnit}
             setCurrentUnitId={setCurrentUnitId}
+            currentUnitId = {currentUnitId}
             copyUnit={copyUnit}
             deleteUnit={deleteUnit}
           />

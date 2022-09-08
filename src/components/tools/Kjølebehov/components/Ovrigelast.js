@@ -19,7 +19,7 @@ export default function Ovrigelast(props) {
                 [name]: value,
             }
         })
-        // setLast(current => [...current, {[name]: value}])
+        
     }
 
     function saveData() {
@@ -40,11 +40,10 @@ export default function Ovrigelast(props) {
         )))
     }, [lasts])
 
-  console.log(Object.values(lasts))
+
     let lastPrint = lasts.map((item) => (Object.values(item)))
 
-    /// add the effekt to the total effekt 
-    let ovrige_Effekt =  [ lasts.reduce((a, b) => a + parseInt(b.effekt), 0) ]
+
     return (
         <div>
 
@@ -82,7 +81,7 @@ export default function Ovrigelast(props) {
                 {lastsTable}
             </table>
             </div>
-            <p>Total øvrige last: {ovrige_Effekt} W</p>
+            
             </>
            ) : null}
 

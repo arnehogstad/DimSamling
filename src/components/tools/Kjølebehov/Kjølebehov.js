@@ -20,15 +20,24 @@ export default function Kjølebehov(props) {
   //To move data up a compnonet from a child component for the data in Vindus.js
   const [vindus, setVindus] = useState([]);
   const vindu_data = (vindu) => { setVindus(vindu) }
+// To calculate the total effect of the windows 
+let vindu_effekt = vindus.reduce((a, b) => a + parseInt(b[3])+ parseInt(b[4]), 0)
+
+
+
 
   //To move data up a compnonet from a child component for the data in Øvrigelast.js
   const [ovriges, setOvriges] = useState([]);
   const ovrige_data = (ovrige) => { setOvriges(ovrige) }
+  //calculate the total of ovriges
+  let ovrige_Effekt = ovriges.reduce((a, b) => a + parseInt(b[1]), 0)
+  
 
   const [innDatas, setInnDatas] = useState([]);
   const innDatas_data = (data) => { setInnDatas(data) }
 
-
+//calculate the total of the last
+let total= ovrige_Effekt+vindu_effekt+lasts.reduce((a, b) => a + parseInt(b), 0)
 
   return (
     <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
@@ -42,8 +51,8 @@ export default function Kjølebehov(props) {
 
         {ovriges.length !== 0 ? (
           <div className='oversikt'>
-            <Oversikt lasts={lasts} ovrige={ovriges} vindus={vindus} />
-            <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas)}>Print to PDF</button>
+            <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} />
+            <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print to PDF</button>
           </div>
         ) : null}
 

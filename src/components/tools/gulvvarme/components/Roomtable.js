@@ -67,7 +67,7 @@ function Row(props){
       value: tempFloor==="1 etasje - betong" || tempFloor==="Kjeller" || tempWet === true ?
       Object.keys(props.gulvvarmePakker)[0] :
       tempFloor!=="" ?
-      Object.keys(props.gulvvarmePakker)[3]:
+      Object.keys(props.gulvvarmePakker)[14]:
       ""
     }
     if (tempFloor !== manualEvent.value){

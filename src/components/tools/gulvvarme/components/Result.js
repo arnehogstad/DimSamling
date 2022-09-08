@@ -30,7 +30,7 @@ export default function Result(props){
         unitArea = parseFloat(unitArea + 1*tempRoom.area)
         unitZones = parseFloat(unitZones + 1)
         unitCircuits = parseFloat(unitCircuits + 1*tempRoom.circuits)
-        unitCircuitArray.push([tempRoom.circuits,tempRoom.floor])
+        unitCircuitArray.push([tempRoom.circuits,tempRoom.floor.replace(' - betong').replace(' - bjelkelag')])
         unitWetRooms = parseFloat(unitWetRooms + 1*tempRoom.wetroom)
         //gets temp pipe package for room
         let tempItems = props.dataBase.gulvvarmePakker[tempRoom.pipetype]
@@ -101,6 +101,8 @@ export default function Result(props){
         var tempSkapDb = skapDb.påVegg
       }else if(tempUnit.fordelerskap === "I vegg"){
         var tempSkapDb = skapDb.iVegg
+      }else if(tempUnit.fordelerskap === "I vegg inkl fordeler"){
+        var tempSkapDb = skapDb.iVeggMedFordeler
       }else{
         var tempSkapDb = false
       }
@@ -266,9 +268,10 @@ export default function Result(props){
         edgeCaseCountArr[i].nstokk : 1,
         artdim: "stk"
       }
-
-      //returns the stokk
-      returArr.push(tempStokk)
+      if(skapDb.Name !== "iVeggMedFordeler"){
+        //returns the stokk
+        returArr.push(tempStokk)
+      }
       //getting fordelerskap
       if (skapDb !== false){
         let tempSkap = {
@@ -471,7 +474,6 @@ function ResultForUnit(props){
     <div>
       <ResultHeader
         unit = {props.unit}
-        netCost = "1 234,50"
         showProducts = {showProducts}
         toggleShowProducts = {() => setShowProducts(!showProducts)}
       />
@@ -489,9 +491,6 @@ function ResultForUnit(props){
           </div>
           <div className="result-article-line-headline text-center">
             Benevning
-          </div>
-          <div className="result-article-line-headline text-center">
-            Nettopris
           </div>
         </div>
         {lineElements}
@@ -522,11 +521,8 @@ function ResultHeader(props){
           </p>
         </div>
         <div className="result-header-actionbutton">
-          <h4>
-            Nettopris: kr {props.netCost}
-          </h4>
           <button className="add-to-basket-button">
-            <span>Legg til i handlekurven</span>
+            <span>Last ned handleliste</span>
           </button>
         </div>
       </div>
@@ -561,9 +557,6 @@ function ResultArticleLines(props){
       </div>
       <div className="result-article-line-datapoint text-center">
         {props.article.artdim}
-      </div>
-      <div className="result-article-line-datapoint text-center">
-        kr. 99,-
       </div>
     </div>
   )

@@ -73,8 +73,11 @@ export default function Vindu(props) {
     }
 
     //logs the data from vinduData(the current page) to a matrix of all windows
-    function saveVindu() { setVindus(prev => [...prev, { vinduData }]) }
-
+    function saveVindu() { setVindus(prev => [...prev,  vinduData ]) }
+   
+   
+   let vindusPrint=vindus.map((item) => (Object.values(item)))
+   
     //calls on the soleffect function to add the strål the strål (last) to the vinduData after the data is taken in
     useEffect(() => {
         solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)
@@ -85,18 +88,18 @@ export default function Vindu(props) {
     useEffect(() => {
         setVinduTable(vindus.map((item) => (
             <tr>
-                <td className="tbel">{item.vinduData.vinduArealet}</td>
-                <td className="tbel">{item.vinduData.avskjerming}</td>
-                <td className="tbel">{item.vinduData.vinduRettning}</td>
-                <td className="tbel">{item.vinduData.trans}</td>
-                <td className="tbel">{item.vinduData.strål}</td>
+                <td className="tbel">{item.vinduArealet}</td>
+                <td className="tbel">{item.avskjerming}</td>
+                <td className="tbel">{item.vinduRettning}</td>
+                <td className="tbel">{item.trans}</td>
+                <td className="tbel">{item.strål}</td>
                 <td className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
             </tr>
         )))
     }, [vindus])
 
-    let total_strål = [vindus.reduce((a, b) => a + parseInt(b.vinduData.strål), 0)]
-
+  
+    
     return (
         <div>
 
@@ -161,7 +164,7 @@ export default function Vindu(props) {
                 </div>
             ) : null}
 
-            <button className="handlingsKnapp" onClick={() => props.vindu_data(total_strål)}>Neste Steg</button>
+            <button className="handlingsKnapp" onClick={() => props.vindu_data(vindusPrint)}>Neste Steg</button>
         </div>
     )
 }

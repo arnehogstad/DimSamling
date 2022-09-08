@@ -7,7 +7,7 @@ export default function Oversikt(props) {
     let lastsTable = props.lasts.map((item) => (
        <td className="tbel">{item}</td>
     ))
-let total= props.ovrige[0]+props.vindus[0]+props.lasts.reduce((a, b) => a + parseInt(b), 0)
+
 
 return (
         <div className="oversikt">
@@ -42,7 +42,7 @@ return (
             <h3>Last fra vinduer er: {props.vindus}</h3>
             <h3>Øvriger last er {props.ovrige} W</h3>
             
-            <h2>Total last er: {total} W </h2>
+            <h2>Total last er: {props.total} W </h2>
 
 
             

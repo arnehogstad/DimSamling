@@ -1,5 +1,7 @@
 import React from 'react'
 import nyLinjePic from '../../../../images/nyLinjeBilde.png'
+import editNamePic from '../../../../images/rediger.png'
+import delUnitPic from '../../../../images/Slett.jpg'
 
 export default function Unitlist(props){
 
@@ -10,12 +12,24 @@ export default function Unitlist(props){
         }`}
           onClick={() => props.setCurrentUnitId(unit.unitId)}
         >
-          <div>{unit.unitName}</div>
+          <div className="unit-list-item-name">{unit.unitName}</div>
+          <button className="delete-btn">
+            <img
+              className="button-col-img"
+              src={editNamePic}
+              alt="Endrer navn på boenhet"
+              onClick={(event) => props.setShowModal({show:true,modalName:"editNameUnit"})}
+              />
+          </button>
           <button
               className="delete-btn"
-              onClick={(event) => props.deleteUnit(event, unit.unitId)}
+              onClick={(event) => props.setShowModal({show:true,modalName:"deleteUnit"})}
           >
-              <i className="gg-trash trash-icon"></i>
+            <img
+              className="button-col-img"
+              src={delUnitPic}
+              alt="Sletter boenhet"
+              />
           </button>
         </div>
       </div>
@@ -25,13 +39,20 @@ export default function Unitlist(props){
     <div className="unitListDiv">
         <div className="unitListDiv-overskrift">
           <div className="unitListDiv-overskrift-tekst">
-            Boenheter {props.projectName}
+            {props.projectName === "" ? "Boenheter" : props.projectName}
           </div>
+          <img
+            className="unitListDiv-overskrift-knapp"
+            style={{opacity: 0.6}}
+            src={editNamePic}
+            alt="Legg til ny boenhet"
+            onClick={(event) => props.setShowModal({show:true,modalName:"editNameProject"})}
+          />
           <img
             className="unitListDiv-overskrift-knapp"
             src={nyLinjePic}
             alt="Legg til ny boenhet"
-            onClick={(event) => props.setShowModal(true)}
+            onClick={(event) => props.setShowModal({show:true,modalName:"newUnit"})}
           />
         </div>
         <div className="unitListDiv-liste">

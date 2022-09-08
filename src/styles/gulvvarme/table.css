@@ -11,7 +11,7 @@ table tr:hover {background-color: #ddd;}
 td{
   border-style: solid;
   border-width: thin;
-  border-color: black;
+  border-color: lightgray;
   padding: 0;
 }
 

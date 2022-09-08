@@ -30,7 +30,10 @@ export default function Gulvvarme(props){
   //state of result
   const [showResult,setShowResult] = React.useState(false)
   //state of modals
-  const [showModal,setShowModal] = React.useState(false)
+  const [showModal,setShowModal] = React.useState({
+    show: false,
+    modalName: ""
+  })
   //name of the project
   const [projectName,setProjectName] = React.useState("")
 
@@ -108,9 +111,21 @@ export default function Gulvvarme(props){
     }) || units[0]
   }
 
+  //function changing name of a unit
+  function changeNameUnit(newName){
+    setUnits(oldUnits => oldUnits.map(unit =>
+      (
+        unit.unitId === currentUnitId ?
+         {...unit,
+         unitName: newName}
+         :
+         {...unit}
+      )))
+  }
+
   //function deleting unit
-  function deleteUnit(event, unitId){
-    event.stopPropagation()
+  function deleteUnit(unitId){
+
     setUnits(oldUnits => oldUnits.filter(unit => unit.unitId!== unitId))
   }
 
@@ -135,10 +150,11 @@ export default function Gulvvarme(props){
   function shiftFloors(unitId,unitRooms,floorShift){
     let tempRooms = unitRooms.map(room => (
       {...room,
-      floor: floorListText.findIndex((floorname) => floorname === room.floor) > 0 && parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) > 0 ?
+      floor: floorListText.findIndex((floorname) => floorname === room.floor) > 0 && parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) > 0  && parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) < floorListText.length ?
         parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) === 2 && 1*floorShift < 0 ?
-        floorListText[1] : parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) === 2 && 1*floorShift > 0 ?
-        floorListText[3] : floorListText[parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift)]
+        floorListText[1] :floorListText.findIndex((floorname) => floorname === room.floor) === 1 && 1*floorShift > 0 ?
+        floorListText[parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1+1*floorShift)] :
+        floorListText[parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift)]
         :
         room.floor
       }
@@ -247,18 +263,21 @@ export default function Gulvvarme(props){
           <Modal
             showModal={showModal}
             setShowModal={setShowModal}
+            projectName={projectName}
             setProjectName={setProjectName}
             units={units}
             addUnit={addUnit}
+            changeNameUnit={changeNameUnit}
+            findCurrentUnit={findCurrentUnit}
             setCurrentUnitId={setCurrentUnitId}
+            currentUnitId = {currentUnitId}
             copyUnit={copyUnit}
+            deleteUnit={deleteUnit}
           />
           { units.length > 0 ?
             <div>
               <Unit
                 units={units}
-                addUnit={addUnit}
-                deleteUnit={deleteUnit}
                 currentUnit={findCurrentUnit()}
                 setCurrentUnitId={setCurrentUnitId}
                 radioButtonClick={radioButtonClick}
@@ -293,7 +312,7 @@ export default function Gulvvarme(props){
                   Ingen aktive boenheter, start et nytt prosjekt eller jobb videre på et eksisterende prosjekt
                 </div>
                 <div className="addUnitPrompt-line">
-                  <button onClick={(event) => setShowModal(true)} className="handlingsKnapp">
+                  <button onClick={(event) => setShowModal({show:true,modalName:"newUnit"})} className="handlingsKnapp">
                     Nytt prosjekt
                   </button>
                   <button onClick={(event) => addUnit()} className="handlingsKnapp">

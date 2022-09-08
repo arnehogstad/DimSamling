@@ -2,7 +2,291 @@ import React from 'react'
 
 export default function Modal(props){
 
-  const styles = {display: props.showModal === true ? "flex" : "none"}
+  const styles = {display: props.showModal.show === true ? "flex" : "none"}
+
+  function toggleVisibility(event){
+    if (event.target.className === "modal" ||
+      event.target.className === "modal-cancel-div" ||
+      event.target.className === "handlingsKnapp avbrytknapp"){
+      props.setShowModal({show:false,modalName:""})
+    }
+  }
+
+  return (
+
+      <>
+        {
+          props.showModal.modalName === "newUnit" ?
+          <AddUnitModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            setProjectName={props.setProjectName}
+            units={props.units}
+            addUnit={props.addUnit}
+            setCurrentUnitId={props.setCurrentUnitId}
+            copyUnit={props.copyUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          props.showModal.modalName === "editNameUnit" ?
+          <RenameUnitModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
+            findCurrentUnit = {props.findCurrentUnit}
+            changeNameUnit ={props.changeNameUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          props.showModal.modalName === "editNameProject" ?
+          <RenameProjectModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            projectName={props.projectName}
+            setProjectName={props.setProjectName}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          <DeleteUnitModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
+            currentUnitId = {props.currentUnitId}
+            findCurrentUnit = {props.findCurrentUnit}
+            deleteUnit={props.deleteUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+        }
+      </>
+
+
+  )
+}
+
+///////////////////////////////////////////////////////////////////////////
+///////             MODAL FOR DELETING UNIT                   ////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+function DeleteUnitModal(props){
+  const [unitToDel,setunitToDel] = React.useState({
+    name: props.units.length > 0 ? props.findCurrentUnit().unitName : "",
+    unitId: props.units.length > 0 ? props.findCurrentUnit().unitId : "",
+  })
+
+  function delUnit(){
+    //props.setProjectName(newProjectName.newname)
+    props.setShowModal({show:false,modalName:""})
+    props.deleteUnit(unitToDel.unitId)
+  }
+
+  //Listener on changes in selected unit, changes unitToDel
+  React.useEffect(()=>{
+    setunitToDel(
+        {name: props.units.length > 0 ? props.findCurrentUnit().unitName : "",
+        unitId: props.units.length > 0 ? props.findCurrentUnit().unitId : ""}
+    )
+  },[props.currentUnitId])
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Slett boenhet</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div>
+            Dette vil slette boenheten permanent.
+            Er du sikker på at du vil slette følgende boenhet?
+            <p></p>
+          </div>
+          <div className="modal-input-line">
+            <div className="modal-input-title">
+                Navn på boenhet
+            </div>
+            <div className="modal-input-value">
+              <input
+                name="name"
+                type="search"
+                autoComplete="off"
+                value={unitToDel.name}
+                disabled= {true}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <button onClick={delUnit} className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+
+
+}
+
+///////////////////////////////////////////////////////////////////////////
+///////             MODAL FOR CHANGING UNIT  NAME            ////////////
+//////////////////////////////////////////////////////////////////////////
+
+function RenameUnitModal(props){
+  const [newNameUnit,setNewNameUnit] = React.useState({
+    oldname: props.findCurrentUnit().unitName,
+    newname:"",
+  })
+
+  function updateUnitName(){
+    //props.setProjectName(newProjectName.newname)
+    props.setShowModal({show:false,modalName:""})
+    props.changeNameUnit(newNameUnit.newname)
+  }
+
+  function changeName(event){
+    const {name, value} = event.target
+    setNewNameUnit(oldVals =>
+      (
+         {...oldVals,
+         [name]: value
+       }
+     ))
+  }
+
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Endre navn på boenhet</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div className="modal-input-line">
+            <div className="modal-input-title">
+                Navn på boenhet
+            </div>
+            <div className="modal-input-value">
+              <input
+                name="oldname"
+                type="search"
+                autoComplete="off"
+                value={newNameUnit.oldname}
+                disabled= {true}
+              />
+            </div>
+          </div>
+          <div className="modal-input-line">
+            <div className="modal-input-title">
+                Nytt navn på boenhet
+            </div>
+            <div className="modal-input-value">
+              <input
+                name="newname"
+                type="search"
+                autoComplete="off"
+                autoFocus = {true}
+                value={newNameUnit.newname}
+                onChange={(event)=>changeName(event)}
+
+              />
+            </div>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <button onClick={updateUnitName} className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+///////             MODAL FOR CHANGING PROJECT NAME            ////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+function RenameProjectModal(props){
+  const [newProjectName,setNewProjectName] = React.useState({
+    oldname: props.projectName,
+    newname:""
+  })
+
+  function updateProject(){
+    props.setProjectName(newProjectName.newname)
+    props.setShowModal({show:false,modalName:""})
+  }
+
+  function changeName(event){
+    const {name, value} = event.target
+    setNewProjectName(oldVals =>
+      (
+         {...oldVals,
+         [name]: value
+       }
+     ))
+  }
+
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Endre prosjektnavn</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div className="modal-input-line">
+            <div className="modal-input-title">
+                Prosjektnavn
+            </div>
+            <div className="modal-input-value">
+              <input
+                name="oldname"
+                type="search"
+                autoComplete="off"
+                value={newProjectName.oldname}
+                disabled= {true}
+              />
+            </div>
+          </div>
+          <div className="modal-input-line">
+            <div className="modal-input-title">
+                Nytt Prosjektnavn
+            </div>
+            <div className="modal-input-value">
+              <input
+                name="newname"
+                type="search"
+                autoComplete="off"
+                autoFocus = {true}
+                value={newProjectName.newname}
+                onChange={(event)=>changeName(event)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <button onClick={updateProject} className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+///////////////////////////////////////////////////////////////////////////
+///////    MODAL FOR ADDING A NEW PROJECT OR NEW UNIT         ////////////
+//////////////////////////////////////////////////////////////////////////
+
+function AddUnitModal(props){
+
   const [newProjectVals,setNewProjectVals] = React.useState({
     projectname: "",
     unitname:"",
@@ -10,15 +294,6 @@ export default function Modal(props){
     rooms: 5,
     floorshift:0
   })
-
-
-  function toggleVisibility(event){
-    if (event.target.className === "modal" ||
-      event.target.className === "modal-cancel-div" ||
-      event.target.className === "handlingsKnapp avbrytknapp"){
-      props.setShowModal(false)
-    }
-  }
 
   //function updating state of units with values from input
   function projecInput(event) {
@@ -55,10 +330,11 @@ export default function Modal(props){
            floorshift:0
        }
      ))
-    props.setShowModal(false)
+    props.setShowModal({show:false,modalName:""})
   }
 
   var headerText = props.units.length === 0 ? "Nytt prosjekt" : "Legg til boenhet"
+
   const unitListElements = []
   const floorShifElements = []
   unitListElements.push(<option key="" value="">Ny tom boenhet</option>)
@@ -70,7 +346,7 @@ export default function Modal(props){
   }
 
   return (
-    <div className="modal" style={styles} onClick={(event) => toggleVisibility(event)}>
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
       <div className="modal-content">
         <div className="modal-header">
           <div className="modal-header-text">{headerText}</div>
@@ -86,6 +362,7 @@ export default function Modal(props){
                 name="projectname"
                 type="search"
                 autoComplete="off"
+                autoFocus = {props.units.length === 0 ? true : false}
                 value={newProjectVals.projectname}
                 onChange={(event)=>projecInput(event)}
                 disabled= {props.units.length === 0 ? false : true}
@@ -101,6 +378,7 @@ export default function Modal(props){
                 name="unitname"
                 type="search"
                 autoComplete="off"
+                autoFocus = {props.units.length === 0 ? false : true}
                 value={newProjectVals.unitname}
                 onChange={(event)=>projecInput(event)}
               />
@@ -179,8 +457,5 @@ export default function Modal(props){
         </div>
       </div>
     </div>
-
   )
-
-
 }

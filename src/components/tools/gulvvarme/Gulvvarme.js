@@ -111,6 +111,18 @@ export default function Gulvvarme(props){
     }) || units[0]
   }
 
+  //function changing name of a unit
+  function changeNameUnit(newName){
+    setUnits(oldUnits => oldUnits.map(unit =>
+      (
+        unit.unitId === currentUnitId ?
+         {...unit,
+         unitName: newName}
+         :
+         {...unit}
+      )))
+  }
+
   //function deleting unit
   function deleteUnit(event, unitId){
     event.stopPropagation()
@@ -251,18 +263,20 @@ export default function Gulvvarme(props){
           <Modal
             showModal={showModal}
             setShowModal={setShowModal}
+            projectName={projectName}
             setProjectName={setProjectName}
             units={units}
             addUnit={addUnit}
+            changeNameUnit={changeNameUnit}
+            findCurrentUnit={findCurrentUnit}
             setCurrentUnitId={setCurrentUnitId}
             copyUnit={copyUnit}
+            deleteUnit={deleteUnit}
           />
           { units.length > 0 ?
             <div>
               <Unit
                 units={units}
-                addUnit={addUnit}
-                deleteUnit={deleteUnit}
                 currentUnit={findCurrentUnit()}
                 setCurrentUnitId={setCurrentUnitId}
                 radioButtonClick={radioButtonClick}

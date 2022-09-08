@@ -23,12 +23,12 @@ export default function Unitlist(props){
           </button>
           <button
               className="delete-btn"
-              onClick={(event) => props.deleteUnit(event, unit.unitId)}
+              onClick={(event) => props.setShowModal({show:true,modalName:"deleteUnit"})}
           >
             <img
               className="button-col-img"
               src={delUnitPic}
-              alt="Endrer navn på boenhet"
+              alt="Sletter boenhet"
               />
           </button>
         </div>
@@ -43,6 +43,7 @@ export default function Unitlist(props){
           </div>
           <img
             className="unitListDiv-overskrift-knapp"
+            style={{opacity: 0.6}}
             src={editNamePic}
             alt="Legg til ny boenhet"
             onClick={(event) => props.setShowModal({show:true,modalName:"editNameProject"})}

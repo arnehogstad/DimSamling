@@ -2,7 +2,66 @@ import React from 'react'
 
 export default function Modal(props){
 
-  const styles = {display: props.showModal === true ? "flex" : "none"}
+  const styles = {display: props.showModal.show === true ? "flex" : "none"}
+
+  function toggleVisibility(event){
+    if (event.target.className === "modal" ||
+      event.target.className === "modal-cancel-div" ||
+      event.target.className === "handlingsKnapp avbrytknapp"){
+      props.setShowModal({show:false,modalName:""})
+    }
+  }
+
+
+  var headerText = props.units.length === 0 ? "Nytt prosjekt" :
+                    props.showModal.modalName === "newUnit" ? "Legg til boenhet" :
+                    props.showModal.modalName === "editNameUnit" ? "Endre navn på boenhet" : "Endre navn på prosekt"
+
+  return (
+
+      <>
+        {
+          props.showModal.modalName === "newUnit" ?
+          <AddUnitModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            setProjectName={props.setProjectName}
+            units={props.units}
+            addUnit={props.addUnit}
+            setCurrentUnitId={props.setCurrentUnitId}
+            copyUnit={props.copyUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          props.showModal.modalName === "editNameUnit" ?
+          <RenameUnitModal />
+          :
+          props.showModal.modalName === "editNameProject" ?
+          <RenameProjectModal />
+          :
+          <DeleteUnitModal />
+        }
+      </>
+
+
+  )
+}
+
+function DeleteUnitModal(props){
+
+}
+
+function RenameUnitModal(props){
+
+}
+
+function RenameProjectModal(props){
+
+}
+
+function AddUnitModal(props){
+
   const [newProjectVals,setNewProjectVals] = React.useState({
     projectname: "",
     unitname:"",
@@ -10,15 +69,6 @@ export default function Modal(props){
     rooms: 5,
     floorshift:0
   })
-
-
-  function toggleVisibility(event){
-    if (event.target.className === "modal" ||
-      event.target.className === "modal-cancel-div" ||
-      event.target.className === "handlingsKnapp avbrytknapp"){
-      props.setShowModal(false)
-    }
-  }
 
   //function updating state of units with values from input
   function projecInput(event) {
@@ -55,10 +105,11 @@ export default function Modal(props){
            floorshift:0
        }
      ))
-    props.setShowModal(false)
+    props.setShowModal({show:false,modalName:""})
   }
 
   var headerText = props.units.length === 0 ? "Nytt prosjekt" : "Legg til boenhet"
+
   const unitListElements = []
   const floorShifElements = []
   unitListElements.push(<option key="" value="">Ny tom boenhet</option>)
@@ -70,7 +121,7 @@ export default function Modal(props){
   }
 
   return (
-    <div className="modal" style={styles} onClick={(event) => toggleVisibility(event)}>
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
       <div className="modal-content">
         <div className="modal-header">
           <div className="modal-header-text">{headerText}</div>
@@ -179,8 +230,5 @@ export default function Modal(props){
         </div>
       </div>
     </div>
-
   )
-
-
 }

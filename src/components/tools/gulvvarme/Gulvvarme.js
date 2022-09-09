@@ -291,6 +291,8 @@ export default function Gulvvarme(props){
                 setShowModal={setShowModal}
               />
               <ButtonLine
+                units={units}
+                projectName={projectName}
                 showResult = {setShowResult}
                 setShowModal={setShowModal}
               />

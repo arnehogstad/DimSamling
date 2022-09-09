@@ -51,16 +51,29 @@ export default function Modal(props){
             styles={styles}
           />
           :
+          props.showModal.modalName === "deleteUnit" ?
           <DeleteUnitModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
             units={props.units}
+            deleteUnit={props.deleteUnit}
             currentUnitId = {props.currentUnitId}
             findCurrentUnit = {props.findCurrentUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          props.showModal.modalName === "newProject" ?
+          <NewProjectModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
             deleteUnit={props.deleteUnit}
             toggleVisibility = {toggleVisibility}
             styles={styles}
           />
+          :
+          null
         }
       </>
 
@@ -128,9 +141,44 @@ function DeleteUnitModal(props){
       </div>
     </div>
   )
-
-
 }
+
+///////////////////////////////////////////////////////////////////////////
+///////       MODAL FOR NEW PROJECT - DELETING EXISTING DATA   ////////////
+//////////////////////////////////////////////////////////////////////////
+function NewProjectModal(props){
+
+  function delProject(){
+    props.units.forEach(unit => props.deleteUnit(unit.unitId))
+    props.setShowModal({show:true,modalName:"newUnit"})
+  }
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Nytt prosjekt</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div>
+            Dette vil slette aktivt prosjekt permanent. <br></br>
+            Er du sikker på at du vil slette aktivt prosjekt?<p></p>
+            Det er ikke mulig å angre denne handlingen
+            <p></p>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <button onClick={delProject} className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////
 ///////             MODAL FOR CHANGING UNIT  NAME            ////////////

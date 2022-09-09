@@ -522,6 +522,21 @@ function ResultHeader(props){
     paddingBottom: "10px",
   }
 
+  const headers=[
+    {
+      label: "Artikkelnummer", key:"artnmbr"
+    },
+    {
+      label: "Artikkelnavn", key:"artname"
+    },
+    {
+      label: "Antall", key:"artcount"
+    },
+    {
+      label: "Benevning", key:"artdim"
+    }
+  ]
+
   return(
 
     <div className="result-header">
@@ -543,6 +558,7 @@ function ResultHeader(props){
               data={props.articleList}
               filename={`Handleliste-${props.unit.unitname}.csv`}
               style={cleanLink}
+              headers={headers}
             >
               Last ned handleliste
             </CSVLink>

@@ -394,7 +394,13 @@ export default function Result(props){
         )
       }
     }
-    return returnArr.flat()
+    //making sure all artcounts are whole numbers, flattening and rounding returnarray
+    const roundedReturnArr = returnArr.flat().map((item) => (
+        { ...item,
+          artcount: Math.ceil(item.artcount)
+        }
+      ))
+    return roundedReturnArr
   }
 
   var printArray = []

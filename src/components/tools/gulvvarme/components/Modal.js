@@ -20,6 +20,7 @@ export default function Modal(props){
           <AddUnitModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
+            projectName={props.projectName}
             setProjectName={props.setProjectName}
             units={props.units}
             addUnit={props.addUnit}
@@ -288,7 +289,7 @@ function RenameProjectModal(props){
 function AddUnitModal(props){
 
   const [newProjectVals,setNewProjectVals] = React.useState({
-    projectname: "",
+    projectname: props.units.length > 0 ? props.projectName : "",
     unitname:"",
     copyunit:"",
     rooms: 5,

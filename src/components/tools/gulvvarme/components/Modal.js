@@ -249,6 +249,7 @@ function OpenCSVModal(props){
         console.log(csvArray);
         if(csvArray.length > 0){
           csvArray.forEach(unit => {
+              console.log(unit);
               props.addUnit(unit.length,unit.unitName)
           })
           props.setShowModal({show:false,modalName:""})

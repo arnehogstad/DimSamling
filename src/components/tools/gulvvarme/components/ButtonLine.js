@@ -8,34 +8,42 @@ export default function ButtonLine(props){
   //function preparing the units object for csv download
   function prepareData(units){
     var tempData = [...units]
+    var returnData = []
     //loops through each unit
-      tempData.forEach(unit => {
-        //loops through each room in the current unit
-        unit.rooms.forEach((room,index) =>{
-          if(index < unit.rooms.length-1){
-            //sets dynamic keys
-            let tempKeyfloor = `Room${index}-floor`
-            let tempKeyname = `Room${index}-name`
-            let tempKeyarea = `Room${index}-area`
-            let tempKeypipetype = `Room${index}-pipetype`
-            let tempKeycc = `Room${index}-cc`
-            let tempKeycircuits = `Room${index}-circuits`
-            let tempKeywetroom = `Room${index}-wetroom`
-            let tempKeyid = `Room${index}-id`
-            //adds the values
-            unit[tempKeyfloor] = room.floor
-            unit[tempKeyname] = room.name
-            unit[tempKeyarea] = room.area
-            unit[tempKeypipetype] = room.pipetype
-            unit[tempKeycc] = room.cc
-            unit[tempKeycircuits] = room.circuits
-            unit[tempKeywetroom] = room.wetroom
-            unit[tempKeyid] = room.id
-            unit['projectName'] = props.projectName
-          }
-        })
+    tempData.forEach(unit => {
+      //loops through each room in the current unit
+      unit.rooms.forEach((room,index) =>{
+        if(index < unit.rooms.length-1){
+          //sets dynamic keys
+          let tempKeyfloor = `Room${index}-floor`
+          let tempKeyname = `Room${index}-name`
+          let tempKeyarea = `Room${index}-area`
+          let tempKeypipetype = `Room${index}-pipetype`
+          let tempKeycc = `Room${index}-cc`
+          let tempKeycircuits = `Room${index}-circuits`
+          let tempKeywetroom = `Room${index}-wetroom`
+          let tempKeyid = `Room${index}-id`
+          //adds the values
+          unit[tempKeyfloor] = room.floor
+          unit[tempKeyname] = room.name
+          unit[tempKeyarea] = room.area
+          unit[tempKeypipetype] = room.pipetype
+          unit[tempKeycc] = room.cc
+          unit[tempKeycircuits] = room.circuits
+          unit[tempKeywetroom] = room.wetroom
+          unit[tempKeyid] = room.id
+          unit['projectName'] = props.projectName
+        }
       })
-    return tempData
+    })
+
+    tempData.forEach(unit => {
+      let {rooms, ...cleanUnit} = unit
+      returnData.push(cleanUnit)
+    })
+
+
+    return returnData
   }
 
 

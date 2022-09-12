@@ -91,6 +91,7 @@ export default function Modal(props){
             deleteUnit={props.deleteUnit}
             toggleVisibility = {toggleVisibility}
             styles={styles}
+            addUnit={props.addUnit}
           />
           :
           null
@@ -204,23 +205,11 @@ function OpenProjectModal(props){
 
 function OpenCSVModal(props){
   const [csvFile, setCsvFile] = React.useState();
-
-  const submit = () => {
-      const file = csvFile;
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-          const text = e.target.result;
-          console.log(text);
-          processCSV(text)
-          console.log(csvFile);
-      }
-
-      reader.readAsText(file);
-  }
-
   const [csvArray, setCsvArray] = React.useState([]);
 
+
+
+  //funksjon som returnerer CSV tilbake til object
   const processCSV = (str, delim=',') => {
           const headers = str.slice(0,str.indexOf('\n')).split(delim);
           const rows = str.slice(str.indexOf('\n')+1).split('\n');
@@ -228,14 +217,38 @@ function OpenCSVModal(props){
           const newArray = rows.map( row => {
               const values = row.split(delim);
               const eachObject = headers.reduce((obj, header, i) => {
-                  obj[header] = values[i];
+                  obj[header] = values[i].replaceAll('\"','');
                   return obj;
               }, {})
               return eachObject;
           })
-
+          console.log("kjører");
+          console.log(newArray);
           setCsvArray(newArray)
+          console.log(csvArray);
+          console.log("oppdatert");
+          props.setShowModal({show:false,modalName:""})
       }
+
+      //funksjon som henter CSV fil
+      const submit = () => {
+          const file = csvFile;
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+              const text = e.target.result;
+              processCSV(text)
+          }
+          reader.readAsText(file);
+      }
+
+
+      //Listener on changes in units, toggles showResult back to false if set to true
+      React.useEffect(()=>{
+        console.log("ya");
+        console.log(csvArray);
+
+      },[csvArray])
 
 
   return (
@@ -246,29 +259,23 @@ function OpenCSVModal(props){
           <div className="modal-cancel-div">x</div>
         </div>
         <div className="modal-input-container">
-          <form id='csv-form'>
-              <input
-                  type='file'
-                  accept='.csv'
-                  id='csvFile'
-                  onChange={(e) => {
-                      setCsvFile(e.target.files[0])
-                  }}
-              >
-              </input>
-              <br/>
-              <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  if(csvFile)submit()
-                }}
-              >
-                  Submit
-              </button>
-          </form>
+
+            <div className="modal-input-value">
+
+                <input
+                    type='file'
+                    accept='.csv'
+                    id='csvFile'
+                    onChange={(e) => {
+                        setCsvFile(e.target.files[0])
+                    }}
+                >
+                </input>
+              </div>
+
         </div>
         <div className="modal-buttons">
-          <button className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp" onClick={(e) => {if(csvFile)submit()}} >Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
         </div>
       </div>

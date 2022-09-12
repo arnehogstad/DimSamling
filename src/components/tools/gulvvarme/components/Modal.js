@@ -227,7 +227,6 @@ function OpenCSVModal(props){
           setCsvArray(newArray)
           console.log(csvArray);
           console.log("oppdatert");
-          props.setShowModal({show:false,modalName:""})
       }
 
       //funksjon som henter CSV fil
@@ -240,6 +239,7 @@ function OpenCSVModal(props){
               processCSV(text)
           }
           reader.readAsText(file);
+
       }
 
 
@@ -247,7 +247,12 @@ function OpenCSVModal(props){
       React.useEffect(()=>{
         console.log("ya");
         console.log(csvArray);
-
+        if(csvArray.length > 0){
+          csvArray.forEach(unit => {
+              props.addUnit(unit.length,unit.unitName)
+          })
+          props.setShowModal({show:false,modalName:""})
+        }
       },[csvArray])
 
 

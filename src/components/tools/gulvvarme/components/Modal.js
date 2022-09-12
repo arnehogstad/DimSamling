@@ -73,6 +73,26 @@ export default function Modal(props){
             styles={styles}
           />
           :
+          props.showModal.modalName === "openProject" ?
+          <OpenProjectModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
+            deleteUnit={props.deleteUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          props.showModal.modalName === "openCSV" ?
+          <OpenCSVModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
+            deleteUnit={props.deleteUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
           null
         }
       </>
@@ -142,6 +162,120 @@ function DeleteUnitModal(props){
     </div>
   )
 }
+
+///////////////////////////////////////////////////////////////////////////
+///////       MODAL FOR OPENING A PROJECT - DELETING EXISTING DATA   //////
+//////////////////////////////////////////////////////////////////////////
+
+function OpenProjectModal(props){
+
+  function delProject(){
+    props.units.forEach(unit => props.deleteUnit(unit.unitId))
+    props.setShowModal({show:true,modalName:"openCSV"})
+  }
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Åpne lagret prosjekt</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div>
+            Dette vil slette aktivt prosjekt permanent. <br></br>
+            Er du sikker på at du vil slette aktivt prosjekt?<p></p>
+            Det er ikke mulig å angre denne handlingen
+            <p></p>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <button onClick={delProject} className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+///////////////////////////////////////////////////////////////////////////
+///////       MODAL FOR OPENING A PROJECT - OPENING CSV FILE   //////
+//////////////////////////////////////////////////////////////////////////
+
+function OpenCSVModal(props){
+  const [csvFile, setCsvFile] = React.useState();
+
+  const submit = () => {
+      const file = csvFile;
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+          const text = e.target.result;
+          console.log(text);
+          processCSV(text)
+          console.log(csvFile);
+      }
+
+      reader.readAsText(file);
+  }
+
+  const [csvArray, setCsvArray] = React.useState([]);
+
+  const processCSV = (str, delim=',') => {
+          const headers = str.slice(0,str.indexOf('\n')).split(delim);
+          const rows = str.slice(str.indexOf('\n')+1).split('\n');
+
+          const newArray = rows.map( row => {
+              const values = row.split(delim);
+              const eachObject = headers.reduce((obj, header, i) => {
+                  obj[header] = values[i];
+                  return obj;
+              }, {})
+              return eachObject;
+          })
+
+          setCsvArray(newArray)
+      }
+
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Åpne lagret prosjekt</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <form id='csv-form'>
+              <input
+                  type='file'
+                  accept='.csv'
+                  id='csvFile'
+                  onChange={(e) => {
+                      setCsvFile(e.target.files[0])
+                  }}
+              >
+              </input>
+              <br/>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  if(csvFile)submit()
+                }}
+              >
+                  Submit
+              </button>
+          </form>
+        </div>
+        <div className="modal-buttons">
+          <button className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 ///////////////////////////////////////////////////////////////////////////
 ///////       MODAL FOR NEW PROJECT - DELETING EXISTING DATA   ////////////

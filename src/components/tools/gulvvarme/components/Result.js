@@ -1,4 +1,5 @@
 import React from 'react'
+import { CSVLink } from "react-csv"
 
 export default function Result(props){
   //array for all units in project
@@ -394,7 +395,14 @@ export default function Result(props){
         )
       }
     }
-    return returnArr.flat()
+    //making sure all artcounts are whole numbers, flattening and rounding returnarray
+    const roundedReturnArr = returnArr.flat().map((item) => (
+        { ...item,
+          artcount: Math.ceil(item.artcount)
+        }
+      ))
+
+    return roundedReturnArr
   }
 
   var printArray = []
@@ -476,6 +484,7 @@ function ResultForUnit(props){
         unit = {props.unit}
         showProducts = {showProducts}
         toggleShowProducts = {() => setShowProducts(!showProducts)}
+        articleList = {props.articleList}
       />
       {showProducts === true ?
       <div className="result-article-line-wrapper">
@@ -505,6 +514,29 @@ function ResultForUnit(props){
 
 
 function ResultHeader(props){
+
+  const cleanLink  = {
+    color: "black",
+    textDecoration:"none",
+    paddingTop: "10px",
+    paddingBottom: "10px",
+  }
+
+  const headers=[
+    {
+      label: "Artikkelnummer", key:"artnmbr"
+    },
+    {
+      label: "Artikkelnavn", key:"artname"
+    },
+    {
+      label: "Antall", key:"artcount"
+    },
+    {
+      label: "Benevning", key:"artdim"
+    }
+  ]
+
   return(
 
     <div className="result-header">
@@ -522,7 +554,15 @@ function ResultHeader(props){
         </div>
         <div className="result-header-actionbutton">
           <button className="add-to-basket-button">
-            <span>Last ned handleliste</span>
+            <CSVLink
+              data={props.articleList}
+              filename={`Handleliste-${props.unit.unitname}.csv`}
+              style={cleanLink}
+              headers={headers}
+            >
+              Last ned handleliste
+            </CSVLink>
+
           </button>
         </div>
       </div>

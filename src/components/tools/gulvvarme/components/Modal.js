@@ -20,6 +20,7 @@ export default function Modal(props){
           <AddUnitModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
+            projectName={props.projectName}
             setProjectName={props.setProjectName}
             units={props.units}
             addUnit={props.addUnit}
@@ -50,16 +51,50 @@ export default function Modal(props){
             styles={styles}
           />
           :
+          props.showModal.modalName === "deleteUnit" ?
           <DeleteUnitModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
             units={props.units}
+            deleteUnit={props.deleteUnit}
             currentUnitId = {props.currentUnitId}
             findCurrentUnit = {props.findCurrentUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          props.showModal.modalName === "newProject" ?
+          <NewProjectModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
             deleteUnit={props.deleteUnit}
             toggleVisibility = {toggleVisibility}
             styles={styles}
           />
+          :
+          props.showModal.modalName === "openProject" ?
+          <OpenProjectModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
+            deleteUnit={props.deleteUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
+          props.showModal.modalName === "openCSV" ?
+          <OpenCSVModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            units={props.units}
+            deleteUnit={props.deleteUnit}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+            addUnit={props.addUnit}
+          />
+          :
+          null
         }
       </>
 
@@ -127,9 +162,261 @@ function DeleteUnitModal(props){
       </div>
     </div>
   )
-
-
 }
+
+///////////////////////////////////////////////////////////////////////////
+///////       MODAL FOR OPENING A PROJECT - DELETING EXISTING DATA   //////
+//////////////////////////////////////////////////////////////////////////
+
+function OpenProjectModal(props){
+
+  function delProject(){
+    props.units.forEach(unit => props.deleteUnit(unit.unitId))
+    props.setShowModal({show:true,modalName:"openCSV"})
+  }
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Åpne lagret prosjekt</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div>
+            Dette vil slette aktivt prosjekt permanent. <br></br>
+            Er du sikker på at du vil slette aktivt prosjekt?<p></p>
+            Det er ikke mulig å angre denne handlingen
+            <p></p>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <button onClick={delProject} className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+///////////////////////////////////////////////////////////////////////////
+///////       MODAL FOR OPENING A PROJECT - OPENING CSV FILE   //////
+//////////////////////////////////////////////////////////////////////////
+
+function OpenCSVModal(props){
+  const [csvFile, setCsvFile] = React.useState();
+  const [csvArray, setCsvArray] = React.useState([]);
+
+
+
+  //funksjon som returnerer CSV tilbake til object
+  const processCSV = (str, delim=',') => {
+          const headers = str.slice(0,str.indexOf('\n')).split(delim);
+          const rows = str.slice(str.indexOf('\n')+1).split('\n');
+
+          const newArray = rows.map( row => {
+              const values = row.split(delim);
+              const eachObject = headers.reduce((obj, header, i) => {
+                  obj[header] = values[i].replaceAll('\"','');
+                  return obj;
+              }, {})
+              return eachObject;
+          })
+          setCsvArray(newArray)
+      }
+
+      //funksjon som henter CSV fil
+      const submit = () => {
+          const file = csvFile;
+          const reader = new FileReader();
+
+          reader.onload = function(e) {
+              const text = e.target.result;
+              processCSV(text)
+          }
+          reader.readAsText(file);
+      }
+
+      function returnEmptyRoom(){
+        let tempRoom = {
+          floor: "",
+          name: "",
+          area:"",
+          pipetype: "",
+          cc:"",
+          circuits:"",
+          wetroom: false,
+          id: ""
+        }
+        return tempRoom
+      }
+
+      //function parsing unit into object
+      function deconstructUnit(unit){
+        const tempRoomArr = []
+        var roomNames  = []
+        var roomArr = []
+
+        //defines the unit object
+        let tempUnit = {
+          unitId: "",
+          unitName: "",
+          rooms: [],
+          fordelerskap: "",
+          fordelerstokk: "",
+          termostatType: "",
+          termostatStandard: "",
+        }
+
+        for (const [key, value] of Object.entries(unit)) {
+          //setting values for the unit
+          if(key.includes("Room")===false){
+            if(key.includes("unitId")){
+              tempUnit.unitId=value
+            }else if (key.includes("unitName")){
+              tempUnit.unitName=value
+            }else if (key.includes("fordelerskap")){
+              tempUnit.fordelerskap=value
+            }else if (key.includes("fordelerstokk")){
+              tempUnit.fordelerstokk=value
+            }else if (key.includes("termostatType")){
+              tempUnit.termostatType=value
+            }else if (key.includes("termostatStandard")){
+              tempUnit.termostatStandard=value
+            }
+          }else{
+            //setting the values for the rooms
+            console.log(`${key}: ${value}`);
+            let roomPrefix = key.substring(0, 6)
+            //if new room - create new empty room and save the new name of the room
+            if(roomNames.includes(roomPrefix) === false){
+              let tempRoom = returnEmptyRoom()
+              roomArr.push(tempRoom)
+              roomNames.push(roomPrefix)
+            }
+            //gettin arrayposion of the room
+            let roomPos = roomNames.indexOf(roomPrefix)
+            //updating the relevant room value
+            if (key.includes("floor")){
+              console.log(key);
+              roomArr[roomPos].floor=value
+            }else if (key.includes("name")){
+              roomArr[roomPos].name=value
+            }else if (key.includes("area")){
+              roomArr[roomPos].area=value
+            }else if (key.includes("pipetype")){
+              roomArr[roomPos].pipetype=value
+            }else if (key.includes("cc")){
+              roomArr[roomPos].cc=value
+            }else if (key.includes("circuits")){
+              roomArr[roomPos].circuits=value
+            }else if (key.includes("wetroom")){
+              roomArr[roomPos].wetroom=value
+            }else if (key.includes("id")){
+              roomArr[roomPos].id=value
+            }
+          }
+        }
+        //fjerner tomme rom
+        let finalRoomArr = roomArr.filter(room => (
+          room.floor !== "" ||
+          room.name !== "" ||
+          room.area !== "" ||
+          room.pipetype !== "" ||
+          room.cc !== "" ||
+          room.circuits !== ""
+        ))
+        //defines the room object
+        let lastRoom = returnEmptyRoom()
+        finalRoomArr.push(lastRoom)
+        tempUnit.rooms=finalRoomArr
+        console.log(tempUnit);
+        return tempUnit
+      }
+
+      //Listener on changes in units, toggles showResult back to false if set to true
+      React.useEffect(()=>{
+
+        if(csvArray.length > 0){
+          csvArray.forEach((unit,index) => {
+            let tempUnit = deconstructUnit(unit)
+            props.addUnit("","",tempUnit)
+          })
+          props.setShowModal({show:false,modalName:""})
+        }
+
+      },[csvArray])
+
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Åpne lagret prosjekt</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+
+            <div className="modal-input-value">
+
+                <input
+                    type='file'
+                    accept='.csv'
+                    id='csvFile'
+                    onChange={(e) => {
+                        setCsvFile(e.target.files[0])
+                    }}
+                >
+                </input>
+              </div>
+
+        </div>
+        <div className="modal-buttons">
+          <button className="handlingsKnapp" onClick={(e) => {if(csvFile)submit()}} >Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+///////       MODAL FOR NEW PROJECT - DELETING EXISTING DATA   ////////////
+//////////////////////////////////////////////////////////////////////////
+function NewProjectModal(props){
+
+  function delProject(){
+    props.units.forEach(unit => props.deleteUnit(unit.unitId))
+    props.setShowModal({show:true,modalName:"newUnit"})
+  }
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Nytt prosjekt</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div>
+            Dette vil slette aktivt prosjekt permanent. <br></br>
+            Er du sikker på at du vil slette aktivt prosjekt?<p></p>
+            Det er ikke mulig å angre denne handlingen
+            <p></p>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <button onClick={delProject} className="handlingsKnapp">Bekreft</button>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+
+
 
 ///////////////////////////////////////////////////////////////////////////
 ///////             MODAL FOR CHANGING UNIT  NAME            ////////////
@@ -288,7 +575,7 @@ function RenameProjectModal(props){
 function AddUnitModal(props){
 
   const [newProjectVals,setNewProjectVals] = React.useState({
-    projectname: "",
+    projectname: props.units.length > 0 ? props.projectName : "",
     unitname:"",
     copyunit:"",
     rooms: 5,

@@ -5,28 +5,32 @@
   padding-left: 0;
   margin-left: 5px;
   border: 0;
-
 }
 
-fieldset > fieldset{
+.radioButtonDiv fieldset > fieldset{
   padding-bottom: 0;
-  margin-top: 5px;
+  margin-top: 10px;
   padding-left: 0;
   margin-left: 0;
   border: 0;
 }
 
-fieldset{
+.radioButtonDiv fieldset{
   letter-spacing: 1px;
   line-height: 1.1;
-
+  font-size: 15px;
 }
 
-legend{
+.radioButtonDiv legend{
   font-weight:bold;
 }
 
 .radioButtonDiv-overskrift{
   padding-left: 5px;
   height: 40px;
+}
+
+.radioButtonDiv label {
+  font-size: 14px;
+  padding-left: 5px;
 }

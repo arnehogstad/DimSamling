@@ -97,9 +97,9 @@ export default function Gulvvarme(props){
   }
 
   //function for adding a new unit
-  function addUnit(nRooms,unitName){
+  function addUnit(nRooms,unitName, loadedUnit){
     let tempRooms = nRooms === undefined ? 11 : nRooms
-    let newUnit = emptyUnit(tempRooms,units.length+1,unitName)
+    let newUnit = loadedUnit === undefined ? emptyUnit(tempRooms,units.length+1,unitName) : loadedUnit
     setUnits(oldUnits => [...oldUnits,newUnit ])
     setCurrentUnitId(newUnit.unitId)
   }
@@ -291,6 +291,8 @@ export default function Gulvvarme(props){
                 setShowModal={setShowModal}
               />
               <ButtonLine
+                units={units}
+                projectName={projectName}
                 showResult = {setShowResult}
                 setShowModal={setShowModal}
               />
@@ -315,7 +317,7 @@ export default function Gulvvarme(props){
                   <button onClick={(event) => setShowModal({show:true,modalName:"newUnit"})} className="handlingsKnapp">
                     Nytt prosjekt
                   </button>
-                  <button onClick={(event) => addUnit()} className="handlingsKnapp">
+                  <button onClick={(event) => setShowModal({show:true,modalName:"openCSV"})} className="handlingsKnapp">
                     Åpne prosjekt
                   </button>
                 </div>

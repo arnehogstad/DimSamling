@@ -456,6 +456,7 @@ export default function Result(props){
       key={`result${unit.unitid}`}
       unit = {unit}
       articleList = {getPackagesNumberAndSize(unit.unititems,packageDb)}
+      print = {props.print}
     />
 
   ))
@@ -485,6 +486,7 @@ function ResultForUnit(props){
         showProducts = {showProducts}
         toggleShowProducts = {() => setShowProducts(!showProducts)}
         articleList = {props.articleList}
+        print = {props.print}
       />
       {showProducts === true ?
       <div className="result-article-line-wrapper">
@@ -553,6 +555,10 @@ function ResultHeader(props){
           </p>
         </div>
         <div className="result-header-actionbutton">
+          <button className="toggleContentsButton" onClick={(event) => props.print()}>
+          Skriv ut
+          </button>
+          <br></br>
           <button className="add-to-basket-button">
             <CSVLink
               data={props.articleList}
@@ -564,6 +570,7 @@ function ResultHeader(props){
             </CSVLink>
 
           </button>
+
         </div>
       </div>
       <div className="result-header-line">

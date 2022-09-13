@@ -317,7 +317,7 @@ export default function Gulvvarme(props){
                   <button onClick={(event) => setShowModal({show:true,modalName:"newUnit"})} className="handlingsKnapp">
                     Nytt prosjekt
                   </button>
-                  <button onClick={(event) => addUnit()} className="handlingsKnapp">
+                  <button onClick={(event) => setShowModal({show:true,modalName:"openCSV"})} className="handlingsKnapp">
                     Åpne prosjekt
                   </button>
                 </div>

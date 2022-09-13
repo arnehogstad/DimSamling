@@ -222,11 +222,7 @@ function OpenCSVModal(props){
               }, {})
               return eachObject;
           })
-          console.log("kjører");
-          console.log(newArray);
           setCsvArray(newArray)
-          console.log(csvArray);
-          console.log("oppdatert");
       }
 
       //funksjon som henter CSV fil
@@ -239,21 +235,116 @@ function OpenCSVModal(props){
               processCSV(text)
           }
           reader.readAsText(file);
-
       }
 
+      function returnEmptyRoom(){
+        let tempRoom = {
+          floor: "",
+          name: "",
+          area:"",
+          pipetype: "",
+          cc:"",
+          circuits:"",
+          wetroom: false,
+          id: ""
+        }
+        return tempRoom
+      }
+
+      //function parsing unit into object
+      function deconstructUnit(unit){
+        const tempRoomArr = []
+        var roomNames  = []
+        var roomArr = []
+
+        //defines the unit object
+        let tempUnit = {
+          unitId: "",
+          unitName: "",
+          rooms: [],
+          fordelerskap: "",
+          fordelerstokk: "",
+          termostatType: "",
+          termostatStandard: "",
+        }
+
+        for (const [key, value] of Object.entries(unit)) {
+          //setting values for the unit
+          if(key.includes("Room")===false){
+            if(key.includes("unitId")){
+              tempUnit.unitId=value
+            }else if (key.includes("unitName")){
+              tempUnit.unitName=value
+            }else if (key.includes("fordelerskap")){
+              tempUnit.fordelerskap=value
+            }else if (key.includes("fordelerstokk")){
+              tempUnit.fordelerstokk=value
+            }else if (key.includes("termostatType")){
+              tempUnit.termostatType=value
+            }else if (key.includes("termostatStandard")){
+              tempUnit.termostatStandard=value
+            }
+          }else{
+            //setting the values for the rooms
+            console.log(`${key}: ${value}`);
+            let roomPrefix = key.substring(0, 6)
+            //if new room - create new empty room and save the new name of the room
+            if(roomNames.includes(roomPrefix) === false){
+              let tempRoom = returnEmptyRoom()
+              roomArr.push(tempRoom)
+              roomNames.push(roomPrefix)
+            }
+            //gettin arrayposion of the room
+            let roomPos = roomNames.indexOf(roomPrefix)
+            //updating the relevant room value
+            if (key.includes("floor")){
+              console.log(key);
+              roomArr[roomPos].floor=value
+            }else if (key.includes("name")){
+              roomArr[roomPos].name=value
+            }else if (key.includes("area")){
+              roomArr[roomPos].area=value
+            }else if (key.includes("pipetype")){
+              roomArr[roomPos].pipetype=value
+            }else if (key.includes("cc")){
+              roomArr[roomPos].cc=value
+            }else if (key.includes("circuits")){
+              roomArr[roomPos].circuits=value
+            }else if (key.includes("wetroom")){
+              roomArr[roomPos].wetroom=value
+            }else if (key.includes("id")){
+              roomArr[roomPos].id=value
+            }
+          }
+        }
+        //fjerner tomme rom
+        let finalRoomArr = roomArr.filter(room => (
+          room.floor !== "" ||
+          room.name !== "" ||
+          room.area !== "" ||
+          room.pipetype !== "" ||
+          room.cc !== "" ||
+          room.circuits !== ""
+        ))
+        //defines the room object
+        let lastRoom = returnEmptyRoom()
+        finalRoomArr.push(lastRoom)
+        tempUnit.rooms=finalRoomArr
+        console.log(tempUnit);
+        return tempUnit
+      }
 
       //Listener on changes in units, toggles showResult back to false if set to true
       React.useEffect(()=>{
-        console.log("ya");
-        console.log(csvArray);
+
         if(csvArray.length > 0){
-          csvArray.forEach(unit => {
-              console.log(unit);
-              props.addUnit(unit.length,unit.unitName)
+          csvArray.forEach((unit,index) => {
+            let tempUnit = deconstructUnit(unit)
+            props.addUnit("","",tempUnit)
           })
           props.setShowModal({show:false,modalName:""})
         }
+
       },[csvArray])
 
 

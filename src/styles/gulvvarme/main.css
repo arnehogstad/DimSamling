@@ -90,6 +90,10 @@ main {
 
 }
 
+.hiddenBtn{
+  display: none;
+}
+
 .handlingsKnapp:hover{
   opacity: 1;
   background-color: black;

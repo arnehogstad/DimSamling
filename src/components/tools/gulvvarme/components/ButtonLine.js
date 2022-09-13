@@ -2,9 +2,8 @@ import React from 'react'
 import { CSVLink, CSVDownload  } from "react-csv"
 
 export default function ButtonLine(props){
+  const [data,setData] = React.useState([])
 
-
-  const data = prepareData(props.units)
   //function preparing the units object for csv download
   function prepareData(units){
     var tempData = [...units]
@@ -24,6 +23,7 @@ export default function ButtonLine(props){
           let tempKeywetroom = `Room${index}-wetroom`
           let tempKeyid = `Room${index}-id`
           //adds the values
+          unit['projectName'] = props.projectName
           unit[tempKeyfloor] = room.floor
           unit[tempKeyname] = room.name
           unit[tempKeyarea] = room.area
@@ -32,7 +32,6 @@ export default function ButtonLine(props){
           unit[tempKeycircuits] = room.circuits
           unit[tempKeywetroom] = room.wetroom
           unit[tempKeyid] = room.id
-          unit['projectName'] = props.projectName
         }
       })
     })
@@ -42,7 +41,7 @@ export default function ButtonLine(props){
       returnData.push(cleanUnit)
     })
 
-
+    console.log(returnData);
     return returnData
   }
 
@@ -57,22 +56,19 @@ export default function ButtonLine(props){
     paddingTop: "18px"
   }
 
-  console.log(data);
 
   return (
     <div className="button-line-div">
       <button className="handlingsKnapp" onClick={generateResult}>Generer utstyrsliste</button>
-
-        {props.units === undefined ? "Lagre prosjekt" :
-        <CSVLink
-          className="handlingsKnapp"
-          data={data}
-          filename={`Inndata-${props.projectName}.csv`}
-          style={cleanLink}
-        >
-          Lagre prosjekt
-        </CSVLink>
-        }
+      <CSVLink
+        className="handlingsKnapp"
+        data={data}
+        onClick={(event) => setData(prepareData(props.units))}
+        filename={`Inndata-${props.projectName}.csv`}
+        style={cleanLink}
+      >
+      Lagre prosjekt
+      </ CSVLink>
 
       <button className="handlingsKnapp" onClick={(event) => props.setShowModal({show:true,modalName:"openProject"})} >Åpne prosjekt</button>
       <button className="handlingsKnapp" onClick={(event) => props.setShowModal({show:true,modalName:"newProject"})} >Nytt prosjekt</button>

@@ -12,6 +12,9 @@ import print from "./components/print"
 export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
 
+  const [page, setPage] = useState("InnData");
+  const pageView = (pagelevel) => { setPage(pagelevel) }
+
 
   //To move data up a compnonet from a child component for the data in InnData.js
   const [lasts, setLasts] = useState([]);
@@ -44,14 +47,14 @@ let total= ovrige_Effekt+vindu_effekt+lasts.reduce((a, b) => a + parseInt(b), 0)
       <Banner title={props.toolName} />
       <div className="toolInfo">
 
-        {lasts.length === 0 ? <InnData last_data={last_data} innDatas_data={innDatas_data} /> : null}
-        {lasts.length !== 0 & vindus.length === 0 ? <Vindu innDatas={innDatas} vindu_data={vindu_data} /> : null}
-        {vindus.length !== 0 & ovriges.length === 0 ? <Ovrigelast ovrige_data={ovrige_data} /> : null}
+        {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} pageView={pageView} /> : null}
+        {page === "vindu"  ? <Vindu innDatas={innDatas} vindu_data={vindu_data} pageView={pageView}/> : null}
+        {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data} pageView={pageView}/> : null}
 
 
-        {ovriges.length !== 0 ? (
+        {page === "oversikt" ? (
           <div className='oversikt'>
-            <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} />
+            <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} pageView={pageView} />
             <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print to PDF</button>
           </div>
         ) : null}

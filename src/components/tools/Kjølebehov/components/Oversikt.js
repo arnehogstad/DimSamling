@@ -10,18 +10,18 @@ export default function Oversikt(props) {
 
 
 return (
-        <div className="oversikt">
+        <div className="border">
 
             <div className="table">
                 <table >
-                    <tr>
+                    <tr className="tbhr">
 
                         <th className="tbel" colspan="2" >Luft effekt</th>
                         <th className="tbel" colspan="4" >Transmission effekt</th>
                         <th className="tbel" colspan="2" >Annet effekt</th>
                     </tr>
 
-                    <tr>
+                    <tr className="tbro">
 
                         <th className="tbel">Infiltrasjon</th>
                         <th className="tbel">Ventilasjon</th>
@@ -44,7 +44,8 @@ return (
             
             <h2>Total last er: {props.total} W </h2>
 
-
+            <button className="sisteNeste" onClick={() => {  props.pageView("ovrige") }}>Gå Tilbake</button>
+        
             
         </div>
     )

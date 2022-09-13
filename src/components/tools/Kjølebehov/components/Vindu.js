@@ -38,11 +38,11 @@ export default function Vindu(props) {
 
     //Writes the effect to the vinduData  //32 should be changed to get data from Inndata
     function solEffect(vinduRettning, avskjerming, vinduArealet) {
-        
+
         setVinduData(prev => {
             return {
                 ...prev,
-                trans: beregn.Vindu_trans(props.innDatas.Byggeår,vinduArealet,props.innDatas.MaksT,props.innDatas.ØnsketT),
+                trans: beregn.Vindu_trans(props.innDatas.Byggeår, vinduArealet, props.innDatas.MaksT, props.innDatas.ØnsketT),
             }
         })
 
@@ -65,6 +65,7 @@ export default function Vindu(props) {
             setVinduData(prev => {
                 return {
                     ...prev,
+                    
                     strål: Math.round((6) * vinduArealet * avskjerming * 32)
                 }
             })
@@ -73,11 +74,11 @@ export default function Vindu(props) {
     }
 
     //logs the data from vinduData(the current page) to a matrix of all windows
-    function saveVindu() { setVindus(prev => [...prev,  vinduData ]) }
-   
-   
-   let vindusPrint=vindus.map((item) => (Object.values(item)))
-   
+    function saveVindu() { setVindus(prev => [...prev, vinduData]) }
+
+
+    let vindusPrint = vindus.map((item) => (Object.values(item)))
+
     //calls on the soleffect function to add the strål the strål (last) to the vinduData after the data is taken in
     useEffect(() => {
         solEffect(vinduData.vinduRettning, Avsjkermings[vinduData.avskjerming], vinduData.vinduArealet)
@@ -87,7 +88,7 @@ export default function Vindu(props) {
     //maps the data from vindus (all the windows) to the jsx
     useEffect(() => {
         setVinduTable(vindus.map((item) => (
-            <tr>
+            <tr className="tbro">
                 <td className="tbel">{item.vinduArealet}</td>
                 <td className="tbel">{item.avskjerming}</td>
                 <td className="tbel">{item.vinduRettning}</td>
@@ -98,13 +99,14 @@ export default function Vindu(props) {
         )))
     }, [vindus])
 
-  
-    
+
+
     return (
-        <div>
+        <div >
+<div className="border">      
+     <form className="formInnData">
 
-            <form className="formInnData">
-
+     <div className="selected">
                 <label className="label" htmlFor="avskjerming">Avsjkerming:</label>
                 <select
                     className="select"
@@ -117,7 +119,9 @@ export default function Vindu(props) {
                         <option value={item}>{item}</option>
                     ))}
                 </select>
+            </div>
 
+            <div className="selected">
                 <label className="label" htmlFor="vinduRettning">Vindu Rettning:</label>
                 <select
                     className="select"
@@ -130,7 +134,9 @@ export default function Vindu(props) {
                         <option value={item}>{item}</option>
                     ))}
                 </select>
+                </div>
 
+                
                 <label className="label">Vindu Arealet [m2]:
                     <input
                         className="input"
@@ -142,8 +148,11 @@ export default function Vindu(props) {
 
 
             </form>
+            <div className="knapper">
             <button className="handlingsKnapp" onClick={saveVindu}>Lagre Vindu</button>
-
+            </div>
+            </div>
+     
 
 
 
@@ -152,11 +161,12 @@ export default function Vindu(props) {
                     <table>
                         <thead>
                             <tr>
-                                <th className="tbel">Vindu Arealet [m2]</th>
-                                <th className="tbel">Avskjerming</th>
-                                <th className="tbel">Vindu Rettning</th>
-                                <th className="tbel">Transmission last [W]</th>
-                                <th className="tbel">Sol Strål [W]</th>
+                                <th className="tbhr">Vindu Arealet [m2]</th>
+                                <th className="tbhr">Avskjerming</th>
+                                <th className="tbhr">Vindu Rettning</th>
+                                <th className="tbhr">Transmisjon last [W]</th>
+                                <th className="tbhr">Sol Strål [W]</th>
+                                <th className="tbhr">Fjern</th>
                             </tr>
                         </thead>
                         <tbody>{vinduTable}</tbody>
@@ -164,7 +174,11 @@ export default function Vindu(props) {
                 </div>
             ) : null}
 
-            <button className="handlingsKnapp" onClick={() => props.vindu_data(vindusPrint)}>Neste Steg</button>
+            <div className="knapper">
+                <button className="sisteNeste" onClick={() => { props.pageView("InnData") }}>Forrige Steg</button>
+                <button className="sisteNeste" onClick={() => { props.vindu_data(vindusPrint); props.pageView("ovrige") }}>Neste Steg</button>
+            </div>
+
         </div>
     )
 }

@@ -1,5 +1,7 @@
 * {
     box-sizing: border-box;
+    font-size: 14px;
+    letter-spacing: 2px;
 }
 
 
@@ -9,16 +11,26 @@
     text-indent: 10px;
     border: 1px solid #444;
     display: block;
-
+    width: 250px;
 
 }
 
 
+.border {
+    border: 1px solid #444;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: block;
+    border-radius: 5px;
+    
+
+}
 
 .selected {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    width: 100%;
 }
 
 .select {
@@ -28,6 +40,8 @@
     border: 1px solid #444;
     display: flex;
     flex-direction: row;
+   width: 250px;
+ 
 
 }
 
@@ -42,36 +56,59 @@
 }
 .formInnData {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: column;
     align-content: center;
     flex-wrap: wrap;
-    border: 2px solid #444;
-    border-radius: 5px;
     padding: 10px;
     margin-bottom: 5px;
-    min-width: 200px;
+    width: 600px;
 
 }
 
-.handlingsKnappKjøle {
+.knapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    font-weight: bold;
+
+}
+
+.sisteNeste {
 
     width: max-content;
     height: 50px;
     margin-right: 20px;
     font-weight: bold;
     text-transform: uppercase;
-    background-color: white;
-    color: black;
+    background-color: #fbab18;
+    color: #333;
     display: inline-block;
+    border-color: #fbab18;
     font-size: 12px;
     letter-spacing: 2px;
-    padding: 0;
+    padding: 5px;
     margin-bottom: 20px;
-
     align-self: center;
     border: 1px solid #e7e7e7;
 }
+.sisteNeste:hover{
+    opacity: 1;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+  .sisteNeste:active{
+    opacity: 1;
+    background-color: #2a2a2a;
+    color: white;
+    
+  }
+  
+
+
 
 .oversikt {
     display: flex;
@@ -82,30 +119,37 @@
     width: 100%;
     max-width: 800px;
     padding: 20px;
-    border: 1px solid #444;
-    border-radius: 5px;
+   
     background-color: #f2f2f2;
 }
 
 .table{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 10 auto;
-    width: 100%;
-    max-width: 600px;
-    padding: 5px;
+    min-width: 100px;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+
+	
+}
+
+.tbhr{
+   	max-width: fit-content;
+	background:#000;
+	padding: 10px  0;
+    color:#fff;
     border: 1px solid #444;
-    border-radius: 5px;
-    background-color: #f2f2f2;
 }
 
 .tbel{
     border: #444 1px solid;
-    padding: 5px;
+    padding: 3px;
+    text-align:center; 
+     
 }
 
+.tbro{
+    background: lightgrey;
+}
 
 .fjern{
     display: flex;

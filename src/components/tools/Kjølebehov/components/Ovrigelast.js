@@ -6,7 +6,7 @@ export default function Ovrigelast(props) {
     const [last, setLast] = React.useState({
         navn: "Øvrigelast",
         effekt: 0,
-        
+
     })
     const [lasts, setLasts] = React.useState([])
     const [lastsTable, setLastsTable] = React.useState([])
@@ -19,7 +19,7 @@ export default function Ovrigelast(props) {
                 [name]: value,
             }
         })
-        
+
     }
 
     function saveData() {
@@ -32,7 +32,7 @@ export default function Ovrigelast(props) {
 
     useEffect(() => {
         setLastsTable(lasts.map((item) => (
-            <tr>
+            <tr className="tbro">
                 <td className="tbel">{item.navn}</td>
                 <td className="tbel">{item.effekt}</td>
                 <td className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
@@ -46,47 +46,51 @@ export default function Ovrigelast(props) {
 
     return (
         <div>
+            <div className="border">
+                <form className="formInnData">
+                    <label className="label">Last Navn:
+                        <input
+                            className="input"
+                            type="text"
+                            onChange={handleChange}
+                            name="navn"
+                            value={last.navn}
+                        /></label>
 
-            <form className="formInnData">
-            <label className="label">Last Navn:
-                <input
-                    className="input"
-                    type="text"
-                    onChange={handleChange}
-                    name="navn"
-                    value={last.navn}
-                /></label>
+                    <label className="label">Effekt [W]:
+                        <input
+                            className="input"
+                            type="number"
+                            onChange={handleChange}
+                            name="effekt"
+                            value={last.effekt}
+                        /></label>
 
-            <label className="label">Effekt [W]:
-                <input
-                    className="input"
-                    type="number"
-                    onChange={handleChange}
-                    name="effekt"
-                    value={last.effekt}
-                /></label>
-            
-           </form>
-           <button className="handlingsKnapp" onClick={saveData}>Lagre last</button>
-           
-           {lasts.length !== 0 ? (
-            <>
-            <div className="table">
-            <table >
-                <tr>
-                    <th className="tbel">Last Navn</th>
-                    <th className="tbel">Effekt [W]</th>
-                    <th className="tbel">Fjern</th>
-                </tr>
-                {lastsTable}
-            </table>
+                </form>
+                <div className="knapper">
+                    <button className="handlingsKnapp" onClick={saveData}>Lagre last</button>
+                </div>
             </div>
-            
-            </>
-           ) : null}
 
-             <button className="handlingsKnapp" onClick={() => props.ovrige_data(lastPrint)}>Ferdigstill beregning</button>
+            {lasts.length !== 0 ? (
+                <>
+                    <div className="table">
+                        <table >
+                            <tr>
+                                <th className="tbhr">Effekt [W]</th>
+                                                            <th className="tbhr">Last Navn</th>
+                                <th className="tbhr">Fjern</th>
+                            </tr>
+                            {lastsTable}
+                        </table>
+                    </div>
+                </>
+            ) : null}
 
+            <div className="knapper">
+                <button className="sisteNeste" onClick={() => { props.pageView("vindu") }}>Forrige steg</button>
+                <button className="sisteNeste" onClick={() => { props.ovrige_data(lastPrint); props.pageView("oversikt") }}>Ferdigstill beregning</button>
+            </div>
 
         </div>
     )

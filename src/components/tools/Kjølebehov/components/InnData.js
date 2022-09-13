@@ -35,11 +35,14 @@ export default function InnData(props) {
   function handleChange(event) {
 
     const { name, value } = event.target
+    //Changes the ØnsketT to 19 if Byggtype is Idrettshall
+    let tempBruk = value === "Idrettsbygning" ? 19 : 21
 
     setFormData(prevFormData => {
       return {
         ...prevFormData,
-        [name]: value
+        [name]: value,
+        ØnsketT: tempBruk
       }
     })
   }
@@ -68,9 +71,10 @@ export default function InnData(props) {
   let effekt = [luft_effekt.infiltrasjon, luft_effekt.ventilasjon, trans_effekt.vegg, trans_effekt.tak, trans_effekt.loft, trans_effekt.gulv, annet_effekt.utstyr, annet_effekt.personer]
 
   return (
-    <div className="formInnData">
+    <div className="border">
 
-      <form>
+      <form className="formInnData">
+        
         <label className="label">Prosjekt Navn:
           <input
             className="input"
@@ -249,12 +253,14 @@ export default function InnData(props) {
 
         {ventilasjonType === "Gjennvinner basert på TEK" || ventilasjonType === "Uten gjennvinner basert på TEK" ? (
           <>
-            <p className="text">Luftmengde er {beregn.luftPrint(ByggType,bra)} m3/h</p>
+            <p className="text">Luftmengde er {beregn.luftPrint(ByggType, bra)} m3/h</p>
           </>
         ) : null}
 
       </form>
-      <button className="handlingsKnapp" onClick={() => {props.last_data(effekt);props.innDatas_data(formData)}}>Neste Steg</button>
+      <div className="knapper">
+        <button className="sisteNeste" onClick={() => { props.last_data(effekt); props.innDatas_data(formData); props.pageView("vindu") }}>Neste Steg</button>
+      </div>
     </div>
   )
 }

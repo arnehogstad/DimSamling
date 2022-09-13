@@ -30,7 +30,7 @@ function footer () {
     return [
         doc.setFont("times", "italic"),
         doc.setFontSize(10),
-        doc.text("Vi tar forbehold om feil i beregninger, modellen kan endres uten varsel. \n Merk også at estimatene er basert på normtall og vil ikke tilsvare faktisk forbruk eller besparelse.", 105, 280, null, null, "center"),
+        doc.text("Vi tar forbehold om feil i beregninger, modellen kan endres uten varsel. \n Merk også at estimatene er basert på normtall og vil ikke tilsvare faktisk forbruk.", 105, 280, null, null, "center"),
         doc.setFont("helvetica", "normal"),
     ]}
 
@@ -48,32 +48,30 @@ function footer () {
             ["Arealet (BRA) [m3]", innDatas.bra],
             ["Tak høyde [m]", innDatas.takhøyde],
             ["Ventilasjon Type", innDatas.ventilasjonType],
-            [innDatas.luftmengde] !== 0 ?  ["Ventilasjon luft mengde [m3/h]", innDatas.luftmengde]: 0
+            innDatas.luftmengde !== 0 ?  ["Ventilasjon luft mengde [m3/h]", innDatas.luftmengde]: 0
         ]
     })
 
-
 console.log(innDatas.luftmengde)
-  
-    let vinTable = (vindus.length) * 10 + 160
-    doc.autoTable({
-        startY: vinTable + 20,
-        head: [
-            [{ content: 'Luft effekt', colSpan: 2 }, { content: 'Transmission Effekt', colSpan: 4 }, { content: 'Annet Effekt', colSpan: 2 }],
-            ["Infiltrasjon", "Ventilasjon", "Vegg", "Tak", "Loft", "Gulv", "Utstyr", "Personer"]],
-        body: [lasts],
-    })
+
+doc.autoTable({
+    startY: 130,
+    head: [
+        [{ content: 'Luft effekt', colSpan: 2 }, { content: 'Transmission Effekt', colSpan: 4 }, { content: 'Annet Effekt', colSpan: 2 }],
+        ["Infiltrasjon", "Ventilasjon", "Vegg", "Tak", "Loft", "Gulv", "Utstyr", "Personer"]],
+    body: [lasts],
+})
 
 
+doc.text(`Last fra vinduer:`, 10, 175);
+doc.autoTable({
+    startY: 180,
+    head: [["Vindu Arealet [m2]", "Avskjerming", "Vindu Rettning", "Transmission last [W]", "Sol Strål [W]"]],
+    body: vindus,
+})
+doc.text(`Total last fra vinduerer ${vindu_effekt} W`, 10, (vindus.length) * 10 + 180+20);
    
-    doc.text(`Last fra vinduer:`, 10, 145);
-    doc.autoTable({
-        startY: 150,
-        head: [["Vindu Arealet [m2]", "Avskjerming", "Vindu Rettning", "Transmission last [W]", "Sol Strål [W]"]],
-        body: vindus,
-    })
-    doc.text(`Total last fra vinduerer ${vindu_effekt}W`, 10, (vindus.length) * 10 + 150+10);
-
+   
     footer();
 
 
@@ -86,7 +84,7 @@ console.log(innDatas.luftmengde)
             ["Navn", "Last"]],
         body: ovriges,
     })
-    doc.text(`Total av øvrige definert last er ${ovrige_Effekt}`, 10, ovrige_Effekt.length * 15 + 60 + 20);
+    doc.text(`Total av øvrige definert last er ${ovrige_Effekt} W`, 10, ovrige_Effekt.length * 10 + 55 + 20);
 
 
     doc.setFontSize(16);

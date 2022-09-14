@@ -556,7 +556,7 @@ function ResultHeader(props){
         </div>
         <div className="result-header-actionbutton">
           <button className="toggleContentsButton" onClick={(event) => props.print()}>
-          Skriv ut
+          Last ned romoversikt
           </button>
           <br></br>
           <button className="add-to-basket-button">

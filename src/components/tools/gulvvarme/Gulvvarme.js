@@ -8,6 +8,8 @@ import Modal from './components/Modal'
 import Banner from '../../../components/static/Banner'
 import { nanoid } from 'nanoid'
 import mockDatabase from "./components/mockDatabase.js"
+import print from "./components/print"
+
 //CSS-files importeres her for å holde prosjektoppsummeringen ryddigere
 import "../../../styles/gulvvarme/style.css";
 import "../../../styles/gulvvarme/main.css";
@@ -301,6 +303,7 @@ export default function Gulvvarme(props){
                   units={units}
                   dataBase={dataBase}
                   projectName={projectName}
+                  print={print}
                 />
                 :
                 ""

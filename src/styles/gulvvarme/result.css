@@ -34,7 +34,7 @@
   width: 15%;
   min-width: 260px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
 .result-header-actionbutton h4 {

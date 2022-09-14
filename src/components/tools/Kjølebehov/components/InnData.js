@@ -30,8 +30,7 @@ export default function InnData(props) {
   const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, uid } = formData
 
 
-  //const [options, setOptions] = React.useState([])
-
+ 
   function handleChange(event) {
 
     const { name, value } = event.target
@@ -104,7 +103,7 @@ export default function InnData(props) {
             name="ByggType"
           >
             {Byggtypes.map((item) => (
-              <option value={item}>{item}</option>
+              <option key={nanoid()} value={item}>{item}</option>
             ))}
           </select>
         </div>
@@ -119,7 +118,7 @@ export default function InnData(props) {
             name="Byggeår"
           >
             {Byggeårs.map((item) => (
-              <option value={item}>{item}</option>
+              <option key={nanoid()} value={item}>{item}</option>
             ))}
           </select>
         </div>

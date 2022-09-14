@@ -1,4 +1,5 @@
 import React from 'react'
+import { CSVLink, CSVDownload  } from "react-csv"
 
 export default function Modal(props){
 
@@ -94,6 +95,16 @@ export default function Modal(props){
             addUnit={props.addUnit}
           />
           :
+          props.showModal.modalName === "saveProject" ?
+          <SaveCSVModal
+            showModal={props.showModal}
+            setShowModal={props.setShowModal}
+            projectName={props.projectName}
+            units={props.units}
+            toggleVisibility = {toggleVisibility}
+            styles={styles}
+          />
+          :
           null
         }
       </>
@@ -101,6 +112,117 @@ export default function Modal(props){
 
   )
 }
+
+///////////////////////////////////////////////////////////////////////////
+///////             MODAL FOR SAVING UNIT                   ////////////
+//////////////////////////////////////////////////////////////////////////
+
+
+function SaveCSVModal(props){
+  const [fileName,setFileName] = React.useState(`Inndata-${props.projectName}`)
+  const [data,setData] = React.useState([])
+
+  //function preparing the units object for csv download
+  function prepareData(units){
+    var tempData = [...units]
+    var returnData = []
+    //loops through each unit
+    tempData.forEach(unit => {
+      //loops through each room in the current unit
+      unit.rooms.forEach((room,index) =>{
+        if(index < unit.rooms.length-1){
+          //sets dynamic keys
+          let tempKeyfloor = `Room${index}-floor`
+          let tempKeyname = `Room${index}-name`
+          let tempKeyarea = `Room${index}-area`
+          let tempKeypipetype = `Room${index}-pipetype`
+          let tempKeycc = `Room${index}-cc`
+          let tempKeycircuits = `Room${index}-circuits`
+          let tempKeywetroom = `Room${index}-wetroom`
+          let tempKeyid = `Room${index}-id`
+          //adds the values
+          unit['projectName'] = props.projectName
+          unit[tempKeyfloor] = room.floor
+          unit[tempKeyname] = room.name
+          unit[tempKeyarea] = room.area
+          unit[tempKeypipetype] = room.pipetype
+          unit[tempKeycc] = room.cc
+          unit[tempKeycircuits] = room.circuits
+          unit[tempKeywetroom] = room.wetroom
+          unit[tempKeyid] = room.id
+        }
+      })
+    })
+
+    tempData.forEach(unit => {
+      let {rooms, ...cleanUnit} = unit
+      returnData.push(cleanUnit)
+    })
+    return returnData
+  }
+
+  const cleanLink  = {
+    textDecoration:"none",
+    textAlign: "center",
+    paddingTop: "18px"
+  }
+
+  //eventhandler - change name of file to save
+  function changeName(event){
+    setFileName(event.target.value)
+  }
+
+
+  function updateDataExitModal(){
+    setData(prepareData(props.units))
+    setTimeout(() => {props.setShowModal({show:false,modalName:""}) }, 500);
+  }
+
+
+  return (
+    <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
+      <div className="modal-content">
+        <div className="modal-header">
+          <div className="modal-header-text">Lagre prosjekt</div>
+          <div className="modal-cancel-div">x</div>
+        </div>
+        <div className="modal-input-container">
+          <div>
+            Dette vil laste ned inndata som en csv-fil
+            <p></p>
+          </div>
+          <div className="modal-input-line">
+            <div className="modal-input-title">
+                Navn på fil
+            </div>
+            <div className="modal-input-value">
+              <input
+                name="fileName"
+                type="search"
+                autoComplete="off"
+                value={fileName}
+                onChange={(event)=>changeName(event)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="modal-buttons">
+          <CSVLink
+            className="handlingsKnapp"
+            data={data}
+            onClick={(event) => updateDataExitModal()}
+            filename={`${fileName}.csv`}
+            style={cleanLink}
+          >
+          Lagre prosjekt
+          </ CSVLink>
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 
 ///////////////////////////////////////////////////////////////////////////
 ///////             MODAL FOR DELETING UNIT                   ////////////
@@ -356,7 +478,10 @@ function OpenCSVModal(props){
           <div className="modal-cancel-div">x</div>
         </div>
         <div className="modal-input-container">
-
+          <div className="modal-input-value">
+            Velg en csv-fil å laste inn <br></br>
+            <p></p>
+          </div>
             <div className="modal-input-value">
 
                 <input

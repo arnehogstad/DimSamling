@@ -457,6 +457,7 @@ export default function Result(props){
       unit = {unit}
       articleList = {getPackagesNumberAndSize(unit.unititems,packageDb)}
       print = {props.print}
+      projectName={props.projectName}
     />
 
   ))
@@ -487,6 +488,7 @@ function ResultForUnit(props){
         toggleShowProducts = {() => setShowProducts(!showProducts)}
         articleList = {props.articleList}
         print = {props.print}
+        projectName={props.projectName}
       />
       {showProducts === true ?
       <div className="result-article-line-wrapper">
@@ -555,7 +557,7 @@ function ResultHeader(props){
           </p>
         </div>
         <div className="result-header-actionbutton">
-          <button className="toggleContentsButton" onClick={(event) => props.print()}>
+          <button className="toggleContentsButton" onClick={(event) => props.print(props.projectName)}>
           Last ned romoversikt
           </button>
           <br></br>

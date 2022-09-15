@@ -9,10 +9,10 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
   },
   description: {
-    width: "60%",
+    width: "30%",
   },
   xyz: {
-    width: "40%",
+    width: "20%",
   },
 });
 
@@ -21,7 +21,9 @@ export default function TableRow(props){
   const rows = props.data.items.map((item) => (
     <View style={styles.row} key={item.sr.toString()}>
       <Text style={styles.description}>{item.desc}</Text>
+      <Text style={styles.description}>{item.desc}</Text>
       <Text style={styles.xyz}>{item.xyz}</Text>
+      <Text style={styles.xyz}>Test {item.xyz}</Text>
     </View>
   ))
   return (<Fragment>{rows}</Fragment>)

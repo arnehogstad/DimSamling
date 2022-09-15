@@ -1,5 +1,7 @@
 import React from 'react'
 import { CSVLink } from "react-csv"
+import { PDFViewer } from "@react-pdf/renderer";
+import Print from "./printComponents/Print";
 
 export default function Result(props){
   //array for all units in project
@@ -518,6 +520,9 @@ function ResultForUnit(props){
 
 
 function ResultHeader(props){
+  const [showModal,setShowModal] = React.useState(false)
+
+
 
   const cleanLink  = {
     color: "black",
@@ -541,9 +546,69 @@ function ResultHeader(props){
     }
   ]
 
+  function toggleModal(visible){
+    setShowModal(visible)
+  }
+
+  function modalClick(event){
+    if (event.target.className === "modal" ||
+      event.target.className === "modal-cancel-div" ||
+      event.target.className === "handlingsKnapp avbrytknapp"){
+      setShowModal(false)
+    }
+  }
+
+  const data = {
+    id: "5df3180a09ea16dc4b95f910",
+    items: [
+      {
+        sr: 1,
+        desc: "desc1",
+        xyz: 5,
+      },
+      {
+        sr: 2,
+        desc: "desc2",
+        xyz: 6,
+      },
+      {
+        sr: 3,
+        desc: "desc1",
+        xyz: 5,
+      },
+      {
+        sr: 4,
+        desc: "desc1",
+        xyz: 5,
+      },
+    ],
+  };
+
+
+
+
   return(
 
     <div className="result-header">
+    {showModal === true ?
+      <div className="modal" style={{display:"flex",}} onClick={(event) => modalClick(event)}> >
+        <div className="modal-content-print">
+          <div className="modal-header">
+            <div className="modal-header-text">Forhåndsvisning utskrift</div>
+            <div className="modal-cancel-div">x</div>
+          </div>
+        <>
+          <PDFViewer width="100%" height="100%">
+            <Print data={data} />
+          </PDFViewer>
+        </>
+        </div>
+      </div>
+      :
+      null
+    }
+
+
       <div className="result-header-line">
         <div className="result-header-headline">
           <h4>
@@ -558,6 +623,9 @@ function ResultHeader(props){
         </div>
         <div className="result-header-actionbutton">
           <button className="toggleContentsButton" onClick={(event) => props.print(props.projectName)}>
+          Last ned romoversikt
+          </button>
+          <button className="toggleContentsButton" onClick={(event) => toggleModal(true)}>
           Last ned romoversikt
           </button>
           <br></br>

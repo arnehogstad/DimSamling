@@ -57,6 +57,6 @@ export default function print(projectName) {
     header(doc,`Materialliste ${projectName}`)
     body(doc)
     table(doc)
-    doc.save(`Gulvvarme.pdf`)
+    doc.save(`Materialliste ${projectName}`)
 
 }

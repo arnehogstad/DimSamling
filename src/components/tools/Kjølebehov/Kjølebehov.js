@@ -7,6 +7,8 @@ import Ovrigelast from './components/Ovrigelast'
 import "../../../styles/kjølebehov/kjølebehov.css"
 import Oversikt from './components/Oversikt'
 import print from "./components/print"
+import printR from './components/printR'
+import ReactPDF from '@react-pdf/renderer';
 
 
 export default function Kjølebehov(props) {
@@ -23,9 +25,9 @@ export default function Kjølebehov(props) {
   //To move data up a compnonet from a child component for the data in Vindus.js
   const [vindus, setVindus] = useState([]);
   const vindu_data = (vindu) => { setVindus(vindu) }
-// To calculate the total effect of the windows 
-let vindu_effekt = vindus.reduce((a, b) => a + parseInt(b[3])+ parseInt(b[4]), 0)
-
+  // To calculate the total effect of the windows 
+  let vindu_effekt = vindus.reduce((a, b) => a + parseInt(b[3])+ parseInt(b[4]), 0)
+  
 
 
 
@@ -33,7 +35,7 @@ let vindu_effekt = vindus.reduce((a, b) => a + parseInt(b[3])+ parseInt(b[4]), 0
   const [ovriges, setOvriges] = useState([]);
   const ovrige_data = (ovrige) => { setOvriges(ovrige) }
   //calculate the total of ovriges
-  let ovrige_Effekt = ovriges.reduce((a, b) => a + parseInt(b[1]), 0)
+  let ovrige_Effekt = ovriges.reduce((a, b) =>  a + parseInt(b[1]), 0)
   
 
   const [innDatas, setInnDatas] = useState([]);
@@ -55,7 +57,10 @@ let total= ovrige_Effekt+vindu_effekt+lasts.reduce((a, b) => a + parseInt(b), 0)
         {page === "oversikt" ? (
           <div className='oversikt'>
             <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} pageView={pageView} />
-            <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print to PDF</button>
+           {/* <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print to PDF</button>
+         */}
+         <button className='handlingsKnapp' onClick={printR()}>Print to PDF</button>
+         
           </div>
         ) : null}
 

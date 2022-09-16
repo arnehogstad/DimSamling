@@ -14,7 +14,10 @@ export default function ItemsTable(props){
 return (
   <View style={styles.tableContainer}>
     {/*<TableHeader />*/}
-    <TableRow data={props.data} />
+    <TableRow
+      data={props.data} 
+      dataIndex={props.dataIndex}
+    />
     {/*<TableFooter items={data.items} />*/}
   </View>
 )

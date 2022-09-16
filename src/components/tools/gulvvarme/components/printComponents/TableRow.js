@@ -18,13 +18,20 @@ const styles = StyleSheet.create({
 
 export default function TableRow(props){
 
-  const rows = props.data.items.map((item) => (
-    <View style={styles.row} key={item.sr.toString()}>
-      <Text style={styles.description}>{item.desc}</Text>
-      <Text style={styles.description}>{item.desc}</Text>
-      <Text style={styles.xyz}>{item.xyz}</Text>
-      <Text style={styles.xyz}>Test {item.xyz}</Text>
+  console.log(props.data)
+  console.log(props.dataIndex);
+
+  const rows = props.data.map((unit) =>(
+      unit.rooms.map((item) => (
+    <View style={styles.row} key={item.id.toString()}>
+      <Text style={styles.description}>{item.name}</Text>
+      <Text style={styles.description}>{item.area}</Text>
+      <Text style={styles.xyz}>{item.cc}</Text>
+      <Text style={styles.xyz}>{item.circuits}</Text>
     </View>
-  ))
+  ))))
+
+
+
   return (<Fragment>{rows}</Fragment>)
 }

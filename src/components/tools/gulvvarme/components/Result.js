@@ -6,6 +6,9 @@ import Print from "./printComponents/Print";
 export default function Result(props){
   //array for all units in project
   const totArray = []
+  //array holding values for the pdf
+  const unitPDFArray = []
+
   //databases for lookup
   const stokkDb = props.dataBase.rørfordeler.fordeler
   const skapDb = props.dataBase.fordelerskap
@@ -15,7 +18,11 @@ export default function Result(props){
   for (let i = 0; i<props.units.length;i++){
     //definerer unitArray
     const unitArray = []
-
+    //defining temporary unit for print
+    let tempPDFUnit = {
+      id: `${i}-${props.units[i].unitId}`,
+      items: []
+    }
     let unitArea = 0
     let unitZones = 0
     let unitCircuits = 0
@@ -29,6 +36,12 @@ export default function Result(props){
       let tempRoom = tempUnit.rooms[j]
       //makes sure room has data
       if(tempRoom.area !== "" && tempRoom.pipetype !== "" && tempRoom.circuits !== ""){
+        //defining temporary PDF room object
+        let tempPDFRoom = {
+          id: tempRoom.id,
+
+
+        }
         //increments total area
         unitArea = parseFloat(unitArea + 1*tempRoom.area)
         unitZones = parseFloat(unitZones + 1)
@@ -457,8 +470,9 @@ export default function Result(props){
     <ResultForUnit
       key={`result${unit.unitid}`}
       unit = {unit}
+      unitObjects = {props.units}
+      unitObjectIndex = {index}
       articleList = {getPackagesNumberAndSize(unit.unititems,packageDb)}
-      print = {props.print}
       projectName={props.projectName}
     />
 
@@ -486,10 +500,11 @@ function ResultForUnit(props){
     <div>
       <ResultHeader
         unit = {props.unit}
+        unitObjects = {props.unitObjects}
+        unitObjectIndex = {props.unitObjectIndex}
         showProducts = {showProducts}
         toggleShowProducts = {() => setShowProducts(!showProducts)}
         articleList = {props.articleList}
-        print = {props.print}
         projectName={props.projectName}
       />
       {showProducts === true ?
@@ -558,35 +573,6 @@ function ResultHeader(props){
     }
   }
 
-  const data = {
-    id: "5df3180a09ea16dc4b95f910",
-    items: [
-      {
-        sr: 1,
-        desc: "desc1",
-        xyz: 5,
-      },
-      {
-        sr: 2,
-        desc: "desc2",
-        xyz: 6,
-      },
-      {
-        sr: 3,
-        desc: "desc99",
-        xyz: 5,
-      },
-      {
-        sr: 4,
-        desc: "desc1",
-        xyz: 5,
-      },
-    ],
-  };
-
-
-
-
   return(
 
     <div className="result-header">
@@ -599,7 +585,7 @@ function ResultHeader(props){
           </div>
         <>
           <PDFViewer width="100%" height="100%">
-            <Print data={data} />
+            <Print data={props.unitObjects} dataIndex={props.unitObjectIndex} headline={`Materialliste - ${props.projectName}`}/>
           </PDFViewer>
         </>
         </div>
@@ -622,9 +608,6 @@ function ResultHeader(props){
           </p>
         </div>
         <div className="result-header-actionbutton">
-          <button className="toggleContentsButton" onClick={(event) => props.print(props.projectName)}>
-          Last ned romoversikt
-          </button>
           <button className="toggleContentsButton" onClick={(event) => toggleModal(true)}>
           Last ned romoversikt
           </button>

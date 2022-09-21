@@ -7,9 +7,8 @@ import Ovrigelast from './components/Ovrigelast'
 import "../../../styles/kjølebehov/kjølebehov.css"
 import Oversikt from './components/Oversikt'
 import print from "./components/print"
-import printR from './components/printR'
-import ReactPDF from '@react-pdf/renderer';
-
+import PrintOversikt from './components/PrintOversikt'
+import { PDFViewer } from "@react-pdf/renderer";
 
 export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
@@ -37,7 +36,7 @@ export default function Kjølebehov(props) {
   //calculate the total of ovriges
   let ovrige_Effekt = ovriges.reduce((a, b) =>  a + parseInt(b[1]), 0)
   
-
+console.log(ovriges)
   const [innDatas, setInnDatas] = useState([]);
   const innDatas_data = (data) => { setInnDatas(data) }
 
@@ -46,6 +45,7 @@ let total= ovrige_Effekt+vindu_effekt+lasts.reduce((a, b) => a + parseInt(b), 0)
 
   return (
     <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+           
       <Banner title={props.toolName} />
       <div className="toolInfo">
 
@@ -54,15 +54,24 @@ let total= ovrige_Effekt+vindu_effekt+lasts.reduce((a, b) => a + parseInt(b), 0)
         {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data} pageView={pageView}/> : null}
 
 
-        {page === "oversikt" ? (
+      {/* {page === "oversikt" ? (
           <div className='oversikt'>
             <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} pageView={pageView} />
-           {/* <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print to PDF</button>
-         */}
-         <button className='handlingsKnapp' onClick={printR()}>Print to PDF</button>
-         
+            <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print to PDF</button>
           </div>
-        ) : null}
+        ) : null}*/}
+
+
+        {page === "oversikt" ? (
+       <div className='oversikt'>
+    
+        <PDFViewer width={1000} height={1500}>
+           <PrintOversikt ovrige={ovriges} />
+           </PDFViewer>
+           
+          </div>
+        ) : null} 
+
 
 
       </div>

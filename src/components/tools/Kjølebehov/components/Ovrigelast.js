@@ -87,8 +87,8 @@ export default function Ovrigelast(props) {
                         <table >
                             <thead>
                                 <tr>
-                                    <th className="tbhr">Effekt [W]</th>
                                     <th className="tbhr">Last Navn</th>
+                                    <th className="tbhr">Effekt [W]</th>
                                     <th className="tbhr">Fjern</th>
                                 </tr>
                             </thead>

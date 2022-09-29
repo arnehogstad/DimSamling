@@ -70,6 +70,7 @@ export default function Kjølebehov(props) {
             </PDFViewer>
 
           </div>
+          
         ) : null*/}
 
 

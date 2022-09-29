@@ -60,7 +60,7 @@ export function Ventilasjon(ventilasjonType, luftmengdeIN, år, byggtype, areal,
 
 
     ////////Intern Last
-    export function Belysning(byggtype, areal) {
+    export function belysning(byggtype, areal) {
         let u_belysning = UData.Belysning[byggtype]
         return Math.round(u_belysning * areal)
     }
@@ -75,6 +75,6 @@ export function Ventilasjon(ventilasjonType, luftmengdeIN, år, byggtype, areal,
 
 
     export function personer(byggtype, areal) {
-        let u_personer = UData.utstyr[byggtype]
+        let u_personer = UData.personer[byggtype]
         return Math.round(u_personer * areal)
     }

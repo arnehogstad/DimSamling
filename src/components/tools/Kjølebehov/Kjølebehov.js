@@ -9,6 +9,7 @@ import Oversikt from './components/Oversikt'
 import print from "./components/print"
 import PrintOversikt from './components/PrintOversikt'
 import { PDFViewer } from "@react-pdf/renderer";
+import Print from './components/printComponents/Print'
 
 export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
@@ -25,8 +26,7 @@ export default function Kjølebehov(props) {
   const [vindus, setVindus] = useState([]);
   const vindu_data = (vindu) => { setVindus(vindu) }
   // To calculate the total effect of the windows 
-  let vindu_effekt = vindus.reduce((a, b) => a + parseInt(b[3])+ parseInt(b[4]), 0)
-  
+  let vindu_effekt = vindus.reduce((a, b) => a + parseInt(b[3]) + parseInt(b[4]), 0)
 
 
 
@@ -34,43 +34,43 @@ export default function Kjølebehov(props) {
   const [ovriges, setOvriges] = useState([]);
   const ovrige_data = (ovrige) => { setOvriges(ovrige) }
   //calculate the total of ovriges
-  let ovrige_Effekt = ovriges.reduce((a, b) =>  a + parseInt(b[1]), 0)
-  
-console.log(ovriges)
+  let ovrige_Effekt = ovriges.reduce((a, b) => a + parseInt(b[1]), 0)
+
+
   const [innDatas, setInnDatas] = useState([]);
   const innDatas_data = (data) => { setInnDatas(data) }
 
-//calculate the total of the last
-let total= ovrige_Effekt+vindu_effekt+lasts.reduce((a, b) => a + parseInt(b), 0)
-
+  //calculate the total of the last
+  let total = ovrige_Effekt + vindu_effekt + lasts.reduce((a, b) => a + parseInt(b), 0)
+  
   return (
     <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
-           
+
       <Banner title={props.toolName} />
       <div className="toolInfo">
 
         {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} pageView={pageView} /> : null}
-        {page === "vindu"  ? <Vindu innDatas={innDatas} vindu_data={vindu_data} pageView={pageView}/> : null}
-        {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data} pageView={pageView}/> : null}
-
-
-      {/* {page === "oversikt" ? (
-          <div className='oversikt'>
-            <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} pageView={pageView} />
-            <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print to PDF</button>
-          </div>
-        ) : null}*/}
+        {page === "vindu" ? <Vindu innDatas={innDatas} vindu_data={vindu_data} pageView={pageView} /> : null}
+        {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data} pageView={pageView} /> : null}
 
 
         {page === "oversikt" ? (
-       <div className='oversikt'>
-    
-        <PDFViewer width={1000} height={1500}>
-           <PrintOversikt ovrige={ovriges} />
-           </PDFViewer>
-           
+          <div className='oversikt'>
+            <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} pageView={pageView} />
+            <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print til PDF</button>
           </div>
-        ) : null} 
+      ) : null}
+
+
+        {/*page === "oversikt" ? (
+          <div className='oversikt'>
+
+            <PDFViewer width={1000} height={1500}>
+              <Print innDatas={innDatas}  ovrige={ovriges} />
+            </PDFViewer>
+
+          </div>
+        ) : null*/}
 
 
 

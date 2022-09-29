@@ -19,7 +19,7 @@ return (
 
                         <th className="tbel" colSpan="2" >Luft effekt</th>
                         <th className="tbel" colSpan="4" >Transmission effekt</th>
-                        <th className="tbel" colSpan="2" >Annet effekt</th>
+                        <th className="tbel" colSpan="3" >Annet effekt</th>
                     </tr>
 
                     <tr className="tbro">
@@ -34,6 +34,7 @@ return (
 
                         <th className="tbel">Utstyr</th>
                         <th className="tbel">Personer</th>
+                        <th className="tbel">Belysning</th>
 
                     </tr>
                     </thead>

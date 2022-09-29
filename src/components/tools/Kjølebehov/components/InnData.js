@@ -10,7 +10,7 @@ export default function InnData(props) {
     {
       Navn: "Prosjekt Navn",
       Referanse: "Navn",
-      ByggType: "Småhus",
+      ByggType: "Barnehage",
       Byggeår: "2017-nå",
       MaksT: 32,
       ØnsketT: 21,
@@ -63,11 +63,12 @@ export default function InnData(props) {
   }
   let annet_effekt = {
     utstyr: beregn.utstyr(ByggType, bra),
-    personer: beregn.personer(ByggType, bra)
+    personer: beregn.personer(ByggType, bra),
+    belysning: beregn.belysning(ByggType, bra)
   }
 
 
-  let effekt = [luft_effekt.infiltrasjon, luft_effekt.ventilasjon, trans_effekt.vegg, trans_effekt.tak, trans_effekt.loft, trans_effekt.gulv, annet_effekt.utstyr, annet_effekt.personer]
+  let effekt = [luft_effekt.infiltrasjon, luft_effekt.ventilasjon, trans_effekt.vegg, trans_effekt.tak, trans_effekt.loft, trans_effekt.gulv, annet_effekt.utstyr, annet_effekt.personer,annet_effekt.belysning]
 
   return (
     <div className="border">

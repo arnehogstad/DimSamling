@@ -69,7 +69,7 @@ doc.autoTable({
     head: [["Vindu Arealet [m2]", "Avskjerming", "Vindu Rettning", "Transmission last [W]", "Sol Strål [W]"]],
     body: vindus,
 })
-doc.text(`Total last fra vinduerer ${vindu_effekt} W`, 10, (vindus.length) * 10 + 180+20);
+doc.text(`Total last fra vinduerer ${vindu_effekt} W`, 10, (vindus.length) * 8 + 175+20);
    
    
     footer();
@@ -84,11 +84,11 @@ doc.text(`Total last fra vinduerer ${vindu_effekt} W`, 10, (vindus.length) * 10 
             ["Navn", "Last"]],
         body: ovriges,
     })
-    doc.text(`Total av øvrige definert last er ${ovrige_Effekt} W`, 10, ovrige_Effekt.length * 10 + 55 + 20);
+    doc.text(`Total av øvrige definert last er ${ovrige_Effekt} W`, 10, ovriges.length * 8 + 55 + 20);
 
 
     doc.setFontSize(16);
-    doc.text(`Total kjølebehov er ${total} W.`, 105, ovrige_Effekt.length * 15 + 60 + 20 + 20, null, null, "center");
+    doc.text(`Total kjølebehov er ${total} W.`, 105, ovriges.length * 8 + 75 + 20, null, null, "center");
     footer();
 
 doc.save(`${innDatas.Navn} Kjølebehov beregning .pdf`)

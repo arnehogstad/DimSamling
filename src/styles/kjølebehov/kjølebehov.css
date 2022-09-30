@@ -20,6 +20,12 @@
 
 }
 
+
+.ovrigekjølebehov {
+    width: 100%;
+    justify-content: space-between;
+}
+
 .selected {
     display: flex;
     flex-direction: row;
@@ -136,7 +142,7 @@
 
 .tbel{
     border: #444 1px solid;
-    padding: 3px;
+    padding: 10px;
     text-align:center;
 
 }

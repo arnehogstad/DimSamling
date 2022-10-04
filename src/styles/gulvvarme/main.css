@@ -53,8 +53,8 @@ main {
 }
 
 .addUnitPrompt{
-  font-size: 20px;
-  background-color: #eeeeee;
+  font-size: 18px;
+
 }
 .addUnitPrompt-line{
   display: flex;

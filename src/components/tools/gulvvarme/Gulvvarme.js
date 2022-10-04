@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { useSelector } from 'react-redux'
 import Toolinfo from './components/Toolinfo'
 import Unit from './components/Unit'
@@ -8,7 +8,6 @@ import Modal from './components/Modal'
 import Banner from '../../../components/static/Banner'
 import { nanoid } from 'nanoid'
 import mockDatabase from "./components/mockDatabase.js"
-import print from "./components/print"
 
 //CSS-files importeres her for å holde prosjektoppsummeringen ryddigere
 import "../../../styles/gulvvarme/style.css";
@@ -21,6 +20,7 @@ import "../../../styles/gulvvarme/radiobuttons.css";
 
 
 export default function Gulvvarme(props){
+
   //state of tool - from redux-store
   const showTool = useSelector((state) => state.tool.visibleId)
   //state of units
@@ -303,7 +303,6 @@ export default function Gulvvarme(props){
                   units={units}
                   dataBase={dataBase}
                   projectName={projectName}
-                  print={print}
                 />
                 :
                 ""

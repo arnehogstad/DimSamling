@@ -23,6 +23,18 @@
   flex-direction: column;
   height: 300px;
 }
+
+/* Modal Content/Box */
+.modal-content-print {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  border: 1px solid #888;
+  Width: 60%;
+  display: flex;
+  flex-direction: column;
+  height: 80%;
+}
+
 .modal-cancel-div{
   font-size: 20px;
   font-weight:bolder;

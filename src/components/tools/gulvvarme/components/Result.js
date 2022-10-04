@@ -1,9 +1,14 @@
 import React from 'react'
 import { CSVLink } from "react-csv"
+import { PDFViewer } from "@react-pdf/renderer";
+import Print from "./printComponents/Print";
 
 export default function Result(props){
   //array for all units in project
   const totArray = []
+  //array holding values for the pdf
+  const unitPDFArray = []
+
   //databases for lookup
   const stokkDb = props.dataBase.rørfordeler.fordeler
   const skapDb = props.dataBase.fordelerskap
@@ -13,7 +18,11 @@ export default function Result(props){
   for (let i = 0; i<props.units.length;i++){
     //definerer unitArray
     const unitArray = []
-
+    //defining temporary unit for print
+    let tempPDFUnit = {
+      id: `${i}-${props.units[i].unitId}`,
+      items: []
+    }
     let unitArea = 0
     let unitZones = 0
     let unitCircuits = 0
@@ -27,6 +36,12 @@ export default function Result(props){
       let tempRoom = tempUnit.rooms[j]
       //makes sure room has data
       if(tempRoom.area !== "" && tempRoom.pipetype !== "" && tempRoom.circuits !== ""){
+        //defining temporary PDF room object
+        let tempPDFRoom = {
+          id: tempRoom.id,
+
+
+        }
         //increments total area
         unitArea = parseFloat(unitArea + 1*tempRoom.area)
         unitZones = parseFloat(unitZones + 1)
@@ -455,8 +470,10 @@ export default function Result(props){
     <ResultForUnit
       key={`result${unit.unitid}`}
       unit = {unit}
+      unitObjects = {props.units}
+      unitObjectIndex = {index}
       articleList = {getPackagesNumberAndSize(unit.unititems,packageDb)}
-      print = {props.print}
+      projectName={props.projectName}
     />
 
   ))
@@ -483,10 +500,12 @@ function ResultForUnit(props){
     <div>
       <ResultHeader
         unit = {props.unit}
+        unitObjects = {props.unitObjects}
+        unitObjectIndex = {props.unitObjectIndex}
         showProducts = {showProducts}
         toggleShowProducts = {() => setShowProducts(!showProducts)}
         articleList = {props.articleList}
-        print = {props.print}
+        projectName={props.projectName}
       />
       {showProducts === true ?
       <div className="result-article-line-wrapper">
@@ -516,6 +535,9 @@ function ResultForUnit(props){
 
 
 function ResultHeader(props){
+  const [showModal,setShowModal] = React.useState(false)
+
+
 
   const cleanLink  = {
     color: "black",
@@ -539,9 +561,40 @@ function ResultHeader(props){
     }
   ]
 
+  function toggleModal(visible){
+    setShowModal(visible)
+  }
+
+  function modalClick(event){
+    if (event.target.className === "modal" ||
+      event.target.className === "modal-cancel-div" ||
+      event.target.className === "handlingsKnapp avbrytknapp"){
+      setShowModal(false)
+    }
+  }
+
   return(
 
     <div className="result-header">
+    {showModal === true ?
+      <div className="modal" style={{display:"flex",}} onClick={(event) => modalClick(event)}> >
+        <div className="modal-content-print">
+          <div className="modal-header">
+            <div className="modal-header-text">Forhåndsvisning utskrift</div>
+            <div className="modal-cancel-div">x</div>
+          </div>
+        <>
+          <PDFViewer width="100%" height="100%">
+            <Print data={props.unitObjects} dataIndex={props.unitObjectIndex} headline={`Materialliste - ${props.projectName}`}/>
+          </PDFViewer>
+        </>
+        </div>
+      </div>
+      :
+      null
+    }
+
+
       <div className="result-header-line">
         <div className="result-header-headline">
           <h4>
@@ -555,7 +608,7 @@ function ResultHeader(props){
           </p>
         </div>
         <div className="result-header-actionbutton">
-          <button className="toggleContentsButton" onClick={(event) => props.print()}>
+          <button className="toggleContentsButton" onClick={(event) => toggleModal(true)}>
           Last ned romoversikt
           </button>
           <br></br>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Byggeårs, Byggtypes } from "./data"
+import { Byggeårs, Byggtypes } from "../../../static/staticData"
 import * as beregn from "./beregn"
 import "../../../../styles/kjølebehov/kjølebehov.css"
 import { nanoid } from "@reduxjs/toolkit"

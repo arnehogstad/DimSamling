@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "@react-pdf/renderer";
+import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import TableRow from "./TableRow";
 
 const styles = StyleSheet.create({
@@ -13,10 +13,9 @@ export default function ItemsTable(props){
 
 return (
   <View style={styles.tableContainer}>
-    {/*<TableHeader />*/}
+
     <TableRow
-      data={props.data} 
-      dataIndex={props.dataIndex}
+      data={props.data}
     />
     {/*<TableFooter items={data.items} />*/}
   </View>

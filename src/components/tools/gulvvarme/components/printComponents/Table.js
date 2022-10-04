@@ -13,7 +13,6 @@ export default function Table(props){
     <View style={props.styleTable}>
         <ItemsTable
           data={props.data}
-          dataIndex={props.dataIndex} 
         />
     </View>
   )

@@ -9,6 +9,7 @@ import Varmebehov from './components/tools/Varmebehov'
 import Kjølebehov from './components/tools/Kjølebehov/Kjølebehov'
 import Diverse from './components/tools/Diverse'
 import { nanoid } from 'nanoid'
+import Varmtvann from './components/tools/varmtvann/Varmtvann'
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
   "Ekspansjonskarsvelger",
   "Beregning varmebehov",
   "Beregning kjølebehov",
+  "Varmtvann",
   "Estimat andre greier"
   ]
   //genererer ID til alle verktøy
@@ -61,9 +63,13 @@ export default function App() {
             toolId={toolId[3]}
             toolName={toolNames[3]}
           />
-          <Diverse
+          <Varmtvann
             toolId={toolId[4]}
             toolName={toolNames[4]}
+          />
+          <Diverse
+            toolId={toolId[5]}
+            toolName={toolNames[5]}
           />
         </div>
         <Footer />

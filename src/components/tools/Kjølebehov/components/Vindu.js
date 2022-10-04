@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { vindu_rettning, Avsjkermings } from "./data"
+import { vindu_rettning, Avsjkermings } from "../../../static/staticData"
 import * as beregn from "./beregn"
 import { nanoid } from "@reduxjs/toolkit"
 

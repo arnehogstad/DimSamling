@@ -6,6 +6,7 @@ export default function Ovrigelast(props) {
     const [last, setLast] = React.useState({
         navn: "Øvrigelast",
         effekt: 0,
+        uid: nanoid()
 
     })
     const [lasts, setLasts] = React.useState([])
@@ -23,6 +24,13 @@ export default function Ovrigelast(props) {
     }
 
     function saveData() {
+        setLast(prev => {
+            return {
+                ...prev,
+                uid: nanoid()
+            }
+        })
+
         setLasts(prev => [...prev, last])
     }
 
@@ -32,10 +40,10 @@ export default function Ovrigelast(props) {
 
     useEffect(() => {
         setLastsTable(lasts.map((item) => (
-            <tr className="tbro">
-                <td className="tbel">{item.navn}</td>
-                <td className="tbel">{item.effekt}</td>
-                <td className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
+            <tr key={nanoid()} className="tbro">
+                <td key={nanoid()} className="tbel">{item.navn}</td>
+                <td key={nanoid()} className="tbel">{item.effekt}</td>
+                <td key={nanoid()} className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
             </tr>
         )))
     }, [lasts])
@@ -47,6 +55,7 @@ export default function Ovrigelast(props) {
     return (
         <div>
             <div className="border">
+
                 <form className="formInnData">
                     <label className="label">Last Navn:
                         <input
@@ -76,12 +85,16 @@ export default function Ovrigelast(props) {
                 <>
                     <div className="table">
                         <table >
-                            <tr>
-                                <th className="tbhr">Effekt [W]</th>
-                                                            <th className="tbhr">Last Navn</th>
-                                <th className="tbhr">Fjern</th>
-                            </tr>
-                            {lastsTable}
+                            <thead>
+                                <tr>
+                                    <th className="tbhr">Last Navn</th>
+                                    <th className="tbhr">Effekt [W]</th>
+                                    <th className="tbhr">Fjern</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {lastsTable}
+                            </tbody>
                         </table>
                     </div>
                 </>

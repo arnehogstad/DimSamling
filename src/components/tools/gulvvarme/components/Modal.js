@@ -89,6 +89,7 @@ export default function Modal(props){
           <OpenCSVModal
             showModal={props.showModal}
             setShowModal={props.setShowModal}
+            setProjectName={props.setProjectName}
             units={props.units}
             deleteUnit={props.deleteUnit}
             toggleVisibility = {toggleVisibility}
@@ -329,8 +330,7 @@ function OpenProjectModal(props){
 function OpenCSVModal(props){
   const [csvFile, setCsvFile] = React.useState();
   const [csvArray, setCsvArray] = React.useState([]);
-
-
+  var tempProjectName = ""
 
   //funksjon som returnerer CSV tilbake til object
   const processCSV = (str, delim=',') => {
@@ -374,6 +374,8 @@ function OpenCSVModal(props){
         return tempRoom
       }
 
+
+
       //function parsing unit into object
       function deconstructUnit(unit){
         const tempRoomArr = []
@@ -406,10 +408,12 @@ function OpenCSVModal(props){
               tempUnit.termostatType=value
             }else if (key.includes("termostatStandard")){
               tempUnit.termostatStandard=value
+            }else if (key.includes("projectName") && tempProjectName === "") {
+              tempProjectName = value
             }
           }else{
             //setting the values for the rooms
-            console.log(`${key}: ${value}`);
+            //console.log(`${key}: ${value}`);
             let roomPrefix = key.substring(0, 6)
             //if new room - create new empty room and save the new name of the room
             if(roomNames.includes(roomPrefix) === false){
@@ -421,7 +425,7 @@ function OpenCSVModal(props){
             let roomPos = roomNames.indexOf(roomPrefix)
             //updating the relevant room value
             if (key.includes("floor")){
-              console.log(key);
+              //console.log(key);
               roomArr[roomPos].floor=value
             }else if (key.includes("name")){
               roomArr[roomPos].name=value
@@ -453,18 +457,18 @@ function OpenCSVModal(props){
         let lastRoom = returnEmptyRoom()
         finalRoomArr.push(lastRoom)
         tempUnit.rooms=finalRoomArr
-        console.log(tempUnit);
         return tempUnit
       }
 
       //Listener on changes in units, toggles showResult back to false if set to true
       React.useEffect(()=>{
-
         if(csvArray.length > 0){
           csvArray.forEach((unit,index) => {
             let tempUnit = deconstructUnit(unit)
             props.addUnit("","",tempUnit)
           })
+          console.log(`lagret verdi: ${tempProjectName}`)
+          props.setProjectName(tempProjectName)
           props.setShowModal({show:false,modalName:""})
         }
 

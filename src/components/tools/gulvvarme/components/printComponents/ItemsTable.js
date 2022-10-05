@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import TableRow from "./TableRow";
 
@@ -11,13 +11,17 @@ const styles = StyleSheet.create({
 
 export default function ItemsTable(props){
 
-return (
-  <View style={styles.tableContainer}>
+const tables = props.data.map((unit) => (
+  <TableRow
+    unit={unit}
+  />
+))
 
-    <TableRow
-      data={props.data}
-    />
+
+return (
+  <Fragment>
+    {tables}
     {/*<TableFooter items={data.items} />*/}
-  </View>
+  </Fragment>
 )
 }

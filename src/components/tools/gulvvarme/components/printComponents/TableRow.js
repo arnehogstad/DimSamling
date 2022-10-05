@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 0.5,
   },
-
   rowHeader: {
     flexDirection: "row",
     alignItems: "left",
@@ -23,23 +22,25 @@ const styles = StyleSheet.create({
   xyz: {
     width: "20%",
   },
+  tableContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 10,
+  },
 });
 
 export default function TableRow(props){
 
-  console.log(props.data)
+  console.log(props.unit)
 
-  const rows = props.data.map((unit) =>(
-      unit.rooms.map((item, index) => (
-    <View style={styles.row} key={item.id.toString()}>
-      <Text style={styles.description}>{item.name}</Text>
-      <Text style={styles.description}>{item.area}</Text>
-      <Text style={styles.xyz}>{item.cc}</Text>
-      <Text style={styles.xyz}>{item.circuits}</Text>
+  const rows = props.unit.rooms.map((room,index) =>(
+    <View style={styles.row} key={room.id.toString()}>
+      <Text style={styles.description}>{room.name}</Text>
+      <Text style={styles.description}>{room.area}</Text>
+      <Text style={styles.xyz}>{room.cc}</Text>
+      <Text style={styles.xyz}>{room.circuits}</Text>
     </View>
-  ))))
-
-
+  ))
 
   return (
     <Fragment>
@@ -50,19 +51,19 @@ export default function TableRow(props){
 
 function TableHeader() {
   return(
-    <Fragment>
-    <View style={styles.rowHeader} key="TableHeader1">
-      <Text style={styles.description}>Rom</Text>
-      <Text style={styles.description}>Areal</Text>
-      <Text style={styles.xyz}>Røravstand</Text>
-      <Text style={styles.xyz}>Antall kurser</Text>
+    <View style={styles.tableContainer}>
+      <View style={styles.rowHeader}>
+        <Text style={styles.description}>Rom</Text>
+        <Text style={styles.description}>Areal</Text>
+        <Text style={styles.xyz}>Røravstand</Text>
+        <Text style={styles.xyz}>Antall kurser</Text>
+      </View>
+      <View style={styles.rowHeader}>
+        <Text style={styles.description}>[]</Text>
+        <Text style={styles.description}>[m2]</Text>
+        <Text style={styles.xyz}>[mm]</Text>
+        <Text style={styles.xyz}>[stk]</Text>
+      </View>
     </View>
-    <View style={styles.rowHeader} key="TableHeader2">
-      <Text style={styles.description}>[]</Text>
-      <Text style={styles.description}>[m2]</Text>
-      <Text style={styles.xyz}>[mm]</Text>
-      <Text style={styles.xyz}>[stk]</Text>
-    </View>
-    </Fragment>
   )
 }

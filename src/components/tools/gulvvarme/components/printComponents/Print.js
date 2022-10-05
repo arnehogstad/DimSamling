@@ -44,6 +44,8 @@ export default function Print(props){
 }
 )
 
+console.log(props.dataIndex);
+
   return(
     <Document>
       <Page size="A4" style={styles.page}>

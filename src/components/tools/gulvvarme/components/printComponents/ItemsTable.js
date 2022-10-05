@@ -11,16 +11,20 @@ const styles = StyleSheet.create({
 
 export default function ItemsTable(props){
 
-const tables = props.data.map((unit) => (
-  <TableRow
-    unit={unit}
-  />
-))
-
+const tables =
+  props.data.map((unit, index) => (
+    <TableRow
+      key={`${unit.unitId}table`}
+      unit={unit}
+    />
+  ))
 
 return (
   <Fragment>
-    {tables}
+    {props.dataIndex === 0 ?
+      tables :
+      tables[props.dataIndex-1]
+    }
     {/*<TableFooter items={data.items} />*/}
   </Fragment>
 )

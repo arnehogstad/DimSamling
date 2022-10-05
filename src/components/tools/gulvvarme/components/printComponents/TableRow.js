@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 10,
+    marginTop: 20,
   },
 });
 
@@ -44,21 +44,21 @@ export default function TableRow(props){
 
   return (
     <Fragment>
-      <TableHeader />
+      <TableHeader unitId ={props.unit.unitId} />
       {rows}
     </Fragment>)
 }
 
-function TableHeader() {
+function TableHeader(props) {
   return(
     <View style={styles.tableContainer}>
-      <View style={styles.rowHeader}>
+      <View style={styles.rowHeader} key={`${props.unitId}1`}>
         <Text style={styles.description}>Rom</Text>
         <Text style={styles.description}>Areal</Text>
         <Text style={styles.xyz}>Røravstand</Text>
         <Text style={styles.xyz}>Antall kurser</Text>
       </View>
-      <View style={styles.rowHeader}>
+      <View style={styles.rowHeader}key={`${props.unitId}2`}>
         <Text style={styles.description}>[]</Text>
         <Text style={styles.description}>[m2]</Text>
         <Text style={styles.xyz}>[mm]</Text>

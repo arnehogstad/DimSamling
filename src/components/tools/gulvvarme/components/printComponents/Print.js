@@ -44,8 +44,6 @@ export default function Print(props){
 }
 )
 
-console.log(props.dataIndex);
-
   return(
     <Document>
       <Page size="A4" style={styles.page}>
@@ -58,6 +56,7 @@ console.log(props.dataIndex);
         />
         <Table
           data={props.data}
+          dataIndex = {props.dataIndex}
           styleTable={styles.table}
         />
       </Page>

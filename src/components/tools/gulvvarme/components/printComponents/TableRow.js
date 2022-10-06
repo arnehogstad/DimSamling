@@ -5,9 +5,17 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     alignItems: "left",
-    borderColor: 'black',
-    borderWidth: 0.5,
     width: "100%",
+  },
+  rowSummation: {
+    flexDirection: "row",
+    alignItems: "left",
+    borderTopColor: 'black',
+    borderTopWidth: 0.5,
+    borderBottomColor: 'black',
+    borderBottomWidth: 0.5,
+    width: "100%",
+
   },
   rowHeader: {
     flexDirection: "row",
@@ -41,10 +49,12 @@ export default function TableRow(props){
   const rows = sortedByFloor.map((room,index) =>(
     <Fragment key={`${props.unit.unitId}${room.id}`}>
     {index === 1 ?
-      <View style={styles.row} key={`${props.unit.unitId}${room.floor}2`}>
+      <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
         <Text style={styles.description}>{room.floor}</Text>
         <Text style={styles.description}></Text>
-        <Text style={styles.description}></Text>
+        <Text style={styles.description}>
+          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).length} stk
+        </Text>
         <Text style={styles.description}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+parseFloat(curr.area),0)}
         </Text>
@@ -55,8 +65,19 @@ export default function TableRow(props){
       </View>
       :
       index > 1 && sortedByFloor[index-1].floor !== room.floor ?
-      <View style={styles.row} key={`${props.unit.unitId}${room.floor}2`}>
+      <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
         <Text style={styles.description}>{room.floor}</Text>
+        <Text style={styles.description}></Text>
+        <Text style={styles.description}>
+          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).length} stk
+        </Text>
+        <Text style={styles.description}>
+          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+parseFloat(curr.area),0)}
+        </Text>
+        <Text style={styles.xyz}></Text>
+        <Text style={styles.xyz}>
+          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+curr.circuits,0)}
+        </Text>
       </View>
       : null
     }

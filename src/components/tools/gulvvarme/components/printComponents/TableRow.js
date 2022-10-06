@@ -34,7 +34,8 @@ const styles = StyleSheet.create({
 export default function TableRow(props){
 
 
-  const sortedByFloor = props.unit.rooms.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
+  const tempSortByFloor = props.unit.rooms.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
+  const sortedByFloor = tempSortByFloor.map((room)=> ({...room, floor: room.floor.replace(' - bjelkelag', '').replace(' - betong', '')}))
 
 
   const rows = sortedByFloor.map((room,index) =>(
@@ -42,6 +43,15 @@ export default function TableRow(props){
     {index === 1 ?
       <View style={styles.row} key={`${props.unit.unitId}${room.floor}2`}>
         <Text style={styles.description}>{room.floor}</Text>
+        <Text style={styles.description}></Text>
+        <Text style={styles.description}></Text>
+        <Text style={styles.description}>
+          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+parseFloat(curr.area),0)}
+        </Text>
+        <Text style={styles.xyz}></Text>
+        <Text style={styles.xyz}>
+          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+curr.circuits,0)}
+        </Text>
       </View>
       :
       index > 1 && sortedByFloor[index-1].floor !== room.floor ?

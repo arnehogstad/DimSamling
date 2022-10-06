@@ -52,13 +52,13 @@ function footer () {
         ]
     })
 
-console.log(innDatas.luftmengde)
+
 
 doc.autoTable({
     startY: 130,
     head: [
-        [{ content: 'Luft effekt', colSpan: 2 }, { content: 'Transmission Effekt', colSpan: 4 }, { content: 'Annet Effekt', colSpan: 2 }],
-        ["Infiltrasjon", "Ventilasjon", "Vegg", "Tak", "Loft", "Gulv", "Utstyr", "Personer"]],
+        [{ content: 'Luft effekt', colSpan: 2 }, { content: 'Transmission Effekt', colSpan: 4 }, { content: 'Annet Effekt', colSpan: 3 }],
+        ["Infiltrasjon", "Ventilasjon", "Vegg", "Tak", "Loft", "Gulv", "Utstyr", "Personer","Belysning"]],
     body: [lasts],
 })
 

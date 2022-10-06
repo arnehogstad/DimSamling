@@ -1,9 +1,11 @@
 import React from "react"
 import { nanoid } from '@reduxjs/toolkit'
 import * as staticData from '../../static/staticData'
-import BeregnVV from "./BeregnVV"
+import { kWhData, BeregnVolEl, BeregnForvarmSpiss } from "./BeregnVV"
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
+import "../../../styles/varmtvann/VVStyle.css"
+import { useRef } from "react";
 
 
 
@@ -13,14 +15,14 @@ export default function ProsjektData(props) {
         {
             Navn: "Prosjekt Navn",
             Referanse: "Navn",
-            ByggType: "Bar",
-            antall: 330, // For CTC file to caculate kWh, can be number of students, guests or dusje
+            ByggType: "Boligblokk (3+ personer)",
+            antall: 10, // For CTC file to caculate kWh, can be number of students, guests or dusje
             leiligheter: 10,
             årsforbruk: 0,
 
             netVannTemp: 7,
-            tappeVannTemp: 40,
-            berederTemp: 70,
+            tappeVannTemp: 40, 
+
 
 
             vpEffekt: 11,
@@ -30,33 +32,67 @@ export default function ProsjektData(props) {
             startTemp: 52,
 
             spissElEffekt: 15,
-            spissSettpunkt: 70,
+            spissSettpunkt: 65,
             spissVolume: 400,
 
             uid: nanoid(),
-            sliderX: 50,
+            sliderVolEl: 40,
+            sliderForvarmingSpiss: 40,
         }
     )
 
-    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, berederTemp, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp, spissElEffekt, spissSettpunkt, spissVolume, uid, sliderX } = prosjketData
-
+    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp, spissElEffekt, spissSettpunkt, spissVolume, uid, sliderVolEl, sliderForvarmingSpiss } = prosjketData
 
 
     function handleChange(event) {
         const { name, value } = event.target
-        setProsjektData(prevFormData => {
-            return {
-                ...prevFormData,
-                [name]: value,
-            }
-        })
+        if (name === "ByggType") {
+            setProsjektData(prevFormData => {
+                return {
+                    ...prevFormData,
+                    [name]: value,
+                    antall: staticData.byggTypeVVInnDataType[value].verdier[4],
+                }
+            })
+        } else {
+            setProsjektData(prevFormData => {
+                return {
+                    ...prevFormData,
+                    [name]: value,
+                }
+            })
+        }
     }
 
-   
-const kW = BeregnVV(ByggType,antall,sliderX)
+    const [kWhEnheter, setKWhEnheter] = React.useState([])
+    const [kWh, setkWh] = React.useState(0) //total kWh 
 
 
 
+    function leggtil(e) {
+        e.preventDefault()
+        setkWh(prev => prev + kWhData(ByggType, antall))
+        setKWhEnheter(prev => [...prev, { Navn: ByggType, Antall:antall ,kWh: kWhData(ByggType, antall), uid: nanoid() }])
+    }
+
+    const handleDelete = (item) => {
+        setKWhEnheter(kWhEnheter.filter(i => i !== item))
+        setkWh(prev => prev - item.kWh)
+    }
+
+    let kWTabel = kWhEnheter.map((item) => (
+        <tr key={nanoid()} className="tbro">
+            <td key={nanoid()} className="tbel">{item.Navn}</td>
+            <td key={nanoid()} className="tbel">{item.Antall}</td>
+            <td key={nanoid()} className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
+        </tr>
+    ))
+
+
+    let [kW, TotalVol70C] = BeregnVolEl(ByggType, antall, sliderVolEl, kWh)
+    let [forvarmingVol, spissVol] = BeregnForvarmSpiss(TotalVol70C, sliderForvarmingSpiss, settpunktVP, spissSettpunkt)
+
+    console.log(kWhData(ByggType, antall))
 
     return (
 
@@ -101,29 +137,97 @@ const kW = BeregnVV(ByggType,antall,sliderX)
 
 
 
-                <div className="selected">
-                    <label className="label" htmlFor="ByggType">{staticData.byggTypeVVInnDataType[ByggType].navn}:</label>
-                    <select
-                        className="select"
-                        id="antall"
-                        value={antall}
+
+
+                <label className="label">{staticData.byggTypeVVInnDataType[ByggType].navn} (Min: {Math.min(...staticData.byggTypeVVInnDataType[ByggType].verdier)}, Maks: {Math.max(...staticData.byggTypeVVInnDataType[ByggType].verdier)}):
+                    <input
+                        className="input"
+                        type="number"
                         onChange={handleChange}
                         name="antall"
-                    >
-                        {staticData.byggTypeVVInnDataType[ByggType].verdier.map((item) => (
-                            <option key={nanoid()} value={item}>{item}</option>
-                        ))}
-                    </select>
+                        value={antall}
+                    /></label>
+
+                <button className="sisteNeste" onClick={leggtil}>Legg til enhet</button>
+
+                {kWhEnheter.length !== 0 ? (
+                   
+                   <div className="VVresults">
+                   <div className="VVtable">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th className="tbhr">Navn</th>
+                                    <th className="tbhr">Antall</th>
+                                    <th className="tbhr">Fjern</th>
+                                </tr>
+                            </thead>
+                            <tbody>{kWTabel}</tbody>
+                        </table>
+                    </div>
+              
+
+
+
+                <label className="label">Varmepumpe setpunkt [{'\u00b0'}C]:
+                    <input
+                        className="input"
+                        type="number"
+                        onChange={handleChange}
+                        name="settpunktVP"
+                        value={settpunktVP}
+                    /></label>
+
+                <label className="label">Sett punkt for spissbereder [{'\u00b0'}C]
+                    <input
+                        className="input"
+                        type="number"
+                        onChange={handleChange}
+                        name="spissSettpunkt"
+                        value={spissSettpunkt}
+                    /></label>
+
+
+
+
+                <div className="VVSlider">
+
+                    <Box sx={{ width: 200 }}  >
+                        <Slider
+                            name="sliderVolEl"
+                            value={sliderVolEl}
+                            min={20}
+                            max={80}
+                            marks={[{ value: 20, label: "Mer VV volum" }, { value: 80, label: "Mer effekt" }]}
+                            onChange={handleChange} />
+                    </Box>
+                    <p>Samlet effekt av Varmepumpe og el-kolbe i spissbereder: {kW} kW </p>
                 </div>
 
-<p>Elektrik verdi: {kW}</p>
 
-<Box sx={{ width: 200 }}>
-<Slider name="sliderX" value={sliderX}  min={30} max={90} onChange={handleChange} />
-</Box>
-               
 
-{/*
+                <div className="VVSlider">
+                    <Box sx={{ width: 200 }}  >
+                        <Slider
+                            name="sliderForvarmingSpiss"
+                            value={sliderForvarmingSpiss}
+                            min={20}
+                            max={80}
+                            marks={[{ value: 20, label: "Mer spiss volume" }, { value: 80, label: "Mer formvarming volum" }]}
+                            onChange={handleChange} />
+                    </Box>
+
+                    <p>Forvarming volume: {forvarmingVol} liter </p>
+                    <p>Spiss volume: {spissVol} liter </p>
+                   
+                </div>
+                 
+                </div>
+
+) : null}
+
+
+                {/*
 
 <label className="label">Antall leiligheter:
     <input
@@ -205,14 +309,6 @@ const kW = BeregnVV(ByggType,antall,sliderX)
                     /></label>
 
 
-                <label className="label">Varmepumpe settpunkt [{'\u00b0'}C]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="settpunktVP"
-                        value={settpunktVP}
-                    /></label>
 
 
                 <label className="label">Start volume spiralbereder [l]:
@@ -245,14 +341,6 @@ const kW = BeregnVV(ByggType,antall,sliderX)
                     /></label>
 
 
-                <label className="label">Sett punkt for spissbereder [{'\u00b0'}C]
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="spissSettpunkt"
-                        value={spissSettpunkt}
-                    /></label>
 
                 <label className="label">Volume of spissbereder [l]:
                     <input

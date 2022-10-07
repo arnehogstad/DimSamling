@@ -14,6 +14,8 @@ export default function Table(props){
         <ItemsTable
           data={props.data}
           dataIndex={props.dataIndex}
+          unitInfo={props.unitInfo}
+          articleList = {props.articleList}
         />
     </View>
   )

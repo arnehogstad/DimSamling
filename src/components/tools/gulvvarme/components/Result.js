@@ -585,7 +585,13 @@ function ResultHeader(props){
           </div>
         <>
           <PDFViewer width="100%" height="100%">
-            <Print data={props.unitObjects} dataIndex={props.unitObjectIndex} headline={`Materialliste - ${props.projectName}`}/>
+            <Print
+              data={props.unitObjects}
+              unitInfo={props.unit}
+              articleList = {props.articleList}
+              dataIndex={props.unitObjectIndex}
+              headline={`Materialliste - ${props.projectName}`}
+            />
           </PDFViewer>
         </>
         </div>

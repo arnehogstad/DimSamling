@@ -46,7 +46,7 @@ export default function Print(props){
 
   return(
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" style={styles.page} wrap>
         <Header
           headline={props.headline}
           styleHeader={styles.header}
@@ -56,6 +56,8 @@ export default function Print(props){
         />
         <Table
           data={props.data}
+          unitInfo={props.unitInfo}
+          articleList = {props.articleList}
           dataIndex = {props.dataIndex}
           styleTable={styles.table}
         />

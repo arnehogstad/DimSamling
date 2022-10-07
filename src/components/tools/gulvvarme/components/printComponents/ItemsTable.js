@@ -16,6 +16,8 @@ const tables =
     <TableRow
       key={`${unit.unitId}table`}
       unit={unit}
+      unitInfo={props.unitInfo}
+      articleList = {props.articleList} 
     />
   ))
 

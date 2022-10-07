@@ -1,12 +1,17 @@
 import React from "react"
 import { nanoid } from '@reduxjs/toolkit'
 import * as staticData from '../../static/staticData'
-import { kWhData, BeregnVolEl, BeregnForvarmSpiss } from "./BeregnVV"
+import { minVolSpiss,minVolVP, BeregnEffekt, kWhData, BeregnVolEl, BeregnForvarmSpiss } from "./BeregnVV"
 import Slider from '@mui/material/Slider';
 import Box from '@mui/material/Box';
 import "../../../styles/varmtvann/VVStyle.css"
-import { useRef } from "react";
-
+import Stack from '@mui/material/Stack';
+import ElectricMeterIcon from '@mui/icons-material/ElectricMeter';
+import PropaneTankIcon from '@mui/icons-material/PropaneTank';
+import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
+import HvacIcon from '@mui/icons-material/Hvac';
+import { flexbox } from "@mui/system";
+import { Row } from "jspdf-autotable";
 
 
 export default function ProsjektData(props) {
@@ -21,7 +26,7 @@ export default function ProsjektData(props) {
             årsforbruk: 0,
 
             netVannTemp: 7,
-            tappeVannTemp: 40, 
+            tappeVannTemp: 40,
 
 
 
@@ -30,18 +35,23 @@ export default function ProsjektData(props) {
             spiralVolume: 500,
             startVolume: 200,
             startTemp: 52,
+            forvarmingELeffekt: 0,
 
             spissElEffekt: 15,
             spissSettpunkt: 65,
             spissVolume: 400,
 
+            backupType: "Spiss el-kolbe som dekker 100% av behov",
+
             uid: nanoid(),
             sliderVolEl: 40,
-            sliderForvarmingSpiss: 40,
+            sliderForvarmingSpiss: 60,
         }
     )
 
-    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp, spissElEffekt, spissSettpunkt, spissVolume, uid, sliderVolEl, sliderForvarmingSpiss } = prosjketData
+    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp,forvarmingELeffekt, spissElEffekt, spissSettpunkt, spissVolume, backupType, uid, sliderVolEl, sliderForvarmingSpiss } = prosjketData
+
+
 
 
     function handleChange(event) {
@@ -72,7 +82,7 @@ export default function ProsjektData(props) {
     function leggtil(e) {
         e.preventDefault()
         setkWh(prev => prev + kWhData(ByggType, antall))
-        setKWhEnheter(prev => [...prev, { Navn: ByggType, Antall:antall ,kWh: kWhData(ByggType, antall), uid: nanoid() }])
+        setKWhEnheter(prev => [...prev, { Navn: ByggType, Antall: antall, kWh: kWhData(ByggType, antall), uid: nanoid() }])
     }
 
     const handleDelete = (item) => {
@@ -92,8 +102,17 @@ export default function ProsjektData(props) {
     let [kW, TotalVol70C] = BeregnVolEl(ByggType, antall, sliderVolEl, kWh)
     let [forvarmingVol, spissVol] = BeregnForvarmSpiss(TotalVol70C, sliderForvarmingSpiss, settpunktVP, spissSettpunkt)
 
-    console.log(kWhData(ByggType, antall))
+    let dekningGradMaks = (settpunktVP - netVannTemp) / (spissSettpunkt - netVannTemp)
+    let spisseff = BeregnEffekt(spissVol, kWh, spissSettpunkt)
+    let vpefff = BeregnEffekt(forvarmingVol, kWh * dekningGradMaks, settpunktVP)
 
+
+    let minVolume = {
+        minimumVPVol: minVolVP(vpEffekt, kWh * dekningGradMaks, settpunktVP),
+        minimumSpissVol: minVolSpiss(spissElEffekt, kWh, spissSettpunkt,backupType,dekningGradMaks,forvarmingELeffekt)
+    }
+
+    console.log(minVolume.minimumVPVol, minVolume.minimumSpissVol, dekningGradMaks)
     return (
 
 
@@ -148,37 +167,8 @@ export default function ProsjektData(props) {
                         value={antall}
                     /></label>
 
-                <button className="sisteNeste" onClick={leggtil}>Legg til enhet</button>
 
-                {kWhEnheter.length !== 0 ? (
-                   
-                   <div className="VVresults">
-                   <div className="VVtable">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="tbhr">Navn</th>
-                                    <th className="tbhr">Antall</th>
-                                    <th className="tbhr">Fjern</th>
-                                </tr>
-                            </thead>
-                            <tbody>{kWTabel}</tbody>
-                        </table>
-                    </div>
-              
-
-
-
-                <label className="label">Varmepumpe setpunkt [{'\u00b0'}C]:
-                    <input
-                        className="input"
-                        type="number"
-                        onChange={handleChange}
-                        name="settpunktVP"
-                        value={settpunktVP}
-                    /></label>
-
-                <label className="label">Sett punkt for spissbereder [{'\u00b0'}C]
+                <label className="label">Spiss settpunkt[{'\u00b0'}C]:
                     <input
                         className="input"
                         type="number"
@@ -187,44 +177,151 @@ export default function ProsjektData(props) {
                         value={spissSettpunkt}
                     /></label>
 
+                <label className="label" >VP setpunkt [{'\u00b0'}C]:
+                    <input
+                        className="input"
+                        type="number"
+                        onChange={handleChange}
+                        name="settpunktVP"
+                        value={settpunktVP}
+                    /></label>
+
+                <label className="label" >Nett vann  temperatur [{'\u00b0'}C]:
+                    <input
+                        className="input"
+                        type="number"
+                        onChange={handleChange}
+                        name="netVannTemp"
+                        value={netVannTemp}
+                    /></label>
 
 
 
-                <div className="VVSlider">
+                <button className="sisteNeste" onClick={leggtil}>Legg til enhet</button>
 
-                    <Box sx={{ width: 200 }}  >
-                        <Slider
-                            name="sliderVolEl"
-                            value={sliderVolEl}
-                            min={20}
-                            max={80}
-                            marks={[{ value: 20, label: "Mer VV volum" }, { value: 80, label: "Mer effekt" }]}
-                            onChange={handleChange} />
-                    </Box>
-                    <p>Samlet effekt av Varmepumpe og el-kolbe i spissbereder: {kW} kW </p>
-                </div>
+                {kWhEnheter.length !== 0 ? (
 
 
 
-                <div className="VVSlider">
-                    <Box sx={{ width: 200 }}  >
-                        <Slider
-                            name="sliderForvarmingSpiss"
-                            value={sliderForvarmingSpiss}
-                            min={20}
-                            max={80}
-                            marks={[{ value: 20, label: "Mer spiss volume" }, { value: 80, label: "Mer formvarming volum" }]}
-                            onChange={handleChange} />
-                    </Box>
 
-                    <p>Forvarming volume: {forvarmingVol} liter </p>
-                    <p>Spiss volume: {spissVol} liter </p>
-                   
-                </div>
-                 
-                </div>
+                    <div className="VVresults">
+                        <div className="VVtable">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th className="tbhr">Navn</th>
+                                        <th className="tbhr">Antall</th>
+                                        <th className="tbhr">Fjern</th>
+                                    </tr>
+                                </thead>
+                                <tbody>{kWTabel}</tbody>
+                            </table>
+                        </div>
 
-) : null}
+
+                        <label className="label" >VP effekt [kW]:
+                            <input
+                                className="input"
+                                type="number"
+                                onChange={handleChange}
+                                name="vpEffekt"
+                                value={vpEffekt}
+                            /></label>
+
+                        <label className="label" >Spiss el-kolbe effekt [kW]:
+                            <input
+                                className="input"
+                                type="number"
+                                onChange={handleChange}
+                                name="spissElEffekt"
+                                value={spissElEffekt}
+                            /></label>
+
+                        <div className="selected">
+                            <label className="label" htmlFor="backUpType">Backup type:</label>
+                            <select
+                                className="select"
+                                id="backupType"
+                                value={backupType}
+                                onChange={handleChange}
+                                name="backupType"
+                            >
+                                <option key={nanoid()} value="Spiss el-kolbe som dekker 100% av behov">Spiss dekker 100% av behov</option>
+                                <option key={nanoid()} value="Spiss el-kolbe">Spiss el-kolbe</option>
+                                <option key={nanoid()} value="Spiss el-kolbe plus el-kolbe i forvarming">Spiss el-kolbe plus el-kolbe i forvarming </option>
+                            </select>
+                        </div>
+
+
+
+
+                        {backupType === "Spiss el-kolbe plus el-kolbe i forvarming" ? (
+                            <div className="VVresults">
+                           <label className="label" >El-kolbe effekt i forvarming tanke: [kW]:
+                                <input
+                                    className="input"
+                                    type="number"
+                                    onChange={handleChange}
+                                    name="forvarmingELeffekt"
+                                    value={forvarmingELeffekt}
+                                /></label>
+                                    </div>
+                        ) : null}
+
+                            <p>Minimum anbefalt volume for forvarmingbereder er {minVolume.minimumVPVol} liter og for spissbereder er {minVolume.minimumSpissVol} liter.</p>     
+                        <div className="VVSlider">
+
+                            <Box sx={{ width: 500, mt: 5 }}  >
+
+
+                                <Stack spacing={2} direction="row" alignItems="center">
+                                    <OfflineBoltIcon sx={{ height: 50 }} />
+                                    <Slider
+                                        name="sliderVolEl"
+                                        value={sliderVolEl}
+                                        min={20}
+                                        max={80}
+                                        marks={[{ value: 20, label: "Mer effekt" }, { value: 80, label: "Mer VV volum" }]}
+                                        onChange={handleChange} />
+                                    <PropaneTankIcon sx={{ height: 50 }} />
+                                </Stack>
+                            </Box>
+                            <p>Samlet effekt av Varmepumpe og el-kolbe i spissbereder: {kW} kW </p>
+                            <p> VV 70C volum: {TotalVol70C} L</p>
+                        </div>
+
+
+
+                        <div className="VVSlider">
+                            <Box sx={{ width: 500, mt: 5 }}  >
+
+                                <Stack spacing={2} direction="row" alignItems="center">
+                                    <ElectricMeterIcon sx={{ height: 50 }} />
+                                    <Slider
+                                        name="sliderForvarmingSpiss"
+                                        value={sliderForvarmingSpiss}
+                                        min={20}
+                                        max={70}
+                                        marks={[{ value: 20, label: "Mer spiss volume" }, { value: 70, label: "Mer formvarming volum" }]}
+                                        onChange={handleChange} />
+                                    <HvacIcon sx={{ height: 50 }} />
+                                </Stack>
+
+
+                                <Stack spacing={2} mt={5} direction="row" alignItems="center" justifyContent='space-between'>
+                                    <p>Spiss: {spissVol} L og {spisseff} kW </p>
+                                    <p >Forvarming: {forvarmingVol} L og {vpefff} kW </p>
+
+                                </Stack>
+
+
+                            </Box>
+
+                        </div>
+
+                    </div>
+
+                ) : null}
 
 
                 {/*

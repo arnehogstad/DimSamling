@@ -23,11 +23,11 @@ export  function BeregnVolEl(ByggType, antall,sliderX,kWhIn) {
   
       
     let kW_0 = 0.346*kWhIn //determines the offsett based on the KWh maximum heating kW
-    //console.log(kWhData(ByggType, antall))
+    
     let volume_0 = kW_0/0.0259 //determines intercept at x=0, maximum volume 
     
-    let kW=Math.round(-0.0259*volume_0*(1-sliderX/100)+kW_0) //returns the kW for the given building type and number of people
-    let volume=Math.round(volume_0*(1-sliderX/100)) //returns the volume for the given building type and number of people
+    let kW=Math.round(-0.0259*volume_0*(sliderX/100)+kW_0) //returns the kW for the given building type and number of people
+    let volume=Math.round(volume_0*(sliderX/100)) //returns the volume for the given building type and number of people
     return [kW,volume]
 }
     
@@ -36,4 +36,43 @@ export function BeregnForvarmSpiss(TotalVol70C,sliderForvarmingSpiss,settpunktVP
     let forvarmVol=Math.round(forvarmetVann*sliderForvarmingSpiss/100)
     let spissVol= Math.round(forvarmetVann*(1-sliderForvarmingSpiss/100))
     return [forvarmVol,spissVol]
+}
+
+
+export  function BeregnEffekt (volume,kWhIn,settTemp) {
+    let kW_0 = 0.346*kWhIn //determines the offsett based on the KWh maximum heating kW
+   let aktuelVolume= volume*70/settTemp
+    let Effekt=Math.round(-0.0259*aktuelVolume+kW_0)
+return Effekt
+}
+
+export function minVolVP (kW,kWhIn,settTemp){
+    let kW_0 = 0.346*kWhIn //determines the offsett based on the KWh maximum heating 
+    let Vol70C= (kW-kW_0)/-0.0259
+    let volume=Math.round(Vol70C*70/settTemp)
+    return volume
+}
+
+
+export function minVolSpiss (kW,kWhIn,settTemp,backUpType,dekningGradMaks,forvarmingELeffekt){
+   if (backUpType==="Spiss el-kolbe som dekker 100% av behov"){
+   
+    let kW_0 = 0.346*kWhIn //determines the offsett based on the KWh maximum heating 
+    let Vol70C= (kW-kW_0)/-0.0259
+    let volume=Math.round(Vol70C*70/settTemp)
+    return volume  } 
+    
+    else if  (backUpType==="Spiss el-kolbe")
+    { let kW_0 = 0.346*kWhIn*(1-dekningGradMaks) //determines the offsett based on the KWh maximum heating 
+    let Vol70C= (kW-kW_0)/-0.0259
+    let volume=Math.round(Vol70C*70/settTemp)>0 ? Math.round(Vol70C*70/settTemp) : 0
+    return volume}
+    
+    else if (backUpType==="Spiss el-kolbe plus el-kolbe i forvarming"){
+        
+        let kW_0 = 0.346*kWhIn //determines the offsett based on the KWh maximum heating 
+        let Vol70C= (kW+forvarmingELeffekt-kW_0)/-0.0259
+        let volume=Math.round(Vol70C*70/settTemp)-minVolVP (kW,kWhIn,settTemp)>0 ? Math.round(Vol70C*70/settTemp)-minVolVP (kW,kWhIn,settTemp) : 0
+        return volume  }
+
 }

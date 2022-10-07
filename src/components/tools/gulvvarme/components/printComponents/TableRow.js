@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
   description: {
     width: "15%",
   },
+  descriptionLarge: {
+    width: "35%",
+  },
   descriptionSmall: {
     width: "10%",
     paddingLeft: 10,
@@ -51,7 +54,6 @@ const styles = StyleSheet.create({
 
 export default function TableRow(props){
 
-
   const tempSortByFloor = props.unit.rooms.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
   const sortedByFloor = tempSortByFloor.map((room)=> ({...room, floor: room.floor.replace(' - bjelkelag', '').replace(' - betong', '')}))
 
@@ -61,44 +63,44 @@ export default function TableRow(props){
     <Fragment key={`${props.unit.unitId}${room.id}`}>
     {index === 1 ?
       <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
-        <Text style={styles.description}>{room.floor}</Text>
+        <Text style={styles.descriptionSmall}>{room.floor}</Text>
         <Text style={styles.description}></Text>
-        <Text style={styles.description}>
+        <Text style={styles.descriptionSmall}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).length} stk
         </Text>
-        <Text style={styles.description}>
+        <Text style={styles.descriptionSmall}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+parseFloat(curr.area),0)}
         </Text>
-        <Text style={styles.description}></Text>
-        <Text style={styles.description}>
+        <Text style={styles.descriptionSmall}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+curr.circuits,0)}
         </Text>
+        <Text style={styles.descriptionLarge}></Text>
       </View>
       :
       index > 1 && sortedByFloor[index-1].floor !== room.floor ?
       <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
-        <Text style={styles.description}>{room.floor}</Text>
+        <Text style={styles.descriptionSmall}>{room.floor}</Text>
         <Text style={styles.description}></Text>
-        <Text style={styles.description}>
+        <Text style={styles.descriptionSmall}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).length} stk
         </Text>
-        <Text style={styles.description}>
+        <Text style={styles.descriptionSmall}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+parseFloat(curr.area),0)}
         </Text>
-        <Text style={styles.description}></Text>
-        <Text style={styles.description}>
+        <Text style={styles.descriptionSmall}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+curr.circuits,0)}
         </Text>
+        <Text style={styles.descriptionLarge}></Text>
       </View>
       : null
     }
       <View style={styles.row} key={room.id.toString()}>
-        <Text style={styles.description}></Text>
-        <Text style={styles.description}></Text>
+        <Text style={styles.descriptionSmall}></Text>
         <Text style={styles.description}>{room.name}</Text>
-        <Text style={styles.description}>{room.area}</Text>
-        <Text style={styles.description}>{room.cc}</Text>
-        <Text style={styles.description}>{room.circuits}</Text>
+        <Text style={styles.descriptionSmall}>{room.area}</Text>
+        <Text style={styles.descriptionSmall}>{room.cc}</Text>
+        <Text style={styles.descriptionSmall}>{room.circuits}</Text>
+        <Text style={styles.descriptionLarge}>{room.pipetype}</Text>
       </View>
     </Fragment>
   ))
@@ -115,20 +117,19 @@ function TableHeader(props) {
   return(
     <View style={styles.tableContainer}>
       <View style={styles.rowHeader} key={`${props.unitId}1`}>
-        <Text style={styles.description}></Text>
-        <Text style={styles.description}></Text>
+        <Text style={styles.descriptionSmall}></Text>
         <Text style={styles.description}>Rom</Text>
-        <Text style={styles.description}>Areal</Text>
-        <Text style={styles.description}>Røravstand</Text>
-        <Text style={styles.description}>Antall kurser</Text>
+        <Text style={styles.descriptionSmall}>Areal</Text>
+        <Text style={styles.descriptionSmall}>CC</Text>
+        <Text style={styles.descriptionSmall}>Kurser</Text>
+        <Text style={styles.descriptionLarge}>Rørtype</Text>
       </View>
       <View style={styles.rowHeader}key={`${props.unitId}2`}>
-        <Text style={styles.description}></Text>
-        <Text style={styles.description}></Text>
+        <Text style={styles.descriptionSmall}></Text>
         <Text style={styles.description}>[]</Text>
-        <Text style={styles.description}>[m2]</Text>
-        <Text style={styles.description}>[mm]</Text>
-        <Text style={styles.description}>[stk]</Text>
+        <Text style={styles.descriptionSmall}>[m2]</Text>
+        <Text style={styles.descriptionSmall}>[mm]</Text>
+        <Text style={styles.descriptionLarge}>[]</Text>
       </View>
     </View>
   )
@@ -137,13 +138,21 @@ function TableHeader(props) {
 function UnitHeadline(props) {
 
   let area = props.unit.rooms.filter((room) => room.floor !== "").reduce((prev,curr)=>prev+parseFloat(curr.area),0)
+  let rooms = props.unit.rooms.filter((room) => room.floor !== "").length
   let circuits = props.unit.rooms.reduce((prev,curr)=>prev+curr.circuits,0)
   let wetrooms = props.unit.rooms.reduce((prev,curr)=>prev+curr.wetroom,0)
+  let floors = props.unit.rooms.filter((room) => room.floor !== "").reduce(function(values, v) {
+    if (!values.set[v.floor]) {
+      values.set[v.floor] = 1;
+      values.count++;
+    }
+    return values;
+  }, { set: {}, count: 0 }).count
 
   return (
     <View style={styles.tableHeadline}>
         <Text style={styles.row}>
-          {props.unit.unitName}
+          Romoversikt {props.unit.unitName}
         </Text>
         <Text style={styles.row}>
           Regulering: {props.unit.termostatType} - {props.unit.termostatStandard}
@@ -165,6 +174,28 @@ function UnitHeadline(props) {
           </Text>
           <Text style={styles.descriptionSmallNumber}>
             {circuits}
+          </Text>
+          <Text style={styles.descriptionSmall}>
+            stk
+          </Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.descriptionSmall}>
+            Rom
+          </Text>
+          <Text style={styles.descriptionSmallNumber}>
+            {rooms}
+          </Text>
+          <Text style={styles.descriptionSmall}>
+            stk
+          </Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.descriptionSmall}>
+            Etasjer
+          </Text>
+          <Text style={styles.descriptionSmallNumber}>
+            {floors}
           </Text>
           <Text style={styles.descriptionSmall}>
             stk

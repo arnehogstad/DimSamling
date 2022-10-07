@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import TableRow from "./TableRow";
+import TableRowArticles from "./TableRowArticles";
 
 const styles = StyleSheet.create({
   tableContainer: {
@@ -16,8 +17,6 @@ const tables =
     <TableRow
       key={`${unit.unitId}table`}
       unit={unit}
-      unitInfo={props.unitInfo}
-      articleList = {props.articleList} 
     />
   ))
 
@@ -27,7 +26,10 @@ return (
       tables :
       tables[props.dataIndex-1]
     }
-    {/*<TableFooter items={data.items} />*/}
+    <TableRowArticles
+      articleList = {props.articleList}
+      unitInfo={props.unitInfo}
+    />
   </Fragment>
 )
 }

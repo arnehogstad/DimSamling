@@ -1,17 +1,8 @@
 import React from "react"
 import { nanoid } from '@reduxjs/toolkit'
 import * as staticData from '../../static/staticData'
-import { minVolSpiss,minVolVP, BeregnEffekt, kWhData, BeregnVolEl, BeregnForvarmSpiss } from "./BeregnVV"
-import Slider from '@mui/material/Slider';
-import Box from '@mui/material/Box';
+import { sizeVP, minVolSpiss, minVolVP, BeregnEffekt, kWhData, BeregnVolEl, BeregnForvarmSpiss } from "./BeregnVV"
 import "../../../styles/varmtvann/VVStyle.css"
-import Stack from '@mui/material/Stack';
-import ElectricMeterIcon from '@mui/icons-material/ElectricMeter';
-import PropaneTankIcon from '@mui/icons-material/PropaneTank';
-import OfflineBoltIcon from '@mui/icons-material/OfflineBolt';
-import HvacIcon from '@mui/icons-material/Hvac';
-import { flexbox } from "@mui/system";
-import { Row } from "jspdf-autotable";
 
 
 export default function ProsjektData(props) {
@@ -27,7 +18,7 @@ export default function ProsjektData(props) {
 
             netVannTemp: 7,
             tappeVannTemp: 40,
-
+            perPersonVV: 70,
 
 
             vpEffekt: 11,
@@ -35,7 +26,7 @@ export default function ProsjektData(props) {
             spiralVolume: 500,
             startVolume: 200,
             startTemp: 52,
-            forvarmingELeffekt: 0,
+            forvarmingELeffekt: 5,
 
             spissElEffekt: 15,
             spissSettpunkt: 65,
@@ -49,13 +40,13 @@ export default function ProsjektData(props) {
         }
     )
 
-    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp,forvarmingELeffekt, spissElEffekt, spissSettpunkt, spissVolume, backupType, uid, sliderVolEl, sliderForvarmingSpiss } = prosjketData
+    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp, forvarmingELeffekt, spissElEffekt, spissSettpunkt, spissVolume, backupType, uid, sliderVolEl, sliderForvarmingSpiss } = prosjketData
 
 
 
 
     function handleChange(event) {
-        const { name, value } = event.target
+        const { name, value, type } = event.target
         if (name === "ByggType") {
             setProsjektData(prevFormData => {
                 return {
@@ -65,12 +56,21 @@ export default function ProsjektData(props) {
                 }
             })
         } else {
-            setProsjektData(prevFormData => {
-                return {
-                    ...prevFormData,
-                    [name]: value,
-                }
-            })
+            if (type === "number") {
+                setProsjektData(prevFormData => {
+                    return {
+                        ...prevFormData,
+                        [name]: parseInt(value),
+                    }
+                })
+            } else {
+                setProsjektData(prevFormData => {
+                    return {
+                        ...prevFormData,
+                        [name]: value,
+                    }
+                })
+            }
         }
     }
 
@@ -99,23 +99,19 @@ export default function ProsjektData(props) {
     ))
 
 
-    let [kW, TotalVol70C] = BeregnVolEl(ByggType, antall, sliderVolEl, kWh)
-    let [forvarmingVol, spissVol] = BeregnForvarmSpiss(TotalVol70C, sliderForvarmingSpiss, settpunktVP, spissSettpunkt)
+    //let [kW, TotalVol70C] = BeregnVolEl(ByggType, antall, sliderVolEl, kWh)
+    //let [forvarmingVol, spissVol] = BeregnForvarmSpiss(TotalVol70C, sliderForvarmingSpiss, settpunktVP, spissSettpunkt)
 
     let dekningGradMaks = (settpunktVP - netVannTemp) / (spissSettpunkt - netVannTemp)
-    let spisseff = BeregnEffekt(spissVol, kWh, spissSettpunkt)
-    let vpefff = BeregnEffekt(forvarmingVol, kWh * dekningGradMaks, settpunktVP)
+   
+    let minimumVPVol = minVolVP(vpEffekt, kWh, settpunktVP, dekningGradMaks)
+    let minimumSpissVol = minVolSpiss(spissElEffekt, kWh, spissSettpunkt, backupType, dekningGradMaks, forvarmingELeffekt, minimumVPVol)
 
 
-    let minVolume = {
-        minimumVPVol: minVolVP(vpEffekt, kWh * dekningGradMaks, settpunktVP),
-        minimumSpissVol: minVolSpiss(spissElEffekt, kWh, spissSettpunkt,backupType,dekningGradMaks,forvarmingELeffekt)
-    }
+    let [sizeVpUpper, sizeVpLower]= sizeVP(kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp,settpunktVP,tappeVannTemp)
 
-    console.log(minVolume.minimumVPVol, minVolume.minimumSpissVol, dekningGradMaks)
+
     return (
-
-
         <div className="border">
 
             <form className="formInnData">
@@ -154,10 +150,6 @@ export default function ProsjektData(props) {
                     </select>
                 </div>
 
-
-
-
-
                 <label className="label">{staticData.byggTypeVVInnDataType[ByggType].navn} (Min: {Math.min(...staticData.byggTypeVVInnDataType[ByggType].verdier)}, Maks: {Math.max(...staticData.byggTypeVVInnDataType[ByggType].verdier)}):
                     <input
                         className="input"
@@ -166,6 +158,34 @@ export default function ProsjektData(props) {
                         name="antall"
                         value={antall}
                     /></label>
+
+                {ByggType === "Boligblokk (3+ personer)" || ByggType === "Boligblokk (2-3 personer)" || ByggType === "Boligblokk (1-2 personer)" ? (
+
+                    <div >
+                        <label className="label">Tappevann forbruk per person per dag [L]:
+                            <input
+                                className="input"
+                                type="number"
+                                onChange={handleChange}
+                                name="perPersonVV"
+                                value={perPersonVV}
+                            /></label>
+
+
+
+                        <label className="label">Tappe vann temperatur [L]:
+                            <input
+                                className="input"
+                                type="number"
+                                onChange={handleChange}
+                                name="tappeVannTemp"
+                                value={tappeVannTemp}
+                            /></label>
+                    </div>
+                ) : null}
+
+
+
 
 
                 <label className="label">Spiss settpunkt[{'\u00b0'}C]:
@@ -218,7 +238,7 @@ export default function ProsjektData(props) {
                             </table>
                         </div>
 
-
+                        <p style={{  fontstyle: "italic"}}>Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p>
                         <label className="label" >VP effekt [kW]:
                             <input
                                 className="input"
@@ -257,67 +277,19 @@ export default function ProsjektData(props) {
 
                         {backupType === "Spiss el-kolbe plus el-kolbe i forvarming" ? (
                             <div className="VVresults">
-                           <label className="label" >El-kolbe effekt i forvarming tanke: [kW]:
-                                <input
-                                    className="input"
-                                    type="number"
-                                    onChange={handleChange}
-                                    name="forvarmingELeffekt"
-                                    value={forvarmingELeffekt}
-                                /></label>
-                                    </div>
+                                <label className="label" >El-kolbe effekt i forvarming tanke: [kW]:
+                                    <input
+                                        className="input"
+                                        type="number"
+                                        onChange={handleChange}
+                                        name="forvarmingELeffekt"
+                                        value={forvarmingELeffekt}
+                                    /></label>
+                            </div>
                         ) : null}
 
-                            <p>Minimum anbefalt volume for forvarmingbereder er {minVolume.minimumVPVol} liter og for spissbereder er {minVolume.minimumSpissVol} liter.</p>     
-                        <div className="VVSlider">
+                        <p>Minimum anbefalt volume for forvarmingbereder er {minimumVPVol} liter og for spissbereder er {minimumSpissVol} liter.</p>
 
-                            <Box sx={{ width: 500, mt: 5 }}  >
-
-
-                                <Stack spacing={2} direction="row" alignItems="center">
-                                    <OfflineBoltIcon sx={{ height: 50 }} />
-                                    <Slider
-                                        name="sliderVolEl"
-                                        value={sliderVolEl}
-                                        min={20}
-                                        max={80}
-                                        marks={[{ value: 20, label: "Mer effekt" }, { value: 80, label: "Mer VV volum" }]}
-                                        onChange={handleChange} />
-                                    <PropaneTankIcon sx={{ height: 50 }} />
-                                </Stack>
-                            </Box>
-                            <p>Samlet effekt av Varmepumpe og el-kolbe i spissbereder: {kW} kW </p>
-                            <p> VV 70C volum: {TotalVol70C} L</p>
-                        </div>
-
-
-
-                        <div className="VVSlider">
-                            <Box sx={{ width: 500, mt: 5 }}  >
-
-                                <Stack spacing={2} direction="row" alignItems="center">
-                                    <ElectricMeterIcon sx={{ height: 50 }} />
-                                    <Slider
-                                        name="sliderForvarmingSpiss"
-                                        value={sliderForvarmingSpiss}
-                                        min={20}
-                                        max={70}
-                                        marks={[{ value: 20, label: "Mer spiss volume" }, { value: 70, label: "Mer formvarming volum" }]}
-                                        onChange={handleChange} />
-                                    <HvacIcon sx={{ height: 50 }} />
-                                </Stack>
-
-
-                                <Stack spacing={2} mt={5} direction="row" alignItems="center" justifyContent='space-between'>
-                                    <p>Spiss: {spissVol} L og {spisseff} kW </p>
-                                    <p >Forvarming: {forvarmingVol} L og {vpefff} kW </p>
-
-                                </Stack>
-
-
-                            </Box>
-
-                        </div>
 
                     </div>
 

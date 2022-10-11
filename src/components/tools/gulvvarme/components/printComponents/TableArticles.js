@@ -122,9 +122,15 @@ function UnitHeadlineArticles(props) {
         </Text>
       </View>
       <View style={styles.row}>
+        {unitId === 'Prosjekt' ?
         <Text style={styles.unitDescription}>
             Totalt {area} m&#xB2;, {circuits} kurser, {rooms} rom, {pipeLength} meter rør
         </Text>
+        :
+        <Text style={styles.unitDescription}>
+            Totalt {pipeLength} meter rør
+        </Text>
+        }
       </View>
     </View>
   )

@@ -86,7 +86,7 @@ export default function TableUnit(props){
         <Text style={styles.description}></Text>
         <Text style={styles.descriptionLargeLeft}></Text>
         <Text style={styles.descriptionSmallNumber}>
-          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+parseFloat(curr.area),0)} m&#xB2;
+          {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+parseFloat(curr.area),0)}  m&#xB2;
         </Text>
         <Text style={styles.descriptionMediumRight}>
           {sortedByFloor.filter((rooms) => rooms.floor === room.floor).length} rom, {sortedByFloor.filter((rooms) => rooms.floor === room.floor).reduce((prev,curr)=>prev+curr.circuits,0)} kurser

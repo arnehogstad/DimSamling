@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function TableRowArticles(props){
+export default function TableArticles(props){
 
 
   const rows = props.articleList.map((article,index) =>(

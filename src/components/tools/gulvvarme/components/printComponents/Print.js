@@ -19,7 +19,7 @@ export default function Print(props){
         flexDirection: 'column',
     },
     table:{
-      marginTop: 10,
+      marginTop: 0,
     }
 
 }

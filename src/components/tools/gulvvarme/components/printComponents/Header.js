@@ -11,6 +11,7 @@ export default function Header(props){
       fontSize: 15,
       textAlign: 'right',
       marginBottom: 10,
+      letterSpacing: 1.5,
     },
     headerLine:{
       flexDirection: 'row',
@@ -22,6 +23,7 @@ export default function Header(props){
     },
     date: {
       marginTop: 10,
+      fontSize: 10,
     },
     leftColumn: {
       flexDirection: 'column',

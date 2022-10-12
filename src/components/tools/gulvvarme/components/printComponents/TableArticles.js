@@ -39,8 +39,12 @@ const styles = StyleSheet.create({
     width: "15%",
     textAlign: 'right',
   },
+  descriptionHeader: {
+    width: "15%",
+    textAlign: 'center',
+  },
   descriptionSmall: {
-    width: "10%",
+    width: "12%",
     paddingLeft: 10,
   },
   descriptionSmallNumber: {
@@ -48,7 +52,8 @@ const styles = StyleSheet.create({
     width: "10%",
   },
   descriptionLarge: {
-    width: "55%",
+    width: "53%",
+
   },
   descriptionNumber: {
     textAlign: "center",
@@ -58,6 +63,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     marginTop: 5,
+    marginLeft: 10,
+    marginRight: 5,
   },
   tableHeadline: {
     flexDirection: "row",
@@ -156,7 +163,9 @@ export default function TableArticles(props){
     <View wrap={false}>
       <UnitHeadlineArticles unitInfo = {props.unitInfo}/>
       <TableHeaderArticles />
-      {rows}
+      <View style={styles.tableContainer}>
+        {rows}
+      </View>
     </View>)
 }
 
@@ -168,7 +177,7 @@ function TableHeaderArticles() {
         <Text style={styles.descriptionLarge}>Artikkel</Text>
         <Text style={styles.descriptionNumber}>Antall</Text>
         <Text style={styles.descriptionNumber}>Korrigert antall</Text>
-        <Text style={styles.description}>Forpakning</Text>
+        <Text style={styles.descriptionHeader}>Forpakning</Text>
       </View>
     </View>
   )
@@ -176,7 +185,7 @@ function TableHeaderArticles() {
 
 function UnitHeadlineArticles(props) {
 
-  let pipeLength = props.unitInfo.unititems.filter(item => item.artnmbr < 200).reduce((prev,curr)=>prev+curr.artcount,0)
+  let pipeLength = Math.ceil(props.unitInfo.unititems.filter(item => item.artnmbr < 200).reduce((prev,curr)=>prev+curr.artcount,0))
   let area = props.unitInfo.unitarea
   let circuits = props.unitInfo.unitcircuits
   let rooms = props.unitInfo.unitzones

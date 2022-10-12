@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   description: {
     width: "15%",
+    textAlign: 'right',
   },
   descriptionSmall: {
     width: "10%",
@@ -47,11 +48,11 @@ const styles = StyleSheet.create({
     width: "10%",
   },
   descriptionLarge: {
-    width: "45%",
+    width: "55%",
   },
   descriptionNumber: {
     textAlign: "center",
-    width: "15%",
+    width: "10%",
   },
   tableContainer: {
     flexDirection: "row",

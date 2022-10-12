@@ -15,8 +15,9 @@ export default function Footer(props){
       width:  '100%',
       position: 'absolute',
       fontSize: 8,
-      bottom: 30,
+      bottom: 10,
       marginRight: 0,
+
     },
     rightColumn: {
       flexDirection: 'column',

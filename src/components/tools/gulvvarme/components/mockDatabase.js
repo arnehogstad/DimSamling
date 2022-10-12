@@ -341,6 +341,18 @@ export default {
 			},
 			"Type": "rull"
 		},
+		"1013260": {
+			"Name": 1013260,
+			"PakkeLiten": {
+				"Artikkelnr": 0,
+				"Størrelse": 0
+			},
+			"PakkeStor": {
+				"Artikkelnr": 1013260,
+				"Størrelse": 10
+			},
+			"Type": "rull"
+		},
 		"1013261": {
 			"Name": 1013261,
 			"PakkeLiten": {
@@ -913,8 +925,8 @@ export default {
 			"benevning": [
 				"m",
 				"stk",
-				"stk",
-				"stk",
+				"m",
+				"m",
 				"stk",
 				"stk"
 			],
@@ -984,10 +996,10 @@ export default {
 			],
 			"benevning": [
 				"m",
-				"stk",
-				"stk",
-				"stk",
-				"stk",
+				"m",
+				"m",
+				"m",
+				"m",
 				"stk",
 				"stk"
 			],
@@ -1024,7 +1036,67 @@ export default {
 			"name": "Gulvvarme på foliert EPS på rull m/ fleece x-net C17 25 mm"
 
 		},
+		"Gulvvarme på foliert EPS på rull m/ krampe x-net C12 25 mm": {
+			"artikkelnavn": [
+				"Gulvvarmerør 16x2 mm PE-RT",
+				"Kermi X-net C12 Krampe for feste av 14-17 mm rør til foliert EPS",
+				"Kermi X-net C12 foliert EPS for krampefeste, 10000x1000x25 mm, 10 m2",
+				"Kermi X-net Kantisolasjon H 120 mm",
+				"Kermi X-net Tape",
+				"Vinkel for 16 - 18 mm rør",
+				"Koblingssett EK x 16x2 mm Pex"
+			],
+			"artikkelnummer": [
+				102,
+				1013200,
+				1013206,
+				1013292,
+				1013297,
+				1012115,
+				2220160
+			],
+			"benevning": [
+				"m",
+				"stk",
+				"m",
+				"m",
+				"m",
+				"stk",
+				"stk"
+			],
+			"beregningsmetode": [
+				"pr kvm",
+				"pr kvm",
+				"pr kvm",
+				"omkrets",
+				"mellom plater",
+				"pr kurs",
+				"pr kurs"
+			],
+			"cc": {
+				"CC 200": {
+					"antall": [
+						"5.5",
+						"22",
+						"1",
+						"1",
+						"1",
+						"2",
+						"2"
+					],
 
+					"name": "CC 200"
+
+				},
+
+
+				"CCvalg": [
+					"CC 200"
+				]
+			},
+			"name": "Gulvvarme på foliert EPS på rull m/ krampe x-net C12 25 mm"
+
+		},
 		"Gulvvarme i Knotteplate 11 x-net C11": {
 			"artikkelnavn": [
 				"Gulvvarmerør 16x2 mm PE-RT",
@@ -1043,7 +1115,7 @@ export default {
 			"benevning": [
 				"m",
 				"stk",
-				"stk",
+				"m",
 				"stk",
 				"stk"
 			],
@@ -1107,7 +1179,7 @@ export default {
 			"benevning": [
 				"m",
 				"stk",
-				"stk",
+				"m",
 				"stk",
 				"stk"
 			],
@@ -1519,68 +1591,6 @@ export default {
 				]
 			},
 			"name": "Gulvvarme i Silencio 36 trinnlydsgulv - CC 300"
-
-		},
-
-		"Gulvvarme på foliert EPS på rull m/ krampe x-net C12 25 mm": {
-			"artikkelnavn": [
-				"Gulvvarmerør 16x2 mm PE-RT",
-				"Kermi X-net C12 Krampe for feste av 14-17 mm rør til foliert EPS",
-				"Kermi X-net C12 foliert EPS for krampefeste, 10000x1000x25 mm, 10 m2",
-				"Kermi X-net Kantisolasjon H 120 mm",
-				"Kermi X-net Tape",
-				"Vinkel for 16 - 18 mm rør",
-				"Koblingssett EK x 16x2 mm Pex"
-			],
-			"artikkelnummer": [
-				102,
-				1013200,
-				1013206,
-				1013292,
-				1013297,
-				1012115,
-				2220160
-			],
-			"benevning": [
-				"m",
-				"stk",
-				"stk",
-				"stk",
-				"stk",
-				"stk",
-				"stk"
-			],
-			"beregningsmetode": [
-				"pr kvm",
-				"pr kvm",
-				"pr kvm",
-				"omkrets",
-				"mellom plater",
-				"pr kurs",
-				"pr kurs"
-			],
-			"cc": {
-				"CC 200": {
-					"antall": [
-						"5.5",
-						"22",
-						"1",
-						"1",
-						"1",
-						"2",
-						"2"
-					],
-
-					"name": "CC 200"
-
-				},
-
-
-				"CCvalg": [
-					"CC 200"
-				]
-			},
-			"name": "Gulvvarme på foliert EPS på rull m/ krampe x-net C12 25 mm"
 
 		}
 	},

@@ -70,7 +70,7 @@ export default function Result(props){
           Math.round(tempItemsMult.antall[k]*Math.sqrt(tempRoom.area)*4*10)/10 :
           tempItems.beregningsmetode[k] === "mellom plater" ?
           Math.round(tempItemsMult.antall[k]*2*Math.sqrt(tempRoom.area)*(Math.sqrt(tempRoom.area)-1)*10)/10 :
-          0
+          99
           //defines tempobject for returning each value
           let tempArticle = {
             artnmbr: tempItems.artikkelnummer[k],

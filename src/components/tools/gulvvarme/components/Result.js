@@ -68,6 +68,8 @@ export default function Result(props){
           tempItemsMult.antall[k]*tempRoom.circuits :
           tempItems.beregningsmetode[k] === "omkrets" ?
           Math.round(tempItemsMult.antall[k]*Math.sqrt(tempRoom.area)*4*10)/10 :
+          tempItems.beregningsmetode[k] === "mellom plater" ?
+          Math.round(tempItemsMult.antall[k]*2*Math.sqrt(tempRoom.area)*(Math.sqrt(tempRoom.area)-1)*10)/10 :
           99
           //defines tempobject for returning each value
           let tempArticle = {
@@ -585,7 +587,13 @@ function ResultHeader(props){
           </div>
         <>
           <PDFViewer width="100%" height="100%">
-            <Print data={props.unitObjects} dataIndex={props.unitObjectIndex} headline={`Materialliste - ${props.projectName}`}/>
+            <Print
+              data={props.unitObjects}
+              unitInfo={props.unit}
+              articleList = {props.articleList}
+              dataIndex={props.unitObjectIndex}
+              headline={`Materialliste - ${props.projectName}`}
+            />
           </PDFViewer>
         </>
         </div>

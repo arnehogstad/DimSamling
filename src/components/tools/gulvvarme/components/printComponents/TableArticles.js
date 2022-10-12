@@ -7,6 +7,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "left",
     width: "100%",
+
+  },
+  tableRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    borderBottomColor: 'rgb(200,200,200)',
+    borderBottomWidth: 0.5,
   },
   rowSummation: {
     flexDirection: "row",
@@ -39,7 +47,7 @@ const styles = StyleSheet.create({
     width: "10%",
   },
   descriptionLarge: {
-    width: "50%",
+    width: "45%",
   },
   descriptionNumber: {
     textAlign: "center",
@@ -53,7 +61,7 @@ const styles = StyleSheet.create({
   tableHeadline: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 10,
+    marginTop: 20,
   },
   unitName: {
     fontSize: 11,
@@ -70,14 +78,56 @@ const styles = StyleSheet.create({
 
 export default function TableArticles(props){
 
+  var mergedArticleList = [];
 
-  const rows = props.articleList.map((article,index) =>(
+  props.articleList.forEach(function(item) {
+    var existing = mergedArticleList.filter(function(v, i) {
+      return v.artname == item.artname;
+    });
+    if (existing.length) {
+      var existingIndex = mergedArticleList.indexOf(existing[0]);
+      mergedArticleList[existingIndex].artnmbr = `${mergedArticleList[existingIndex].artnmbr} ${'\n'} ${item.artnmbr}`;
+      mergedArticleList[existingIndex].artdim = `${mergedArticleList[existingIndex].artdim} ${'\n'} ${item.artcount} stk ${item.artdim}`
+      mergedArticleList[existingIndex].korrigertAntall = parseFloat(mergedArticleList[existingIndex].korrigertAntall+item.artdim.replace(/\D/g,'')*item.artcount)
+    } else {
+      item.korrigertAntall = parseFloat(item.artdim.replace(/\D/g,'')*item.artcount)
+      item.artdim = `${item.artcount} stk ${item.artdim}`
+      mergedArticleList.push(item);
+    }
+  });
+
+  console.log(mergedArticleList);
+  console.log(props)
+
+  const rows = mergedArticleList.map((article,index) =>(
     <Fragment key={nanoid()}>
-      <View style={styles.row} key={nanoid()}>
-        <Text style={styles.description}>{article.artnmbr}</Text>
+      <View style={styles.tableRow} key={nanoid()}>
+        <Text style={styles.descriptionSmall}>{article.artnmbr}</Text>
         <Text style={styles.descriptionLarge}>{article.artname}</Text>
-        <Text style={styles.descriptionNumber}>{article.artcount}</Text>
-        <Text style={styles.description}>{article.artdim}</Text>
+        {props.unitInfo.unititems.filter(item => item.artname === article.artname).reduce((prev,curr)=>prev+curr.artcount,0) !== article.artcount ?
+        <>
+          <Text style={styles.descriptionNumber}>
+            {props.unitInfo.unititems[index].artcount}
+          </Text>
+          <Text style={styles.descriptionNumber}>
+            {article.korrigertAntall}
+          </Text>
+          <Text style={styles.description}>
+            {article.artdim}
+          </Text>
+        </>
+        :
+        <>
+          <Text style={styles.descriptionNumber}>
+            {article.artcount}
+          </Text>
+          <Text style={styles.descriptionNumber}>
+            {article.artcount}
+          </Text>
+          <Text style={styles.description}>
+          </Text>
+        </>
+        }
       </View>
     </Fragment>
   ))
@@ -94,10 +144,11 @@ function TableHeaderArticles() {
   return(
     <View style={styles.tableContainer}>
       <View style={styles.rowHeader} key={nanoid()}>
-        <Text style={styles.description}>Artikkelnr</Text>
+        <Text style={styles.descriptionSmall}>Artikkelnr</Text>
         <Text style={styles.descriptionLarge}>Artikkel</Text>
         <Text style={styles.descriptionNumber}>Antall</Text>
-        <Text style={styles.description}>Benevning</Text>
+        <Text style={styles.descriptionNumber}>Korrigert antall</Text>
+        <Text style={styles.description}>Forpakning</Text>
       </View>
     </View>
   )
@@ -111,8 +162,6 @@ function UnitHeadlineArticles(props) {
   let rooms = props.unitInfo.unitzones
   let unitId = props.unitInfo.unitid
 
-  console.log(props);
-  console.log(pipeLength);
 
   return (
     <View style={styles.tableHeadline}>

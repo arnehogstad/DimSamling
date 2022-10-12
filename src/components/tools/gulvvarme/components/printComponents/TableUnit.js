@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   unitName: {
-    fontSize: 11,
+    fontSize: 10,
     fontWeight: 'bold',
     letterSpacing: 1,
 
@@ -75,8 +75,6 @@ export default function TableUnit(props){
 
   const tempSortByFloor = props.unit.rooms.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
   const sortedByFloor = tempSortByFloor.map((room)=> ({...room, floor: room.floor.replace(' - bjelkelag', '').replace(' - betong', '')}))
-
-  console.log(props)
 
   const rows = sortedByFloor.map((room,index) =>(
     <Fragment key={`${props.unit.unitId}${room.id}`}>

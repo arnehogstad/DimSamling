@@ -7,7 +7,6 @@ export default function Footer(props){
 
   const styles = StyleSheet.create({
     footer:{
-      fontSize: 15,
       textAlign: 'right',
       marginBottom: 10,
     },
@@ -15,8 +14,9 @@ export default function Footer(props){
       flexDirection: 'row',
       width:  '100%',
       position: 'absolute',
-      fontSize: 10,
+      fontSize: 8,
       bottom: 30,
+      marginRight: 0,
     },
     rightColumn: {
       flexDirection: 'column',

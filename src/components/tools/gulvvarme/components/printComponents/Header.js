@@ -8,10 +8,10 @@ export default function Header(props){
 
   const styles = StyleSheet.create({
     header:{
-      fontSize: 15,
+      fontSize: 14,
       textAlign: 'right',
       marginBottom: 10,
-      letterSpacing: 1.5,
+      letterSpacing: 2,
     },
     headerLine:{
       flexDirection: 'row',
@@ -23,7 +23,7 @@ export default function Header(props){
     },
     date: {
       marginTop: 10,
-      fontSize: 10,
+      fontSize: 8,
     },
     leftColumn: {
       flexDirection: 'column',

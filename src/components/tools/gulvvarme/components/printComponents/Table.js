@@ -14,8 +14,6 @@ export default function Table(props){
       />
     ))
 
-
-
   return(
     <View style={props.styleTable}>
       {props.dataIndex === 0 ?

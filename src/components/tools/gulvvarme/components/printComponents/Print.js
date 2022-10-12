@@ -10,7 +10,7 @@ export default function Print(props){
   const styles = StyleSheet.create({
     page: {
         fontFamily: 'Helvetica',
-        fontSize: 9,
+        fontSize: 8,
         paddingTop: 20,
         paddingLeft:30,
         paddingRight:30,

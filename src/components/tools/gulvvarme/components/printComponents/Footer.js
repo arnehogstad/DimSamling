@@ -16,8 +16,8 @@ export default function Footer(props){
       position: 'absolute',
       fontSize: 8,
       bottom: 10,
-      marginRight: 0,
-
+      marginLeft: 30,
+      marginRight: 30,
     },
     rightColumn: {
       flexDirection: 'column',
@@ -26,7 +26,7 @@ export default function Footer(props){
       marginLeft: 'auto',
       marginRight: 0,
       right: 0,
-      textAlign: 'right',
+      textAlign: 'center',
     }
   })
 

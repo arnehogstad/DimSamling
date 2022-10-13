@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     alignItems: "left",
     width: "100%",
 
+
   },
   tableRow: {
     flexDirection: "row",
@@ -15,6 +16,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderBottomColor: 'rgb(200,200,200)',
     borderBottomWidth: 0.5,
+    paddingTop: 2,
   },
   rowSummation: {
     flexDirection: "row",
@@ -34,6 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     color: 'white',
     width: "100%",
+    paddingTop: 3,
   },
   description: {
     width: "15%",

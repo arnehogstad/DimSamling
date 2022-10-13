@@ -297,6 +297,7 @@ export default function Gulvvarme(props){
                 projectName={projectName}
                 showResult = {setShowResult}
                 setShowModal={setShowModal}
+                setCurrentUnitId={setCurrentUnitId}
               />
               { showResult === true ?
                 <Result

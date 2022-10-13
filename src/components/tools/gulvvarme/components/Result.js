@@ -63,13 +63,13 @@ export default function Result(props){
           }
           //calculates quantity
           let tempCount = tempItems.beregningsmetode[k] === "pr kvm" ?
-          Math.round(tempItemsMult.antall[k]*tempRoom.area*10)/10 :
+          Math.ceil(tempItemsMult.antall[k]*tempRoom.area) :
           tempItems.beregningsmetode[k] === "pr kurs" ?
           tempItemsMult.antall[k]*tempRoom.circuits :
           tempItems.beregningsmetode[k] === "omkrets" ?
-          Math.round(tempItemsMult.antall[k]*Math.sqrt(tempRoom.area)*4*10)/10 :
+          Math.ceil(tempItemsMult.antall[k]*Math.sqrt(tempRoom.area)*4) :
           tempItems.beregningsmetode[k] === "mellom plater" ?
-          Math.round(tempItemsMult.antall[k]*2*Math.sqrt(tempRoom.area)*(Math.sqrt(tempRoom.area)-1)*10)/10 :
+          Math.ceil(tempItemsMult.antall[k]*2*Math.sqrt(tempRoom.area)*(Math.sqrt(tempRoom.area)-1)) :
           99
           //defines tempobject for returning each value
           let tempArticle = {

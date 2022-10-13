@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import mockDatabase from "../mockDatabase.js"
 
 const styles = StyleSheet.create({
   row: {
@@ -31,11 +32,11 @@ const styles = StyleSheet.create({
     width: '15%',
   },
   descriptionLargeLeft: {
-    width: '40%',
+    width: '35%',
     textAlign: 'left',
   },
   descriptionMediumRight: {
-    width: '25%',
+    width: '30%',
     textAlign: 'right',
     paddingRight: 5,
   },
@@ -75,7 +76,9 @@ export default function TableUnit(props){
 
   const tempSortByFloor = props.unit.rooms.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
   const sortedByFloor = tempSortByFloor.map((room)=> ({...room, floor: room.floor.replace(' - bjelkelag', '').replace(' - betong', '')}))
+  const ccListe = mockDatabase.ccliste
 
+  console.log(ccListe);
   const rows = sortedByFloor.map((room,index) =>(
     <Fragment key={`${props.unit.unitId}${room.id}`}>
     {index === 1 ?
@@ -112,7 +115,7 @@ export default function TableUnit(props){
         <Text style={styles.description}>{room.name}</Text>
         <Text style={styles.descriptionLargeLeft}>{room.pipetype}</Text>
         <Text style={styles.descriptionSmallNumber}>{room.area}  m&#xB2;</Text>
-        <Text style={styles.descriptionMediumRight}>{room.circuits} kurs{room.circuits === 1 ? null : 'er'}, {room.cc} mm</Text>
+        <Text style={styles.descriptionMediumRight}>{room.circuits} kurs{room.circuits === 1 ? null : 'er'}, {Math.ceil(ccListe[room.cc]*room.area)} m rør, {room.cc} mm</Text>
       </View>
       :
       null
@@ -157,7 +160,7 @@ function UnitHeadline(props) {
       </View>
       <View style={styles.row}>
         <Text style={styles.unitDescription}>
-            Totalt {area} m&#xB2;, {circuits} kurser, {rooms} rom (hvorav {wetrooms} våtrom), {floors} etasjer
+            Totalt {area} m&#xB2;, {circuits} kurser, {rooms} rom (hvorav {wetrooms} våtrom), {floors} etasje{floors === 1 ? null : 'r'}
         </Text>
       </View>
     </View>

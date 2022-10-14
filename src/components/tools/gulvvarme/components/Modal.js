@@ -331,7 +331,7 @@ function OpenCSVModal(props){
   const [csvFile, setCsvFile] = React.useState();
   const [csvArray, setCsvArray] = React.useState([]);
   var tempProjectName = ""
-
+  var acceptedFiletype = false
   //funksjon som returnerer CSV tilbake til object
   const processCSV = (str, delim=',') => {
           const headers = str.slice(0,str.indexOf('\n')).split(delim);
@@ -369,6 +369,7 @@ function OpenCSVModal(props){
           cc:"",
           circuits:"",
           wetroom: false,
+          missingdata: false,
           id: ""
         }
         return tempRoom
@@ -400,6 +401,7 @@ function OpenCSVModal(props){
               tempUnit.unitId=value
             }else if (key.includes("unitName")){
               tempUnit.unitName=value
+              acceptedFiletype = true
             }else if (key.includes("fordelerskap")){
               tempUnit.fordelerskap=value
             }else if (key.includes("fordelerstokk")){
@@ -465,11 +467,15 @@ function OpenCSVModal(props){
         if(csvArray.length > 0){
           csvArray.forEach((unit,index) => {
             let tempUnit = deconstructUnit(unit)
-            props.addUnit("","",tempUnit)
+            if (acceptedFiletype === true){
+              props.addUnit("","",tempUnit)
+            }
           })
-          console.log(`lagret verdi: ${tempProjectName}`)
-          props.setProjectName(tempProjectName)
-          props.setShowModal({show:false,modalName:""})
+          if (acceptedFiletype === true){
+            console.log(`lagret verdi: ${tempProjectName}`)
+            props.setProjectName(tempProjectName)
+            props.setShowModal({show:false,modalName:""})
+          }
         }
 
       },[csvArray])

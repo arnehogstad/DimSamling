@@ -74,6 +74,7 @@ export default function Gulvvarme(props){
       cc:"",
       circuits:"",
       wetroom: false,
+      missingdata: false,
       id: nanoid()
     }
   }
@@ -298,6 +299,7 @@ export default function Gulvvarme(props){
                 showResult = {setShowResult}
                 setShowModal={setShowModal}
                 setCurrentUnitId={setCurrentUnitId}
+                roomDataInput={roomDataInput}
               />
               { showResult === true ?
                 <Result

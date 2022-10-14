@@ -137,6 +137,25 @@ function Row(props){
     props.autoFillFunc("",props.unit.unitId,props.indeks,manualEvent)
   },[ccList])
 
+  //listener to circuits - updates if user tries to set value lesser than minimum
+  React.useEffect(() => {
+    let tempPipe = props.unit.rooms[props.indeks].pipetype
+    let tempArea = props.unit.rooms[props.indeks].area
+    let tempCC = props.unit.rooms[props.indeks].cc
+    let tempCircuits = ""
+    if (tempPipe!=="" && tempArea !== "" && tempCC !== "") {
+      tempCircuits = Math.ceil(tempArea*props.gulvvarmePakker[tempPipe].cc[tempCC].antall[0]/100)
+    }
+    const manualEvent =
+    {
+      name:"circuits",
+      value: tempCircuits
+    }
+    if (props.unit.rooms[props.indeks].circuits < tempCircuits){
+      props.autoFillFunc("",props.unit.unitId,props.indeks,manualEvent)
+    }
+  },[props.unit.rooms[props.indeks].circuits])
+
   //function automatically suggesting floor/pipetype equal to prior choice
   function suggestPrior(event, index){
     if (index > 0) {

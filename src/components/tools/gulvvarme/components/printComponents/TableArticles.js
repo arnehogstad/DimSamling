@@ -7,8 +7,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "left",
     width: "100%",
-
-
   },
   tableRow: {
     flexDirection: "row",
@@ -65,7 +63,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 5,
+    marginTop: 2,
     marginLeft: 10,
     marginRight: 5,
   },

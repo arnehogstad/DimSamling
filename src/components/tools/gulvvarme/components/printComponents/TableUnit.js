@@ -154,7 +154,7 @@ function UnitHeadline(props) {
       </View>
       <View style={styles.row}>
         <Text style={styles.unitDescription}>
-          Regulering: {props.unit.termostatType} - {props.unit.termostatStandard}
+          Regulering: {props.unit.termostatType}{props.unit.termostatType !== 'Uten termostat' ? ` - ${props.unit.termostatStandard}`: null}
         </Text>
       </View>
       <View style={styles.row}>

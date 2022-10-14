@@ -3,17 +3,21 @@ import React from 'react'
 export default function ButtonLine(props){
 
   function generateResult(){
-    let showResult = checkIfValidData()
-    props.showResult(showResult)
+    checkIfValidData()
   }
+
 
   function checkIfValidData(){
     let validData = true
     let tempUnitId = ""
     let tempRoomId = ""
+    let tempRoomIndex = 0
     props.units.every((unit) => {
+      tempUnitId = unit.unitId
       unit.rooms.every((room,index) => {
         if (index < unit.rooms.length-1){
+          tempRoomId = room.id
+          tempRoomIndex =  index
           if(room.floor === ""    ||
             room.name === ""      ||
             room.area === ""      ||
@@ -29,10 +33,15 @@ export default function ButtonLine(props){
               room.circuits !== ""
             ){
               validData = false
-              tempUnitId = unit.unitId
-              tempRoomId = room.id
             }
           }
+        }
+        if (!room.missingdata && !validData){
+          const manualEvent = {
+            name: "missingdata",
+            value: !validData
+          }
+          props.roomDataInput("",tempUnitId,tempRoomIndex,manualEvent)
         }
         return validData
       })
@@ -40,10 +49,11 @@ export default function ButtonLine(props){
     })
     if (validData === false) {
       props.setCurrentUnitId(tempUnitId)
-      console.log(tempRoomId);
     }
-    return validData
+
+    props.showResult(validData)
   }
+
 
   return (
     <div className="button-line-div">

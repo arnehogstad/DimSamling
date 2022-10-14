@@ -234,6 +234,9 @@ export default function Gulvvarme(props){
     function updateRoomData(rooms,roomIndex,name,value){
       let tempRooms = [...rooms]
       tempRooms[roomIndex][name] = value
+      if (name !== 'missingdata'){
+        tempRooms[roomIndex]['missingdata'] = false
+      }
       return tempRooms
     }
 

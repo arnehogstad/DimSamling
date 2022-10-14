@@ -163,7 +163,7 @@ function Row(props){
           alt="Sletter rad"
         />
       </td>
-      <td className="floor-col">
+      <td className={"floor-col " + (props.item.missingdata ? props.item.floor === "" ? "missing-data-col" : null : null)}>
         <select
           name="floor"
           onFocus={(event) => suggestPrior(event,props.indeks)}
@@ -173,17 +173,16 @@ function Row(props){
           {props.floorListValues}
         </select>
       </td>
-      <td className="room-name-col">
+      <td className={"room-name-col " + (props.item.missingdata ? props.item.name === "" ? "missing-data-col" : null : null)}>
         <input
           name="name"
           type="search"
           autoComplete="off"
           onChange={props.roomDataInput}
           value={props.item.name}
-
         />
       </td>
-      <td className="area-col">
+      <td className={"area-col " + (props.item.missingdata ? props.item.area === "" ? "missing-data-col" : null : null)}>
         <input
           name="area"
           type="number"
@@ -193,7 +192,7 @@ function Row(props){
           className="text-center"
         />
       </td>
-      <td className="pipe-type-col">
+      <td className={"pipe-type-col " + (props.item.missingdata ? props.item.pipetype === "" ? "missing-data-col" : null : null)}>
         <select
           name="pipetype"
           onFocus={(event) => suggestPrior(event,props.indeks)}
@@ -203,7 +202,7 @@ function Row(props){
           {props.pipeListValues}
         </select>
       </td>
-      <td className="cc-col">
+      <td className={"cc-col " + (props.item.missingdata ? props.item.cc === "" ? "missing-data-col" : null : null)}>
         <select
           name="cc"
           onFocus={(event) => suggestPrior(event,props.indeks)}
@@ -213,7 +212,7 @@ function Row(props){
           {ccListValues}
         </select>
       </td>
-      <td className="circuit-col">
+      <td className={"circuit-col " + (props.item.missingdata ? props.item.circuits === "" ? "missing-data-col" : null : null)}>
         <input
           name="circuits"
           type="number"

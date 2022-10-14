@@ -39,7 +39,6 @@ export default function Gulvvarme(props){
   //name of the project
   const [projectName,setProjectName] = React.useState("")
 
-
   //mock database for testing calulation etc
   const dataBase = mockDatabase
 

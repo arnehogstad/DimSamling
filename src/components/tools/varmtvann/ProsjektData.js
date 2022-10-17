@@ -1,8 +1,12 @@
 import React from "react"
 import { nanoid } from '@reduxjs/toolkit'
 import * as staticData from '../../static/staticData'
-import { sizeVP, minVolSpiss, minVolVP, BeregnEffekt, kWhData, BeregnVolEl, BeregnForvarmSpiss } from "./BeregnVV"
+import { isLeilighetFucntion, sizeVP, minVolSpiss, minVolVP, BeregnEffekt, kWhData, BeregnVolEl, BeregnForvarmSpiss } from "./BeregnVV"
 import "../../../styles/varmtvann/VVStyle.css"
+import Box from '@mui/material/Box';
+import Slider from '@mui/material/Slider';
+import { Stack } from "@mui/system"
+
 
 
 export default function ProsjektData(props) {
@@ -11,7 +15,7 @@ export default function ProsjektData(props) {
         {
             Navn: "Prosjekt Navn",
             Referanse: "Navn",
-            ByggType: "Boligblokk (3+ personer)",
+            ByggType: "Leilighet (3+ personer)",
             antall: 10, // For CTC file to caculate kWh, can be number of students, guests or dusje
             leiligheter: 10,
             årsforbruk: 0,
@@ -32,6 +36,7 @@ export default function ProsjektData(props) {
             spissSettpunkt: 65,
             spissVolume: 400,
 
+            dekningGradProsent: 70,
             backupType: "Spiss el-kolbe som dekker 100% av behov",
 
             uid: nanoid(),
@@ -40,7 +45,7 @@ export default function ProsjektData(props) {
         }
     )
 
-    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp, forvarmingELeffekt, spissElEffekt, spissSettpunkt, spissVolume, backupType, uid, sliderVolEl, sliderForvarmingSpiss } = prosjketData
+    const { Navn, Referanse, ByggType, bra, leiligheter, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, vpEffekt, settpunktVP, spiralVolume, startVolume, startTemp, forvarmingELeffekt, spissElEffekt, spissSettpunkt, spissVolume, dekningGradProsent, backupType, uid, sliderVolEl, sliderForvarmingSpiss } = prosjketData
 
 
 
@@ -99,17 +104,15 @@ export default function ProsjektData(props) {
     ))
 
 
-    //let [kW, TotalVol70C] = BeregnVolEl(ByggType, antall, sliderVolEl, kWh)
-    //let [forvarmingVol, spissVol] = BeregnForvarmSpiss(TotalVol70C, sliderForvarmingSpiss, settpunktVP, spissSettpunkt)
+    let dekningGradMaksProsent = Math.round((settpunktVP - netVannTemp) / (spissSettpunkt - netVannTemp) * 100)
 
-    let dekningGradMaks = (settpunktVP - netVannTemp) / (spissSettpunkt - netVannTemp)
-   
-    let minimumVPVol = minVolVP(vpEffekt, kWh, settpunktVP, dekningGradMaks)
-    let minimumSpissVol = minVolSpiss(spissElEffekt, kWh, spissSettpunkt, backupType, dekningGradMaks, forvarmingELeffekt, minimumVPVol)
+    let minimumVPVol = minVolVP(vpEffekt, kWh, settpunktVP, dekningGradProsent)
+    let minimumSpissVol = minVolSpiss(spissElEffekt, kWh, spissSettpunkt, backupType, dekningGradProsent, forvarmingELeffekt, minimumVPVol)
 
 
-    let [sizeVpUpper, sizeVpLower]= sizeVP(kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp,settpunktVP,tappeVannTemp)
+    let [sizeVpUpper, sizeVpLower] = sizeVP(kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
 
+    console.log("Maks:", dekningGradMaksProsent, "Grad:", dekningGradProsent)
 
     return (
         <div className="border">
@@ -159,7 +162,7 @@ export default function ProsjektData(props) {
                         value={antall}
                     /></label>
 
-                {ByggType === "Boligblokk (3+ personer)" || ByggType === "Boligblokk (2-3 personer)" || ByggType === "Boligblokk (1-2 personer)" ? (
+                {ByggType === "Leilighet (3+ personer)" || ByggType === "Leilighet (2-3 personer)" || ByggType === "Leilighet (1-2 personer)" ? (
 
                     <div >
                         <label className="label">Tappevann forbruk per person per dag [L]:
@@ -188,7 +191,7 @@ export default function ProsjektData(props) {
 
 
 
-                <label className="label">Spiss settpunkt[{'\u00b0'}C]:
+                <label className="label">Spiss settpunkt [{'\u00b0'}C]:
                     <input
                         className="input"
                         type="number"
@@ -221,9 +224,6 @@ export default function ProsjektData(props) {
 
                 {kWhEnheter.length !== 0 ? (
 
-
-
-
                     <div className="VVresults">
                         <div className="VVtable">
                             <table>
@@ -238,7 +238,7 @@ export default function ProsjektData(props) {
                             </table>
                         </div>
 
-                        <p style={{  fontstyle: "italic"}}>Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p>
+                        {isLeilighetFucntion(kWhEnheter) ? <p style={{ fontStyle: "italic", marginBottom: 6 }}>Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p> : null}
                         <label className="label" >VP effekt [kW]:
                             <input
                                 className="input"
@@ -288,12 +288,31 @@ export default function ProsjektData(props) {
                             </div>
                         ) : null}
 
-                        <p>Minimum anbefalt volume for forvarmingbereder er {minimumVPVol} liter og for spissbereder er {minimumSpissVol} liter.</p>
+                        <p style={{ fontStyle: "italic", textAlign: 'center' }}>Fra slider ned kan man velge mellom akseptable volumer. Høyere volumer er mer ønskelig. </p>
+
+                        <div className="VVSlider">
+                            <Box sx={{ width: 400, mt: 5 }}  >
+                                <Stack spacing={2} direction="row" alignItems="center">
+                                    <Slider
+                                        name="dekningGradProsent"
+                                        value={dekningGradProsent}
+                                        min={60}
+                                        max={dekningGradMaksProsent}
+                                        marks={[{ value: 60, label: "Mer volum og effekt fra VP" }, { value: dekningGradMaksProsent, label: "Mer volum og effekt fra VP" }]}
+                                        onChange={handleChange} />
+                                </Stack>
+                            </Box>
+                        </div>
+
+                        <p>Volume for forvarmingbereder er {minimumVPVol} liter og for spissbereder er {minimumSpissVol} liter.</p>
 
 
                     </div>
 
                 ) : null}
+
+
+
 
 
                 {/*

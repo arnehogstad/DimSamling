@@ -113,7 +113,7 @@ export default function TableUnit(props){
     }
     {room.name !== '' ?
       <View style={styles.row} key={room.id.toString()}>
-        <Text style={styles.descriptionSmall}></Text>
+        <Text style={styles.descriptionSmallNumber}>{room.wetroom? `*` : null}</Text>
         <Text style={styles.description}>{room.name}</Text>
         <Text style={styles.descriptionLargeLeft}>{room.pipetype}</Text>
         <Text style={styles.descriptionSmallNumber}>{room.area}  m&#xB2;</Text>
@@ -161,7 +161,7 @@ function UnitHeadline(props) {
       </View>
       <View style={styles.row}>
         <Text style={styles.unitDescription}>
-            Totalt {area} m&#xB2;, {circuits} kurser, {rooms} rom (hvorav {wetrooms} våtrom), {floors} etasje{floors === 1 ? null : 'r'}
+            Totalt {area} m&#xB2;, {circuits} kurser, {rooms} rom{wetrooms > 0 ? ` (hvorav ${wetrooms} våtrom - vist med * nedenfor)` : null}, {floors} etasje{floors === 1 ? null : 'r'}
         </Text>
       </View>
     </View>

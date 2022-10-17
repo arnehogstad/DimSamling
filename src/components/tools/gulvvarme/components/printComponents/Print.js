@@ -25,6 +25,8 @@ export default function Print(props){
 }
 )
 
+let tempFooterText = "Test av footer text, vi tar ikke ansvar etc"
+
   return(
     <Document>
       <Page size="A4" style={styles.page} wrap>
@@ -38,7 +40,9 @@ export default function Print(props){
           dataIndex = {props.dataIndex}
           styleTable={styles.table}
         />
-        <Footer />
+        <Footer
+          footerText={props.footerText}
+        />
       </Page>
     </Document>
   )

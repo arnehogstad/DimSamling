@@ -575,6 +575,8 @@ function ResultHeader(props){
     }
   }
 
+  let tempFooterText = "Test av footerText. Alle feil er på kundens egen risiko og kostnad. bladibladi"
+
   return(
 
     <div className="result-header">
@@ -593,6 +595,7 @@ function ResultHeader(props){
               articleList = {props.articleList}
               dataIndex={props.unitObjectIndex}
               headline={`Materialliste - ${props.projectName}`}
+              footerText = {tempFooterText}
             />
           </PDFViewer>
         </>

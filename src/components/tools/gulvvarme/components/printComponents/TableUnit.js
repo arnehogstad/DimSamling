@@ -74,13 +74,16 @@ const styles = StyleSheet.create({
 
 export default function TableUnit(props){
 
-  const tempSortByFloor = props.unit.rooms.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
+  const tempNoEmptyFloor = props.unit.rooms.filter((room) => room.floor !== "")
+  const tempSortByFloor = tempNoEmptyFloor.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
   const sortedByFloor = tempSortByFloor.map((room)=> ({...room, floor: room.floor.replace(' - bjelkelag', '').replace(' - betong', '')}))
   const ccListe = mockDatabase.ccliste
 
+  console.log(sortedByFloor);
+
   const rows = sortedByFloor.map((room,index) =>(
     <Fragment key={`${props.unit.unitId}${room.id}`}>
-    {index === 1 ?
+    {index === 0 ?
       <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
         <Text style={styles.descriptionSmall}>{room.floor}</Text>
         <Text style={styles.description}></Text>
@@ -93,7 +96,7 @@ export default function TableUnit(props){
         </Text>
       </View>
       :
-      index > 1 && sortedByFloor[index-1].floor !== room.floor ?
+      index > 0 && sortedByFloor[index-1].floor !== room.floor ?
       <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
         <Text style={styles.descriptionSmall}>{room.floor}</Text>
         <Text style={styles.description}></Text>
@@ -132,7 +135,6 @@ export default function TableUnit(props){
 }
 
 function UnitHeadline(props) {
-
   let area = props.unit.rooms.filter((room) => room.floor !== "").reduce((prev,curr)=>prev+parseFloat(curr.area),0)
   let rooms = props.unit.rooms.filter((room) => room.floor !== "").length
   let circuits = props.unit.rooms.reduce((prev,curr)=>prev+curr.circuits,0)

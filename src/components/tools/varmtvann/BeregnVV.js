@@ -43,8 +43,8 @@ export function BeregnEffekt(volume, kWhIn, settTemp) {
     return Effekt
 }
 
-export function minVolVP(kW, kWhIn, settTemp, dekningGradMaks) {
-    let kW_0 = 0.346 * kWhIn * dekningGradMaks //determines the offsett based on the KWh maximum heating 
+export function minVolVP(kW, kWhIn, settTemp, dekningGradProsent) {
+    let kW_0 = 0.346 * kWhIn * dekningGradProsent/100 //determines the offsett based on the KWh maximum heating 
     let Vol70C = (kW - kW_0) / -0.0259
     let volume = Math.round(Vol70C * 70 / settTemp)
     //console.log("VP",typeof(kW))
@@ -52,7 +52,7 @@ export function minVolVP(kW, kWhIn, settTemp, dekningGradMaks) {
 }
 
 
-export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradMaks, forvarmingELeffekt,minimumVPVol) {
+export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent, forvarmingELeffekt,minimumVPVol) {
    
     
     if (backUpType === "Spiss el-kolbe som dekker 100% av behov") {
@@ -64,9 +64,9 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradMaks, fo
     }
 
     else if (backUpType === "Spiss el-kolbe") {
-        let kW_0 = 0.346 * kWhIn * (1 - dekningGradMaks) //determines the offsett based on the KWh maximum heating 
+        let kW_0 = 0.346 * kWhIn * (1 - dekningGradProsent/100) //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW - kW_0) / -0.0259
-        let volume = Math.round(Vol70C * 70 / settTemp) > 0 ? Math.round(Vol70C * 70 / settTemp) : 100
+        let volume = Math.round(Vol70C * 70 / settTemp) > 100 ? Math.round(Vol70C * 70 / settTemp) : 100
         return volume
     }
 
@@ -74,11 +74,8 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradMaks, fo
 
         let kW_0 = 0.346 * kWhIn //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW + forvarmingELeffekt - kW_0) / -0.0259
-        let volume = Math.round(Vol70C * 70 / settTemp) - minimumVPVol > 0 ? Math.round(Vol70C * 70 / settTemp) - minimumVPVol : 100
-       
-        //console.log(typeof(kW ))
-        //console.log("Spiss","kwhIN:", kWhIn,"Kw0:",kW_0,"Vol 70C",Vol70C,volume,"kw:",kW,"forvarming:",forvarmingELeffekt)
-       
+        let volume = Math.round(Vol70C * 70 / settTemp) - minimumVPVol > 100 ? Math.round(Vol70C * 70 / settTemp) - minimumVPVol : 100
+             
         return volume
     }
 
@@ -86,15 +83,21 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradMaks, fo
 export function sizeVP(kWhEnheter,perPersonVV,spissSettpunkt,netVannTemp,settpunktVP,tappeVannTemp) {
     let antallPersoner = 0
     kWhEnheter.forEach(element => { 
-        if (element.Navn==="Boligblokk (3+ personer)")  antallPersoner +=4*element.Antall
-        if (element.Navn==="Boligblokk (2-3 personer)")  antallPersoner +=3*element.Antall
-        if (element.Navn==="Boligblokk (1-2 personer)")  antallPersoner +=2*element.Antall
+        if (element.Navn==="Leilighet (3+ personer)")  antallPersoner +=3.5*element.Antall
+        if (element.Navn==="Leilighet (2-3 personer)")  antallPersoner +=2.5*element.Antall
+        if (element.Navn==="Leilighet (1-2 personer)")  antallPersoner +=1.5*element.Antall
         })
         let total40Cforbruk= antallPersoner*perPersonVV
         let totalBerederForbruk=(tappeVannTemp*total40Cforbruk-netVannTemp*total40Cforbruk)/(spissSettpunkt-netVannTemp)
 
         let energiForbruk=totalBerederForbruk*(settpunktVP-netVannTemp)*4.2/(3600*24)  //Energi use in Kj and then divided for 24h
         let [sizeVpUpper, sizeVpLower] = [Math.round( energiForbruk*24/10),Math.round( energiForbruk*24/20)] //10 to 20 hours of working hours considered acceptable 
-        console.log(energiForbruk)
+        
         return [sizeVpUpper, sizeVpLower]
     } 
+
+export function isLeilighetFucntion(kWhEnheter) {
+    let isLeilighet = true
+         kWhEnheter.every(element => element.Navn==="Leilighet (3+ personer)" || element.Navn==="Leilighet (2-3 personer)"|| element.Navn==="Leilighet (1-2 personer)") ? isLeilighet=true : isLeilighet=false
+        return isLeilighet
+}

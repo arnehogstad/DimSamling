@@ -101,12 +101,12 @@ function InnDataOversikt (props){
 
  
  
-  let rows = for (var key in props.innDatas){
+  let rows = (
     <View style={styles.tableRow} >
-    <Text style={styles.descriptionSmall}>{key}</Text>
-    <Text style={styles.descriptionLarge}>{value}</Text>
+    <Text style={styles.descriptionSmall}>{23}</Text>
+    <Text style={styles.descriptionLarge}>{32}</Text>
     </View>
-  }
+  )
       console.log(rows)
   return (    
     <View wrap={false}>

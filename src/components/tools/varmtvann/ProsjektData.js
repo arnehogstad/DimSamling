@@ -296,6 +296,9 @@ export default function ProsjektData(props) {
                                     <Slider
                                         name="dekningGradProsent"
                                         value={dekningGradProsent}
+                                        sx={{
+                                            color: '#fbab18'
+                                        }}
                                         min={60}
                                         max={dekningGradMaksProsent}
                                         marks={[{ value: 60, label: "Mer volum og effekt fra VP" }, { value: dekningGradMaksProsent, label: "Mer volum og effekt fra VP" }]}

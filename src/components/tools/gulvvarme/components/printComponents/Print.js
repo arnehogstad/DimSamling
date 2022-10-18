@@ -14,7 +14,7 @@ export default function Print(props){
         paddingTop: 20,
         paddingLeft:30,
         paddingRight:30,
-        paddingBottom:30,
+        paddingBottom:20,
         lineHeight: 1.5,
         flexDirection: 'column',
     },
@@ -24,6 +24,8 @@ export default function Print(props){
 
 }
 )
+
+let tempFooterText = "Test av footer text, vi tar ikke ansvar etc"
 
   return(
     <Document>
@@ -38,7 +40,9 @@ export default function Print(props){
           dataIndex = {props.dataIndex}
           styleTable={styles.table}
         />
-        <Footer />
+        <Footer
+          footerText={props.footerText}
+        />
       </Page>
     </Document>
   )

@@ -35,6 +35,10 @@ td{
 
 }
 
+.missing-data-col{
+  background-color: yellow;
+}
+
 .button-col{
   width: 20px;
 }

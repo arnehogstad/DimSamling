@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "left",
     width: "100%",
-
   },
   tableRow: {
     flexDirection: "row",
@@ -15,6 +14,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderBottomColor: 'rgb(200,200,200)',
     borderBottomWidth: 0.5,
+    paddingTop: 2,
   },
   rowSummation: {
     flexDirection: "row",
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     color: 'white',
     width: "100%",
+    paddingTop: 3,
   },
   description: {
     width: "15%",
@@ -62,7 +63,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 5,
+    marginTop: 2,
     marginLeft: 10,
     marginRight: 5,
   },

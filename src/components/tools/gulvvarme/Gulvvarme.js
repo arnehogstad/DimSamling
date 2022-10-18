@@ -39,7 +39,6 @@ export default function Gulvvarme(props){
   //name of the project
   const [projectName,setProjectName] = React.useState("")
 
-
   //mock database for testing calulation etc
   const dataBase = mockDatabase
 
@@ -74,6 +73,7 @@ export default function Gulvvarme(props){
       cc:"",
       circuits:"",
       wetroom: false,
+      missingdata: false,
       id: nanoid()
     }
   }
@@ -233,6 +233,9 @@ export default function Gulvvarme(props){
     function updateRoomData(rooms,roomIndex,name,value){
       let tempRooms = [...rooms]
       tempRooms[roomIndex][name] = value
+      if (name !== 'missingdata'){
+        tempRooms[roomIndex]['missingdata'] = false
+      }
       return tempRooms
     }
 
@@ -297,6 +300,8 @@ export default function Gulvvarme(props){
                 projectName={projectName}
                 showResult = {setShowResult}
                 setShowModal={setShowModal}
+                setCurrentUnitId={setCurrentUnitId}
+                roomDataInput={roomDataInput}
               />
               { showResult === true ?
                 <Result

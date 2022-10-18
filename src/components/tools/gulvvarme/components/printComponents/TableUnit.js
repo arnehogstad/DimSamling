@@ -1,5 +1,6 @@
 import React, { Fragment } from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import mockDatabase from "../mockDatabase.js"
 
 const styles = StyleSheet.create({
   row: {
@@ -31,11 +32,11 @@ const styles = StyleSheet.create({
     width: '15%',
   },
   descriptionLargeLeft: {
-    width: '40%',
+    width: '35%',
     textAlign: 'left',
   },
   descriptionMediumRight: {
-    width: '25%',
+    width: '30%',
     textAlign: 'right',
     paddingRight: 5,
   },
@@ -73,12 +74,16 @@ const styles = StyleSheet.create({
 
 export default function TableUnit(props){
 
-  const tempSortByFloor = props.unit.rooms.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
+  const tempNoEmptyFloor = props.unit.rooms.filter((room) => room.floor !== "")
+  const tempSortByFloor = tempNoEmptyFloor.slice().sort((a,b)=>a.floor.localeCompare(b.floor))
   const sortedByFloor = tempSortByFloor.map((room)=> ({...room, floor: room.floor.replace(' - bjelkelag', '').replace(' - betong', '')}))
+  const ccListe = mockDatabase.ccliste
+
+  console.log(sortedByFloor);
 
   const rows = sortedByFloor.map((room,index) =>(
     <Fragment key={`${props.unit.unitId}${room.id}`}>
-    {index === 1 ?
+    {index === 0 ?
       <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
         <Text style={styles.descriptionSmall}>{room.floor}</Text>
         <Text style={styles.description}></Text>
@@ -91,7 +96,7 @@ export default function TableUnit(props){
         </Text>
       </View>
       :
-      index > 1 && sortedByFloor[index-1].floor !== room.floor ?
+      index > 0 && sortedByFloor[index-1].floor !== room.floor ?
       <View style={styles.rowSummation} key={`${props.unit.unitId}${room.floor}2`}>
         <Text style={styles.descriptionSmall}>{room.floor}</Text>
         <Text style={styles.description}></Text>
@@ -108,11 +113,11 @@ export default function TableUnit(props){
     }
     {room.name !== '' ?
       <View style={styles.row} key={room.id.toString()}>
-        <Text style={styles.descriptionSmall}></Text>
+        <Text style={styles.descriptionSmallNumber}>{room.wetroom? `*` : null}</Text>
         <Text style={styles.description}>{room.name}</Text>
         <Text style={styles.descriptionLargeLeft}>{room.pipetype}</Text>
         <Text style={styles.descriptionSmallNumber}>{room.area}  m&#xB2;</Text>
-        <Text style={styles.descriptionMediumRight}>{room.circuits} kurs{room.circuits === 1 ? null : 'er'}, {room.cc} mm</Text>
+        <Text style={styles.descriptionMediumRight}>{room.circuits} kurs{room.circuits === 1 ? null : 'er'}, {Math.ceil(ccListe[room.cc]*room.area)} m rør, {room.cc} mm</Text>
       </View>
       :
       null
@@ -130,7 +135,6 @@ export default function TableUnit(props){
 }
 
 function UnitHeadline(props) {
-
   let area = props.unit.rooms.filter((room) => room.floor !== "").reduce((prev,curr)=>prev+parseFloat(curr.area),0)
   let rooms = props.unit.rooms.filter((room) => room.floor !== "").length
   let circuits = props.unit.rooms.reduce((prev,curr)=>prev+curr.circuits,0)
@@ -152,12 +156,12 @@ function UnitHeadline(props) {
       </View>
       <View style={styles.row}>
         <Text style={styles.unitDescription}>
-          Regulering: {props.unit.termostatType} - {props.unit.termostatStandard}
+          Regulering: {props.unit.termostatType}{props.unit.termostatType !== 'Uten termostat' ? ` - ${props.unit.termostatStandard}`: null}
         </Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.unitDescription}>
-            Totalt {area} m&#xB2;, {circuits} kurser, {rooms} rom (hvorav {wetrooms} våtrom), {floors} etasjer
+            Totalt {area} m&#xB2;, {circuits} kurser, {rooms} rom{wetrooms > 0 ? ` (hvorav ${wetrooms} våtrom - vist med * nedenfor)` : null}, {floors} etasje{floors === 1 ? null : 'r'}
         </Text>
       </View>
     </View>

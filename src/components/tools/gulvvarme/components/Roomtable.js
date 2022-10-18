@@ -67,7 +67,7 @@ function Row(props){
       value: tempFloor==="1 etasje - betong" || tempFloor==="Kjeller" || tempWet === true ?
       Object.keys(props.gulvvarmePakker)[0] :
       tempFloor!=="" ?
-      Object.keys(props.gulvvarmePakker)[14]:
+      Object.keys(props.gulvvarmePakker)[15]:
       ""
     }
     if (tempFloor !== manualEvent.value){
@@ -137,6 +137,25 @@ function Row(props){
     props.autoFillFunc("",props.unit.unitId,props.indeks,manualEvent)
   },[ccList])
 
+  //listener to circuits - updates if user tries to set value lesser than minimum
+  React.useEffect(() => {
+    let tempPipe = props.unit.rooms[props.indeks].pipetype
+    let tempArea = props.unit.rooms[props.indeks].area
+    let tempCC = props.unit.rooms[props.indeks].cc
+    let tempCircuits = ""
+    if (tempPipe!=="" && tempArea !== "" && tempCC !== "") {
+      tempCircuits = Math.ceil(tempArea*props.gulvvarmePakker[tempPipe].cc[tempCC].antall[0]/100)
+    }
+    const manualEvent =
+    {
+      name:"circuits",
+      value: tempCircuits
+    }
+    if (props.unit.rooms[props.indeks].circuits < tempCircuits){
+      props.autoFillFunc("",props.unit.unitId,props.indeks,manualEvent)
+    }
+  },[props.unit.rooms[props.indeks].circuits])
+
   //function automatically suggesting floor/pipetype equal to prior choice
   function suggestPrior(event, index){
     if (index > 0) {
@@ -163,7 +182,7 @@ function Row(props){
           alt="Sletter rad"
         />
       </td>
-      <td className="floor-col">
+      <td className={"floor-col " + (props.item.missingdata ? props.item.floor === "" ? "missing-data-col" : null : null)}>
         <select
           name="floor"
           onFocus={(event) => suggestPrior(event,props.indeks)}
@@ -173,17 +192,16 @@ function Row(props){
           {props.floorListValues}
         </select>
       </td>
-      <td className="room-name-col">
+      <td className={"room-name-col " + (props.item.missingdata ? props.item.name === "" ? "missing-data-col" : null : null)}>
         <input
           name="name"
           type="search"
           autoComplete="off"
           onChange={props.roomDataInput}
           value={props.item.name}
-
         />
       </td>
-      <td className="area-col">
+      <td className={"area-col " + (props.item.missingdata ? props.item.area === "" ? "missing-data-col" : null : null)}>
         <input
           name="area"
           type="number"
@@ -193,7 +211,7 @@ function Row(props){
           className="text-center"
         />
       </td>
-      <td className="pipe-type-col">
+      <td className={"pipe-type-col " + (props.item.missingdata ? props.item.pipetype === "" ? "missing-data-col" : null : null)}>
         <select
           name="pipetype"
           onFocus={(event) => suggestPrior(event,props.indeks)}
@@ -203,7 +221,7 @@ function Row(props){
           {props.pipeListValues}
         </select>
       </td>
-      <td className="cc-col">
+      <td className={"cc-col " + (props.item.missingdata ? props.item.cc === "" ? "missing-data-col" : null : null)}>
         <select
           name="cc"
           onFocus={(event) => suggestPrior(event,props.indeks)}
@@ -213,7 +231,7 @@ function Row(props){
           {ccListValues}
         </select>
       </td>
-      <td className="circuit-col">
+      <td className={"circuit-col " + (props.item.missingdata ? props.item.circuits === "" ? "missing-data-col" : null : null)}>
         <input
           name="circuits"
           type="number"

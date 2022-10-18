@@ -39,7 +39,7 @@ export default function Kjølebehov(props) {
 
   const [innDatas, setInnDatas] = useState([]);
   const innDatas_data = (data) => { setInnDatas(data) }
-
+  
   //calculate the total of the last
   let total = ovrige_Effekt + vindu_effekt + lasts.reduce((a, b) => a + parseInt(b), 0)
   
@@ -54,24 +54,22 @@ export default function Kjølebehov(props) {
         {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data} pageView={pageView} /> : null}
 
 
-        {page === "oversikt" ? (
+        {/*page === "oversikt" ? (
           <div className='oversikt'>
             <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} pageView={pageView} />
             <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print til PDF</button>
           </div>
-      ) : null}
+      ) : null*/}
 
 
-        {/*page === "oversikt" ? (
+       { page === "oversikt" ? (
           <div className='oversikt'>
 
             <PDFViewer width={1000} height={1500}>
-              <Print innDatas={innDatas}  ovrige={ovriges} />
+              <Print innDatas={innDatas}  vindus={vindus} ovriges={ovriges} lasts={lasts}/>
             </PDFViewer>
-
           </div>
-          
-        ) : null*/}
+          ) : null}
 
 
 

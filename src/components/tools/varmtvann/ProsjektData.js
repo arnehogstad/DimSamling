@@ -112,8 +112,6 @@ export default function ProsjektData(props) {
 
     let [sizeVpUpper, sizeVpLower] = sizeVP(kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
 
-    console.log("Maks:", dekningGradMaksProsent, "Grad:", dekningGradProsent)
-
     return (
         <div className="border">
 

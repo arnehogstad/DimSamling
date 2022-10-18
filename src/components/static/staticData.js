@@ -41,12 +41,12 @@ export const vindu_rettning = ["Sør", "Vest-Øst", "Nord"]
 // Data for Varmt vann systemer
 
 
-export const byggTypeVarmtVann = ["Boligblokk-Store leiligheter", "Boligblokk-Normale leiligheter", "Boligblokk-Små leiligheter", "Bed&breakfast", "Hotell m/restaurant", "Hotell m/sv.b og restaurant", "Sykehus", "Sykehjem", "Idrettsanlegg på Skolen", "Svømmehall", "Idrettsdusjer", "Offentlige bad, helsestudio", "Skol m/svømmehall og gymsal", "Skol m/Gymsal", "Restaurant 1.kl", "Restaurant 2.kl", "Kafè", "Bar", "Kontorbygg m/kantine- Gulvvask", "Kontorbygg m/kantine-Moppevask", "Industri Garderobe-Vanlig smuss", "Industri Garderobe-Mye smuss"]
+export const byggTypeVarmtVann = ["Leilighet (3+ personer)", "Leilighet (2-3 personer)", "Leilighet (1-2 personer)", "Bed&breakfast", "Hotell m/restaurant", "Hotell m/sv.b og restaurant", "Sykehus", "Sykehjem", "Idrettsanlegg på Skolen", "Svømmehall", "Idrettsdusjer", "Offentlige bad, helsestudio", "Skol m/svømmehall og gymsal", "Skol m/Gymsal", "Restaurant 1.kl", "Restaurant 2.kl", "Kafè", "Bar", "Kontorbygg m/kantine- Gulvvask", "Kontorbygg m/kantine-Moppevask", "Industri Garderobe-Vanlig smuss", "Industri Garderobe-Mye smuss"]
 //verdier tilsvarer til CTC pdf file, null is to make it easier to convert to kWh per tabler later.
 export const byggTypeVVInnDataType = {
-    "Boligblokk-Store leiligheter": { navn: "Antall leiligheter", verdier: [6, 8, 12, 19, 28, 40, 55, 67, 81, 105, 135, 170, 200, 240, 260, 280, 300] },
-    "Boligblokk-Normale leiligheter": { navn: "Antall leiligheter", verdier: [7, 10, 15, 28, 47, 62, 77, 90, 107, 140, 180, 230, 268, 320, 355, 400, 430] },
-    "Boligblokk-Små leiligheter": { navn: "Antall leiligheter", verdier: [10, 18, 28, 48, 70, 95, 120, 140, 160, 200, 240, 290, 330, 410, 480, 540, 590] },
+    "Leilighet (3+ personer)": { navn: "Antall leiligheter", verdier: [6, 8, 12, 19, 28, 40, 55, 67, 81, 105, 135, 170, 200, 240, 260, 280, 300] },
+    "Leilighet (2-3 personer)": { navn: "Antall leiligheter", verdier: [7, 10, 15, 28, 47, 62, 77, 90, 107, 140, 180, 230, 268, 320, 355, 400, 430] },
+    "Leilighet (1-2 personer)": { navn: "Antall leiligheter", verdier: [10, 18, 28, 48, 70, 95, 120, 140, 160, 200, 240, 290, 330, 410, 480, 540, 590] },
     "Bed&breakfast": { navn: "Antall gjester", verdier: [20, 30, 40, 75, 110, 140, 170, 200, 230, 290, 340, 390, 440, 490, 540, 590, 640] },
     "Hotell m/restaurant": { navn: "Antall gjester", verdier: [null, null, 35, 60, 85, 105, 125, 145, 165, 200, 250, 300, 350, 400, 440, 490, 530] },
     "Hotell m/sv.b og restaurant": { navn: "Antall gjester", verdier: [null, null, 30, 50, 65, 85, 105, 122, 140, 180, 220, 270, 310, 350, 380, 420, 450] },

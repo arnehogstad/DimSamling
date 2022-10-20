@@ -41,15 +41,15 @@ export default function Unitlist(props){
   return (
     <div className="unitListDiv">
         <div className="unitListDiv-overskrift">
+          <div className="unitListDiv-overskrift-tekst">
+          Boenheter
+          </div>
           <img
           className="unitListDiv-overskrift-knapp"
           src={nyLinjePic}
           alt="Legg til ny boenhet"
           onClick={(event) => props.setShowModal({show:true,modalName:"newUnit"})}
           />
-          <div className="unitListDiv-overskrift-tekst">
-            Boenheter
-          </div>
         </div>
         <div className="unitListDiv-liste">
           <div>

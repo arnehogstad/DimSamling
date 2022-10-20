@@ -2,6 +2,7 @@ import React from 'react'
 import Roomtable from './Roomtable'
 import Radiobuttons from './Radiobuttons'
 import Unitlist from './Unitlist'
+import Projectheadline from './Projectheadline'
 
 export default function Unit(props) {
 
@@ -34,13 +35,16 @@ export default function Unit(props) {
 
   return (
     <div className='inputArea'>
+          <Projectheadline
+            projectName = {props.projectName}
+            setShowModal={props.setShowModal}
+          />
           <Unitlist
             units={props.units}
             addUnit={props.addUnit}
             deleteUnit={props.deleteUnit}
             currentUnit={props.currentUnit}
             setCurrentUnitId={props.setCurrentUnitId}
-            projectName = {props.projectName}
             setShowModal={props.setShowModal}
           />
         {roomTableElements}

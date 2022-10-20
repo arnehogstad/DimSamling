@@ -23,6 +23,7 @@ td{
   text-align:center;
   flex-direction:column;
   background-color: lightgray;
+  font-weight: bold;
 }
 
 .tableDiv-tabell{

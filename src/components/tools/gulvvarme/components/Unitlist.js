@@ -35,25 +35,21 @@ export default function Unitlist(props){
       </div>
     ))
 
+
+
+
   return (
     <div className="unitListDiv">
         <div className="unitListDiv-overskrift">
+          <img
+          className="unitListDiv-overskrift-knapp"
+          src={nyLinjePic}
+          alt="Legg til ny boenhet"
+          onClick={(event) => props.setShowModal({show:true,modalName:"newUnit"})}
+          />
           <div className="unitListDiv-overskrift-tekst">
-            {props.projectName === "" ? "Boenheter" : props.projectName}
+            Boenheter
           </div>
-          <img
-            className="unitListDiv-overskrift-knapp"
-            style={{opacity: 0.6}}
-            src={editNamePic}
-            alt="Legg til ny boenhet"
-            onClick={(event) => props.setShowModal({show:true,modalName:"editNameProject"})}
-          />
-          <img
-            className="unitListDiv-overskrift-knapp"
-            src={nyLinjePic}
-            alt="Legg til ny boenhet"
-            onClick={(event) => props.setShowModal({show:true,modalName:"newUnit"})}
-          />
         </div>
         <div className="unitListDiv-liste">
           <div>

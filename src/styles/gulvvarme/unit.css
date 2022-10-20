@@ -4,7 +4,7 @@
   margin-right: auto;
   display: block;
   margin-top: 50px;
-  min-height: 500px;
+  min-height: 550px;
   height: 40%;
 
 }
@@ -46,17 +46,20 @@
     padding-bottom: 3px;
     vertical-align: bottom;
     background-color: lightgray;
+    padding-left: 5px;
 
 }
 .unitListDiv-overskrift-tekst{
-    float:left;
-    margin-left: 5px;
-    margin-right: auto;
+
     align-self: center;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: calc(100% - 80px);
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 60px);
+    font-weight: bold;
+
 }
 
 .radioButtonDiv-overskrift{
@@ -69,11 +72,8 @@
 
 }
 
-
-
 .unitListDiv-overskrift-knapp{
     float:left;
-    margin-right: 2px;
     align-self: center;
     border-style: solid;
     border-width: 1px;
@@ -147,4 +147,47 @@
 .unitListDiv-liste{
   height: 460px;
   overflow-y: auto;
+}
+
+.project-headline{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 5px;
+  background-color: black;
+  color: white;
+}
+
+.project-headline-projectName{
+  display: flex;
+  width: 65%;
+  font-weight: bold;
+  justify-content: center;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.project-headline-leftcol{
+  width: 15%;
+}
+.project-headline-rightcol{
+  width: 20%;
+}
+.project-headline-knapp{
+    float:left;
+    align-self: center;
+    border-style: solid;
+    border-width: 1px;
+    border-color: darkgrey;
+    height: 34px;
+    opacity: 0.8;
+
+}
+
+.project-headline-knapp:hover {
+    opacity: 1;
 }

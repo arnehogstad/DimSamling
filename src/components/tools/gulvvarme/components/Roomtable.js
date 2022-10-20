@@ -64,7 +64,7 @@ function Row(props){
     const manualEvent =
     {
       name:"pipetype",
-      value: tempFloor==="1 etasje - betong" || tempFloor==="Kjeller" || tempWet === true ?
+      value: tempFloor==="1 etasje - betong" || tempFloor==="Kjeller" || tempFloor==="Garasje" || tempWet === true ?
       Object.keys(props.gulvvarmePakker)[0] :
       tempFloor!=="" ?
       Object.keys(props.gulvvarmePakker)[15]:

@@ -319,9 +319,9 @@ export default {
   },
   {
   "Navn":"8 liter ekspansjonskar for tappevann, 10 bar",
-  "Artikkelnr":523273,
+  "Artikkelnr":526210,
   "Volum":8,
-  "Lenke":"https://www.abkqviller.no/produkter/armaturer-pumper-og-ventiler-/ekspansjonskar-og-sikkerhetsventiler/ekspansjonskar/ekspansjonskar-for-tappevann-10-bar/?code=523273",
+  "Lenke":"https://www.abkqviller.no/produkter/armaturer-pumper-og-ventiler-/ekspansjonskar-og-sikkerhetsventiler/ekspansjonskar/ekspansjonskar-for-tappevann-10-bar/?code=526210",
   "Type":"tappevann",
   "MaksTemp":70,
   "MinTemp":0,

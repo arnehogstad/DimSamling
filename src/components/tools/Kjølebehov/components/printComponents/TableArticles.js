@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import { nanoid } from 'nanoid'
+import {OvrigeOversikt ,LastsOversikt,VinduOversikt,InnDataOversikt, HeaderType} from './GenerateTableRow'
 
 const styles = StyleSheet.create({
   row: {
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
   tableContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 2,
+    marginTop: 20,
     marginLeft: 10,
     marginRight: 5,
   },
@@ -75,6 +76,14 @@ const styles = StyleSheet.create({
   unitName: {
     fontSize: 11,
     fontWeight: 'bold',
+    marginTop: 10,
+    letterSpacing: 1,
+
+  },
+  results: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginTop: 15,
     letterSpacing: 1,
 
   },
@@ -91,27 +100,39 @@ export default function TableArticles(props){
 
   return (
     <View wrap={false}>
-     <InnDataOversikt innDatas={props.innDatas}/>
-    </View>
+     <InnDataOversikt styles={styles} innDatas={props.innDatas} />
+
+     <View key={nanoid()} style={styles.tableContainer}>
+     <View><Text style={styles.unitName}>Transmisjon, luft og interne laster[W]: </Text> </View>
+     <HeaderType styles={styles} headerType="lasts"/>
+     <LastsOversikt styles={styles} lasts={props.lasts}/>
+     </View>
+
+     {props.vindus.length  ? (
+        <Fragment>
+          <View key={nanoid()} style={styles.tableContainer}>
+          <View><Text style={styles.unitName}>Last fra vinduer: </Text> </View>
+     <HeaderType styles={styles} headerType="vindu"/>
+     <VinduOversikt styles={styles} vindus={props.vindus}/>
+     </View>
+     <View><Text style={styles.unitName}>Total last fra vinuder er {props.total.vindu} W. </Text> </View>
+        
+      </Fragment> 
+      ) : null} 
+
+    {props.ovriges.length  ? (
+      <Fragment>
+         <View key={nanoid()} style={styles.tableContainer}>
+         <View><Text style={styles.unitName}>Øvrige definerte laster: </Text> </View>
+      <HeaderType  styles={styles} headerType="ovrige"/>
+     <OvrigeOversikt  styles={styles} ovriges={props.ovriges}/>
+     </View>
+        <View><Text style={styles.unitName}>Total øvrige last er {props.total.ovrige} W. </Text> </View>
+         </Fragment>) 
+  :null }
+      <View><Text style={styles.results}>Total kjølebehov er {props.total.internt } W. </Text> </View>
+        
+       </View>
   )
 }
 
-
-function InnDataOversikt (props){
-
- 
- 
-  let rows = (
-    <View style={styles.tableRow} >
-    <Text style={styles.descriptionSmall}>{23}</Text>
-    <Text style={styles.descriptionLarge}>{32}</Text>
-    </View>
-  )
-      console.log(rows)
-  return (    
-    <View wrap={false}>
-    <View style={styles.tableContainer}>
-    
-       </View>
-      </View>
-)}

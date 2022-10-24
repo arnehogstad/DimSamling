@@ -34,12 +34,10 @@ export default function Print(props) {
           lasts={props.lasts}
           vindus={props.vindus}
           ovriges={props.ovriges}
+          total={props.total}
           styleTable={styles.table}
         />
 
-
-
-     
         <Footer />
       </Page>
     </Document>

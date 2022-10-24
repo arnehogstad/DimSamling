@@ -299,7 +299,7 @@ export default function ProsjektData(props) {
                                         }}
                                         min={60}
                                         max={dekningGradMaksProsent}
-                                        marks={[{ value: 60, label: "Mer volum og effekt fra VP" }, { value: dekningGradMaksProsent, label: "Mer volum og effekt fra VP" }]}
+                                        marks={[{ value: 60, label: "Mindre volum og effekt fra VP" }, { value: dekningGradMaksProsent, label: "Mer volum og effekt fra VP" }]}
                                         onChange={handleChange} />
                                 </Stack>
                             </Box>
@@ -307,13 +307,9 @@ export default function ProsjektData(props) {
 
                         <p>Volume for forvarmingbereder er {minimumVPVol} liter og for spissbereder er {minimumSpissVol} liter.</p>
 
-
                     </div>
 
                 ) : null}
-
-
-
 
 
                 {/*

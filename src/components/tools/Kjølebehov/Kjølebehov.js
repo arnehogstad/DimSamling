@@ -6,8 +6,7 @@ import Vindu from "./components/Vindu"
 import Ovrigelast from './components/Ovrigelast'
 import "../../../styles/kjølebehov/kjølebehov.css"
 import Oversikt from './components/Oversikt'
-import print from "./components/print"
-import PrintOversikt from './components/PrintOversikt'
+
 import { PDFViewer } from "@react-pdf/renderer";
 import Print from './components/printComponents/Print'
 
@@ -41,7 +40,9 @@ export default function Kjølebehov(props) {
   const innDatas_data = (data) => { setInnDatas(data) }
   
   //calculate the total of the last
-  let total = ovrige_Effekt + vindu_effekt + lasts.reduce((a, b) => a + parseInt(b), 0)
+  //let total = ovrige_Effekt + vindu_effekt + lasts.reduce((a, b) => a + parseInt(b), 0)
+
+  let total ={ovrige: ovrige_Effekt , vindu:vindu_effekt , internt: ((lasts.reduce((a, b) => a + parseInt(b), 0)+ovrige_Effekt+vindu_effekt)*(1+innDatas.SikkerhetsMargin/100)) } 
   
   return (
     <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
@@ -54,19 +55,12 @@ export default function Kjølebehov(props) {
         {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data} pageView={pageView} /> : null}
 
 
-        {/*page === "oversikt" ? (
-          <div className='oversikt'>
-            <Oversikt total={total} lasts={lasts} ovrige={ovrige_Effekt} vindus={vindu_effekt} pageView={pageView} />
-            <button className='handlingsKnapp' onClick={() => print(lasts,vindus,ovriges, innDatas, [vindu_effekt],[ovrige_Effekt],[total])}>Print til PDF</button>
-          </div>
-      ) : null*/}
-
 
        { page === "oversikt" ? (
           <div className='oversikt'>
 
             <PDFViewer width={1000} height={1500}>
-              <Print innDatas={innDatas}  vindus={vindus} ovriges={ovriges} lasts={lasts}/>
+              <Print innDatas={innDatas}  vindus={vindus} ovriges={ovriges} lasts={lasts} total={total}/>
             </PDFViewer>
           </div>
           ) : null}

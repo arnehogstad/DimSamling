@@ -13,6 +13,7 @@ export default function Table(props) {
         lasts={props.lasts}
         vindus={props.vindus}
         ovriges={props.ovriges}
+        total={props.total}
 
       />
     </View>

@@ -10,9 +10,7 @@ export default function Topbar(){
           className="topBar-icon"
         />
           <div className="topBar-text">
-            Velkommen til dimensjoneringsområdet
-            her kan du få hjelp til å velge korrekt produkt
-            velg ønsket verktøy fra listen nedenfor
+
           </div>
         </div>
 

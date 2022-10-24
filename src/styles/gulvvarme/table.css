@@ -22,7 +22,8 @@ td{
   padding-bottom: 10px;
   text-align:center;
   flex-direction:column;
-  background-color: lightgray;
+  background-color: #ececec;
+  font-weight: bold;
 }
 
 .tableDiv-tabell{

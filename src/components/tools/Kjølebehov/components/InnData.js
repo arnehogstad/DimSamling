@@ -23,11 +23,12 @@ export default function InnData(props) {
       gjennvinn: 80,
       ventilasjonType: "Gjennvinner basert på TEK",
       luftmengde: 0,
+      SikkerhetsMargin: 30,
       uid: nanoid()
     }
   )
 
-  const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, uid } = formData
+  const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, SikkerhetsMargin,uid } = formData
 
 
  
@@ -124,6 +125,16 @@ export default function InnData(props) {
           </select>
         </div>
 
+        <label className="label">Sikkerhets Margin [%]:
+          <input
+            className="input"
+            type="number"
+            onChange={handleChange}
+            name="SikkerhetsMargin"
+            value={SikkerhetsMargin}
+          /></label>
+
+
         {0 ? (
           <>
             <label className="label">Maks mulig ute Temperatur:
@@ -145,7 +156,7 @@ export default function InnData(props) {
           </>
         ) : null}
 
-        <label className="label">Arealet BRA [m]:
+        <label className="label">Arealet BRA [m&#xB2;]:
           <input
             className="input"
             type="number"
@@ -165,7 +176,7 @@ export default function InnData(props) {
 
         {ByggType === "Småhus" ? (
           <>
-            <label className="label">Tak mot loft [m]:
+            <label className="label">Tak mot loft [m&#xB2;]:
               <input
                 className="input"
                 type="number"
@@ -183,7 +194,7 @@ export default function InnData(props) {
                 value={taktemp}
               /></label>
 
-            <label className="label">Gulv mot  fri luft [{'\u00b0'}C]:
+            <label className="label">Gulv mot  fri luft [m&#xB2;]:
               <input
                 className="input"
                 type="number"
@@ -239,7 +250,7 @@ export default function InnData(props) {
 
         {ventilasjonType === "Uten gjennvinner basert på luftmengde" || ventilasjonType === "Gjennvinner basert på luftmengde" ? (
           <>
-            <label className="label">Luft Mengde[m{'3'}/h]:
+            <label className="label">Luft Mengde[m&#xB3;/h]:
               <input
                 className="input"
                 type="number"

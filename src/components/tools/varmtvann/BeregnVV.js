@@ -47,7 +47,7 @@ export function minVolVP(kW, kWhIn, settTemp, dekningGradProsent) {
     let kW_0 = 0.346 * kWhIn * dekningGradProsent/100 //determines the offsett based on the KWh maximum heating 
     let Vol70C = (kW - kW_0) / -0.0259
     let volume = Math.round(Vol70C * 70 / settTemp)
-    //console.log("VP",typeof(kW))
+
     return volume
 }
 
@@ -66,7 +66,7 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent,
     else if (backUpType === "Spiss el-kolbe") {
         let kW_0 = 0.346 * kWhIn * (1 - dekningGradProsent/100) //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW - kW_0) / -0.0259
-        let volume = Math.round(Vol70C * 70 / settTemp) > 100 ? Math.round(Vol70C * 70 / settTemp) : 100
+        let volume = Math.round(Vol70C * 70 / settTemp) > 400 ? Math.round(Vol70C * 70 / settTemp) : 400
         return volume
     }
 
@@ -74,7 +74,7 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent,
 
         let kW_0 = 0.346 * kWhIn //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW + forvarmingELeffekt - kW_0) / -0.0259
-        let volume = Math.round(Vol70C * 70 / settTemp) - minimumVPVol > 100 ? Math.round(Vol70C * 70 / settTemp) - minimumVPVol : 100
+        let volume = Math.round(Vol70C * 70 / settTemp) - minimumVPVol > 400 ? Math.round(Vol70C * 70 / settTemp) - minimumVPVol : 400
              
         return volume
     }

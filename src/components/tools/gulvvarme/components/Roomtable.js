@@ -116,7 +116,7 @@ function Row(props){
     let tempArea = props.unit.rooms[props.indeks].area
     let tempCC = props.unit.rooms[props.indeks].cc
     let tempCircuits = ""
-    if (tempPipe!=="" && tempArea !== "" && tempCC !== "") {
+    if (tempPipe!=="" && tempArea !== "" && tempCC !== "" && props.gulvvarmePakker[tempPipe].cc[tempCC] !== undefined ) {
       tempCircuits = Math.ceil(tempArea*props.gulvvarmePakker[tempPipe].cc[tempCC].antall[0]/100)
     }
     const manualEvent =
@@ -143,7 +143,7 @@ function Row(props){
     let tempArea = props.unit.rooms[props.indeks].area
     let tempCC = props.unit.rooms[props.indeks].cc
     let tempCircuits = ""
-    if (tempPipe!=="" && tempArea !== "" && tempCC !== "") {
+    if (tempPipe!=="" && tempArea !== "" && tempCC !== "" && props.gulvvarmePakker[tempPipe].cc[tempCC] !== undefined) {
       tempCircuits = Math.ceil(tempArea*props.gulvvarmePakker[tempPipe].cc[tempCC].antall[0]/100)
     }
     const manualEvent =

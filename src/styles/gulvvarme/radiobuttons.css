@@ -28,6 +28,7 @@
 .radioButtonDiv-overskrift{
   padding-left: 5px;
   height: 40px;
+  font-weight: bold;
 }
 
 .radioButtonDiv label {

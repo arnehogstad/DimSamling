@@ -32,7 +32,7 @@ export default function Radiobuttons(props){
   return (
     <div className="radioButtonDiv" style={styles}>
       <div className="radioButtonDiv-overskrift">
-        TEKNISK ROM {props.unitName.toUpperCase()}
+        Teknisk rom {props.unitName}
       </div>
       <fieldset>
         <legend>Type fordelerskap</legend>

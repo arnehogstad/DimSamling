@@ -36,7 +36,7 @@ export default function Roomtable(props){
   return (
     <div className="tableDiv" style={styles}>
       <div className="tableDiv-overskrift">
-        ROMOVERSIKT FOR {props.unit.unitName.toUpperCase()}
+        Romoversikt {props.unit.unitName}
       </div>
       <div className="tableDiv-tabell">
         <table>

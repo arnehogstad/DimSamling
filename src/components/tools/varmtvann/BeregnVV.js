@@ -1,4 +1,3 @@
-
 import React from "react"
 import { byggTypeVVInnDataType, kWhDataFraCTC } from "../../static/staticData"
 
@@ -75,7 +74,8 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent,
         let kW_0 = 0.346 * kWhIn //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW + forvarmingELeffekt - kW_0) / -0.0259
         let volume = Math.round(Vol70C * 70 / settTemp) - minimumVPVol > 400 ? Math.round(Vol70C * 70 / settTemp) - minimumVPVol : 400
-             
+
+        
         return volume
     }
 
@@ -101,3 +101,5 @@ export function isLeilighetFucntion(kWhEnheter) {
          kWhEnheter.every(element => element.Navn==="Leilighet (3+ personer)" || element.Navn==="Leilighet (2-3 personer)"|| element.Navn==="Leilighet (1-2 personer)") ? isLeilighet=true : isLeilighet=false
         return isLeilighet
 }
+
+

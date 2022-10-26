@@ -14,7 +14,7 @@ export default function Print(props){
         paddingTop: 20,
         paddingLeft:30,
         paddingRight:30,
-        paddingBottom:20,
+        paddingBottom:40,
         lineHeight: 1.5,
         flexDirection: 'column',
     },

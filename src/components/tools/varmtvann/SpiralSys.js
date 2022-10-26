@@ -8,11 +8,12 @@ import { Stack } from "@mui/system"
 
 export default function SpiralSys(props) {
 
-let  {netVannTemp, tappeVannTemp, perPersonVV, vpEffekt,spissSettpunkt, settpunktVP} = props.prosjektData
+let  {netVannTemp, tappeVannTemp, perPersonVV, spissSettpunkt, settpunktVP} = props.prosjektData
 let {kWh, kWhEnheter} = props
 
 const [spiral, setSpiral] = React.useState(
 {
+    vpEffekt: 15,
     forvarmingELeffekt: 5,
     spissElEffekt: 15,
     spissVolume: 400,
@@ -25,7 +26,7 @@ const [spiral, setSpiral] = React.useState(
 }
 )
 
-let {forvarmingELeffekt, spissElEffekt,  dekningGradProsent, backupType} = spiral
+let {vpEffekt,forvarmingELeffekt, spissElEffekt,  dekningGradProsent, backupType} = spiral
  
 function handleChange(event) {
     const { name, value, type } = event.target
@@ -57,6 +58,7 @@ let [sizeVpUpper, sizeVpLower] = sizeVP(kWhEnheter, perPersonVV, spissSettpunkt,
 return(
 
 <Fragment>
+    <h3>Spiral:</h3>
                 {isLeilighetFucntion(kWhEnheter) ? <p style={{ fontStyle: "italic", marginBottom: 6 }}>Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p> : null}
                 <label className="label" >VP effekt [kW]:
                     <input
@@ -107,7 +109,7 @@ return(
                     </div>
                 ) : null}
 
-                <p style={{ fontStyle: "italic", textAlign: 'center' }}>Fra slider ned kan man velge mellom akseptable volumer. Høyere volumer er mer ønskelig. </p>
+                <p style={{ fontStyle: "italic", textAlign: 'center' }}> Med slider kan man velge mellom akesptabelle verdier for forvarmingberreder og spissbereder. Merk at med høyere volum kan man bennytte varmepumpen på en mer effektivt måte. </p>
 
                 <div className="VVSlider">
                     <Box sx={{ width: 400, mt: 5 }}  >
@@ -125,6 +127,9 @@ return(
                         </Stack>
                     </Box>
                 </div>
+
+                 <p style={{fontStyle: "italic", fontSize: 10}}>{`Maks teoretisk dekning grad er ${dekningGradMaksProsent}%,  Valgt dekningsgrad: ${dekningGradProsent}%`}</p>               
+
 
                 <p>Volume for forvarmingbereder er {minimumVPVol} liter og for spissbereder er {minimumSpissVol} liter.</p>
               </Fragment>

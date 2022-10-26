@@ -5,7 +5,7 @@ import { kWhData } from "./BeregnVV"
 import "../../../styles/varmtvann/VVStyle.css"
 import SpiralSys from "./SpiralSys"
 import LøsningTyper from "./LøsningTyper"
-
+import AquaEfficency from "./AquaEfficency"
 
 
 export default function ProsjektData(props) {
@@ -157,6 +157,8 @@ export default function ProsjektData(props) {
                                 onChange={handleChange}
                                 name="perPersonVV"
                                 value={perPersonVV}
+                                min={60}
+                                max={90}
                             /></label>
 
 
@@ -180,6 +182,8 @@ export default function ProsjektData(props) {
                         onChange={handleChange}
                         name="spissSettpunkt"
                         value={spissSettpunkt}
+                        min={60}
+                        max={80}
                     /></label>
 
                 <label className="label" >VP setpunkt [{'\u00b0'}C]:
@@ -189,6 +193,8 @@ export default function ProsjektData(props) {
                         onChange={handleChange}
                         name="settpunktVP"
                         value={settpunktVP}
+                        min={50}
+                        max={75}
                     /></label>
 
                 <label className="label" >Nett vann  temperatur [{'\u00b0'}C]:
@@ -198,6 +204,8 @@ export default function ProsjektData(props) {
                         onChange={handleChange}
                         name="netVannTemp"
                         value={netVannTemp}
+                        min={4}
+                        max={20}
                     /></label>
 
 
@@ -229,7 +237,8 @@ export default function ProsjektData(props) {
                     : null}
                 {systemValg === "Veksler" ? <SpiralSys kWh={kWh} kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
                     : null}
-
+                {systemValg === "AquaEfficency" ? <AquaEfficency kWhEnheter={kWhEnheter} kWh={kWh} />
+                    : null}
 
 
 

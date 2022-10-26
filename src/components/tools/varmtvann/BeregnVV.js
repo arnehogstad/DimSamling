@@ -8,10 +8,6 @@ export function kWhData(ByggType, antall) { ///Finds the Kwh Data from CTC table
     let arrayIndexhigher = byggTypeVVInnDataType[ByggType].verdier.findIndex(isLarger)
     let arrayIndexlower = arrayIndexhigher - 1
 
-    //let kWh=-(kWhDataFraCTC[arrayIndexlower]*(byggTypeVVInnDataType[ByggType].verdier[arrayIndexhigher]-parseInt(antall))+kWhDataFraCTC[arrayIndexhigher]*(parseInt(antall)-byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower]))/(byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower]-byggTypeVVInnDataType[ByggType].verdier[arrayIndexhigher])
-    //the formula for interpolatins is:
-    //y=(y0*(x1-x)+y1*(x-x0))/(x1-x0) 
-
     let kWh = kWhDataFraCTC[arrayIndexlower] + (parseInt(antall) - byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower]) * (kWhDataFraCTC[arrayIndexhigher] - kWhDataFraCTC[arrayIndexlower]) / (byggTypeVVInnDataType[ByggType].verdier[arrayIndexhigher] - byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower])
     //the formula for interpolatins is:
     //y=y1+(x-x1)*(y2-y1)/(x2-x1)    

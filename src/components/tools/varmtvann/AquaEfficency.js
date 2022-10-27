@@ -21,15 +21,10 @@ export default function AquaEfficency(props) {
             if (element.Navn === "Leilighet (1-2 personer)") antallSmåLeilighet += element.Antall
         })
 
-
         let kWTotal = (kWhData(antallSmåLeilighet, "små") ** 2 + kWhData(antallStorLeilighet, "store") ** 2) ** 0.5  ///estimert effekt med samtidighet faktor
-        console.log("total ", kWTotal)
-
         unit = unitVelger(kWTotal) ///velger riktig unit 
 
-        console.log("unit ", unit)
-
-    }else if(isLeilighet === false){
+        }else if(isLeilighet === false){ ////if the units are not apartments then KWH from CTC is used
         let kWTotal = props.kWh
         unit = unitVelger(kWTotal)
     }

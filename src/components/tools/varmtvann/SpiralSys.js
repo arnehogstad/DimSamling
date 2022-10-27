@@ -109,10 +109,10 @@ return(
                     </div>
                 ) : null}
 
-                <p style={{ fontStyle: "italic", textAlign: 'center' }}> Med slider kan man velge mellom akesptabelle verdier for forvarmingberreder og spissbereder. Merk at med høyere volum kan man bennytte varmepumpen på en mer effektivt måte. </p>
+                <p style={{ fontStyle: "italic",  maxWidth:600 }}> Med slider kan man velge mellom akesptabelle verdier for forvarmingberreder og spissbereder. Merk at med høyere volum kan man bennytte varmepumpen på en mer effektivt måte. </p>
 
-                <div className="VVSlider">
-                    <Box sx={{ width: 400, mt: 5 }}  >
+              
+                    <Box sx={{ width: 200, m: 3,  mx: 'auto' }}  >
                         <Stack spacing={2} direction="row" alignItems="center">
                             <Slider
                                 name="dekningGradProsent"
@@ -126,7 +126,8 @@ return(
                                 onChange={handleChange} />
                         </Stack>
                     </Box>
-                </div>
+            
+           
 
                  <p style={{fontStyle: "italic", fontSize: 10}}>{`Maks teoretisk dekning grad er ${dekningGradMaksProsent}%,  Valgt dekningsgrad: ${dekningGradProsent}%`}</p>               
 

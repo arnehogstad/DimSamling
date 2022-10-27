@@ -1,5 +1,5 @@
 import React, { useEffect } from "react"
-import { vindu_rettning, Avsjkermings } from "../../../static/staticData"
+import { vindu_rettning, Avsjkermings } from "./StaticData/KJstaticData"
 import * as beregn from "./beregn"
 import { nanoid } from "@reduxjs/toolkit"
 
@@ -165,10 +165,6 @@ export default function Vindu(props) {
                 <div className="knapper">
                     <button className="handlingsKnapp" onClick={saveVindu}>Lagre Vindu</button>
                 </div>
-            </div>
-
-
-
 
             {vindus.length !== 0 ? (
                 <div className="table">
@@ -187,6 +183,11 @@ export default function Vindu(props) {
                     </table>
                 </div>
             ) : null}
+            
+            </div>
+
+
+
 
             <div className="knapper">
                 <button className="sisteNeste" onClick={() => { props.pageView("InnData") }}>Forrige Steg</button>

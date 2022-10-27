@@ -1,6 +1,6 @@
 import React from "react"
 import { nanoid } from '@reduxjs/toolkit'
-import * as staticData from '../../static/staticData'
+import * as staticData from "./StaticData/VVStaticData"
 import { kWhData } from "./BeregnVV"
 import "../../../styles/varmtvann/VVStyle.css"
 import SpiralSys from "./SpiralSys"
@@ -233,11 +233,11 @@ export default function ProsjektData(props) {
 
 
 
-                {systemValg === "Spiral" ? <SpiralSys kWh={kWh} kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+                {systemValg === "Spiral" && kWhEnheter.length !== 0 ? <SpiralSys kWh={kWh} kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
                     : null}
-                {systemValg === "Veksler" ? <SpiralSys kWh={kWh} kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+                {systemValg === "Veksler"&& kWhEnheter.length !== 0 ? <SpiralSys kWh={kWh} kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
                     : null}
-                {systemValg === "AquaEfficency" ? <AquaEfficency kWhEnheter={kWhEnheter} kWh={kWh} />
+                {systemValg === "AquaEfficency"&& kWhEnheter.length !== 0 ? <AquaEfficency kWhEnheter={kWhEnheter} kWh={kWh} />
                     : null}
 
 

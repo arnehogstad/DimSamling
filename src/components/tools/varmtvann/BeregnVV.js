@@ -1,5 +1,5 @@
 import React from "react"
-import { byggTypeVVInnDataType, kWhDataFraCTC } from "../../static/staticData"
+import { byggTypeVVInnDataType, kWhDataFraCTC} from "./StaticData/VVStaticData"
 
 
 

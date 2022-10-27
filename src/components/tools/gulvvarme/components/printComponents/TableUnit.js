@@ -79,7 +79,6 @@ export default function TableUnit(props){
   const sortedByFloor = tempSortByFloor.map((room)=> ({...room, floor: room.floor.replace(' - bjelkelag', '').replace(' - betong', '')}))
   const ccListe = mockDatabase.ccliste
 
-  console.log(sortedByFloor);
 
   const rows = sortedByFloor.map((room,index) =>(
     <Fragment key={`${props.unit.unitId}${room.id}`}>

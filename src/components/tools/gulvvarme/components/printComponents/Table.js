@@ -5,13 +5,15 @@ import TableArticles from "./TableArticles";
 
 
 export default function Table(props){
-
   const tables =
     props.data.map((unit, index) => (
+      (unit.rooms.filter((room) => room.floor !== "").length > 0 ?
       <TableUnit
         key={`${unit.unitId}table`}
         unit={unit}
       />
+      :
+      null)
     ))
 
   return(

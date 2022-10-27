@@ -1,4 +1,3 @@
-
 import React from "react"
 import { byggTypeVVInnDataType, kWhDataFraCTC } from "../../static/staticData"
 
@@ -8,10 +7,6 @@ export function kWhData(ByggType, antall) { ///Finds the Kwh Data from CTC table
     const isLarger = (arrayElement) => arrayElement >= parseInt(antall)
     let arrayIndexhigher = byggTypeVVInnDataType[ByggType].verdier.findIndex(isLarger)
     let arrayIndexlower = arrayIndexhigher - 1
-
-    //let kWh=-(kWhDataFraCTC[arrayIndexlower]*(byggTypeVVInnDataType[ByggType].verdier[arrayIndexhigher]-parseInt(antall))+kWhDataFraCTC[arrayIndexhigher]*(parseInt(antall)-byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower]))/(byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower]-byggTypeVVInnDataType[ByggType].verdier[arrayIndexhigher])
-    //the formula for interpolatins is:
-    //y=(y0*(x1-x)+y1*(x-x0))/(x1-x0) 
 
     let kWh = kWhDataFraCTC[arrayIndexlower] + (parseInt(antall) - byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower]) * (kWhDataFraCTC[arrayIndexhigher] - kWhDataFraCTC[arrayIndexlower]) / (byggTypeVVInnDataType[ByggType].verdier[arrayIndexhigher] - byggTypeVVInnDataType[ByggType].verdier[arrayIndexlower])
     //the formula for interpolatins is:
@@ -75,7 +70,8 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent,
         let kW_0 = 0.346 * kWhIn //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW + forvarmingELeffekt - kW_0) / -0.0259
         let volume = Math.round(Vol70C * 70 / settTemp) - minimumVPVol > 400 ? Math.round(Vol70C * 70 / settTemp) - minimumVPVol : 400
-             
+
+        
         return volume
     }
 
@@ -101,3 +97,5 @@ export function isLeilighetFucntion(kWhEnheter) {
          kWhEnheter.every(element => element.Navn==="Leilighet (3+ personer)" || element.Navn==="Leilighet (2-3 personer)"|| element.Navn==="Leilighet (1-2 personer)") ? isLeilighet=true : isLeilighet=false
         return isLeilighet
 }
+
+

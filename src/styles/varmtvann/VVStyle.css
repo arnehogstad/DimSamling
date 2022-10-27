@@ -18,3 +18,70 @@
     align-items: center;
     padding: 10px;
 }
+
+
+
+.sisteNesteVV {
+
+    width: max-content;
+    height: 50px;
+    margin-right: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: #fbab18;
+    color: #333;
+    display: inline-block;
+    border-color: #fbab18;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 5px;
+    margin-bottom: 20px;
+    align-self: center;
+    border: 1px solid #e7e7e7;
+}
+.sisteNesteVV:hover{
+    opacity: 1;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+  .sisteNesteVV:active{
+    opacity: 1;
+    background-color: #2a2a2a;
+    color: white;
+
+  }
+
+  
+
+
+  .handlingsKnappVV{
+    height: 50px;
+    margin-right: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: white;
+    color: black;
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 0;
+    margin-bottom: 20px;
+    width: max-content;
+    min-width: 120px;
+    align-self: center;
+    border: 1px solid #e7e7e7;
+  
+  }
+    
+  .handlingsKnappVV:hover{
+    opacity: 1;
+    background-color: black;
+    color: white;
+  }
+  .handlingsKnappVV:active{
+    opacity: 1;
+    background-color: #2a2a2a;
+    color: white;
+  }
+  

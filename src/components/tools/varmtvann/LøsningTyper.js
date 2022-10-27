@@ -5,10 +5,12 @@ import React from "react"
 export default function LøsningTyper(props){
 let {kWh}=props
 function løsningType(kWh) {
+    console.log("kWh",kWh)
+    
     let løsningType = {Spiral: false, Veksler: false, AquaEfficency:false }
-     if (kWh<230) {
+     if (kWh<290) {
          løsningType.Spiral = true
-     }else if (kWh>230) {
+     }else if (kWh>290) {
          løsningType.Veksler = true
          løsningType.AquaEfficency = true
      }

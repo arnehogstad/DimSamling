@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
   descriptionLargeLeft: {
     width: '35%',
     textAlign: 'left',
+    overflow: 'hidden',
+    textOverflow: 'clip',
   },
   descriptionMediumRight: {
     width: '30%',

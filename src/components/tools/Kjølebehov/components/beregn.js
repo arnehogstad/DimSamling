@@ -1,6 +1,6 @@
 
 import React from "react"
-import { UData } from "../../../static/staticData"
+import { UData } from "./StaticData/KJstaticData"
 
 ////Luft last
 

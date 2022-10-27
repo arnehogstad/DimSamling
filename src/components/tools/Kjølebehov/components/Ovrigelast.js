@@ -79,8 +79,6 @@ export default function Ovrigelast(props) {
                 <div className="knapper">
                     <button className="handlingsKnapp" onClick={saveData}>Lagre last</button>
                 </div>
-            </div>
-
             {lasts.length !== 0 ? (
                 <>
                     <div className="table">
@@ -99,6 +97,8 @@ export default function Ovrigelast(props) {
                     </div>
                 </>
             ) : null}
+            </div>
+
 
             <div className="knapper">
                 <button className="sisteNeste" onClick={() => { props.pageView("vindu") }}>Forrige steg</button>

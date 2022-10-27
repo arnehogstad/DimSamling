@@ -11,6 +11,7 @@ export default function Varmtvann(props) {
 
     return (
         <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
+            
             <Banner title={props.toolName} />
             <div className="toolInfo">
                 <ProsjektData />

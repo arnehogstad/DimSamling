@@ -1,5 +1,5 @@
 import React from "react"
-import { byggTypeVVInnDataType, kWhDataFraCTC} from "./StaticData/VVStaticData"
+import { byggTypeVVInnDataType, kWhDataFraCTC } from "./StaticData/VVStaticData"
 
 
 
@@ -39,7 +39,7 @@ export function BeregnEffekt(volume, kWhIn, settTemp) {
 }
 
 export function minVolVP(kW, kWhIn, settTemp, dekningGradProsent) {
-    let kW_0 = 0.346 * kWhIn * dekningGradProsent/100 //determines the offsett based on the KWh maximum heating 
+    let kW_0 = 0.346 * kWhIn * dekningGradProsent / 100 //determines the offsett based on the KWh maximum heating 
     let Vol70C = (kW - kW_0) / -0.0259
     let volume = Math.round(Vol70C * 70 / settTemp)
 
@@ -47,11 +47,11 @@ export function minVolVP(kW, kWhIn, settTemp, dekningGradProsent) {
 }
 
 
-export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent, forvarmingELeffekt,minimumVPVol) {
-   
-    
+export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent, forvarmingELeffekt, minimumVPVol) {
+
+
     if (backUpType === "Spiss el-kolbe som dekker 100% av behov") {
-        
+
         let kW_0 = 0.346 * kWhIn //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW - kW_0) / -0.0259
         let volume = Math.round(Vol70C * 70 / settTemp)
@@ -59,7 +59,7 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent,
     }
 
     else if (backUpType === "Spiss el-kolbe") {
-        let kW_0 = 0.346 * kWhIn * (1 - dekningGradProsent/100) //determines the offsett based on the KWh maximum heating 
+        let kW_0 = 0.346 * kWhIn * (1 - dekningGradProsent / 100) //determines the offsett based on the KWh maximum heating 
         let Vol70C = (kW - kW_0) / -0.0259
         let volume = Math.round(Vol70C * 70 / settTemp) > 400 ? Math.round(Vol70C * 70 / settTemp) : 400
         return volume
@@ -71,31 +71,30 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent,
         let Vol70C = (kW + forvarmingELeffekt - kW_0) / -0.0259
         let volume = Math.round(Vol70C * 70 / settTemp) - minimumVPVol > 400 ? Math.round(Vol70C * 70 / settTemp) - minimumVPVol : 400
 
-        
+
         return volume
     }
 
 }
-export function sizeVP(kWhEnheter,perPersonVV,spissSettpunkt,netVannTemp,settpunktVP,tappeVannTemp) {
+export function sizeVP(kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp) {
     let antallPersoner = 0
-    kWhEnheter.forEach(element => { 
-        if (element.Navn==="Leilighet (3+ personer)")  antallPersoner +=3.5*element.Antall
-        if (element.Navn==="Leilighet (2-3 personer)")  antallPersoner +=2.5*element.Antall
-        if (element.Navn==="Leilighet (1-2 personer)")  antallPersoner +=1.5*element.Antall
-        })
-        let total40Cforbruk= antallPersoner*perPersonVV
-        let totalBerederForbruk=(tappeVannTemp*total40Cforbruk-netVannTemp*total40Cforbruk)/(spissSettpunkt-netVannTemp)
+    
+        if (kWhEnheter.Navn === "Leilighet (3+ personer)") antallPersoner += 3.5 * kWhEnheter.Antall
+        if (kWhEnheter.Navn === "Leilighet (2-3 personer)") antallPersoner += 2.5 * kWhEnheter.Antall
+        if (kWhEnheter.Navn === "Leilighet (1-2 personer)") antallPersoner += 1.5 * kWhEnheter.Antall
+    
+    let total40Cforbruk = antallPersoner * perPersonVV
+    let totalBerederForbruk = (tappeVannTemp * total40Cforbruk - netVannTemp * total40Cforbruk) / (spissSettpunkt - netVannTemp)
 
-        let energiForbruk=totalBerederForbruk*(settpunktVP-netVannTemp)*4.2/(3600*24)  //Energi use in Kj and then divided for 24h
-        let [sizeVpUpper, sizeVpLower] = [Math.round( energiForbruk*24/10),Math.round( energiForbruk*24/20)] //10 to 20 hours of working hours considered acceptable 
-        
-        return [sizeVpUpper, sizeVpLower]
-    } 
+    let energiForbruk = totalBerederForbruk * (settpunktVP - netVannTemp) * 4.2 / (3600 * 24)  //Energi use in Kj and then divided for 24h
+    let [sizeVpUpper, sizeVpLower] = [Math.round(energiForbruk * 24 / 10), Math.round(energiForbruk * 24 / 20)] //10 to 20 hours of working hours considered acceptable 
 
-export function isLeilighetFucntion(kWhEnheter) {
-    let isLeilighet = true
-         kWhEnheter.every(element => element.Navn==="Leilighet (3+ personer)" || element.Navn==="Leilighet (2-3 personer)"|| element.Navn==="Leilighet (1-2 personer)") ? isLeilighet=true : isLeilighet=false
-        return isLeilighet
+    return [sizeVpUpper, sizeVpLower]
 }
 
+export function isLeilighetFucntion(navn) {
+    let isLeilighet = true
+    navn === "Leilighet (3+ personer)" || navn === "Leilighet (2-3 personer)" || navn === "Leilighet (1-2 personer)" ? isLeilighet = true : isLeilighet = false
+    return isLeilighet
+}
 

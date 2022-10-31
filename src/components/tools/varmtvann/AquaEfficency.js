@@ -4,7 +4,10 @@ import { AquaEfficencyData } from "./StaticData/VVStaticData"
 
 export default function AquaEfficency(props) {
 
-    let isLeilighet = isLeilighetFucntion(props.kWhEnheter) ///Decides if all of the units are apartments or not
+    let { Navn,Antall,kWh } = props.kWhEnheter
+
+
+    let isLeilighet = isLeilighetFucntion(Navn) ///Decides if all of the units are apartments or not
 
     let antallSmåLeilighet = 0
     let antallStorLeilighet = 0
@@ -15,18 +18,15 @@ export default function AquaEfficency(props) {
 
     if (isLeilighet === true) {
 
-        props.kWhEnheter.forEach(element => {
-            if (element.Navn === "Leilighet (3+ personer)") antallStorLeilighet += element.Antall
-            if (element.Navn === "Leilighet (2-3 personer)") antallSmåLeilighet += element.Antall
-            if (element.Navn === "Leilighet (1-2 personer)") antallSmåLeilighet += element.Antall
-        })
-
+            if (Navn === "Leilighet (3+ personer)")  antallStorLeilighet += Antall
+            if (Navn === "Leilighet (2-3 personer)") antallSmåLeilighet += Antall
+            if (Navn === "Leilighet (1-2 personer)") antallSmåLeilighet += Antall
+        
         let kWTotal = (kWhData(antallSmåLeilighet, "små") ** 2 + kWhData(antallStorLeilighet, "store") ** 2) ** 0.5  ///estimert effekt med samtidighet faktor
         unit = unitVelger(kWTotal) ///velger riktig unit 
 
         }else if(isLeilighet === false){ ////if the units are not apartments then KWH from CTC is used
-        let kWTotal = props.kWh
-        unit = unitVelger(kWTotal)
+         unit = unitVelger(kWh)
     }
     
     function kWhData(antall, type) {
@@ -74,9 +74,12 @@ export default function AquaEfficency(props) {
 
             {unit.navn ?    //checks if the unit is defined, not defined means too big  demand.
                 <div>
-                    <p >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}`}>{unit.navn}</a> med artikkelnummer: {unit.artikkelNumber}</p>
-                    <p>Minimum anbefalt akkumulerings tanks volum er {unit.AkVol} liter.</p>
-                    <p>Minimum anbefalt effekt av varmepumpe er {unit.Effekt} kW.</p>
+                    <ul>
+                    <li >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}`}>{unit.navn}</a>. </li>
+                    <li>Artikkelnummer: {unit.artikkelNumber}.</li>
+                    <li>Minimum anbefalt akkumulerings tanks volum er {unit.AkVol} liter.</li>
+                    <li>Minimum anbefalt effekt av varmepumpe er {unit.Effekt} kW.</li>
+                    </ul>
                 </div>
                 : <p>Tappe vann behov er for stor for en AquaEfficency modul. Må fordeles på 2 stk. </p>}
 

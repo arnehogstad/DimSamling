@@ -6,7 +6,6 @@ import Vindu from "./components/Vindu"
 import Ovrigelast from './components/Ovrigelast'
 import "../../../styles/kjølebehov/kjølebehov.css"
 import Oversikt from './components/Oversikt'
-
 import { PDFViewer } from "@react-pdf/renderer";
 import Print from './components/printComponents/Print'
 
@@ -64,8 +63,6 @@ export default function Kjølebehov(props) {
             </PDFViewer>
           </div>
           ) : null}
-
-
 
       </div>
     </div>

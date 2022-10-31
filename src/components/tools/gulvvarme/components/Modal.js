@@ -416,8 +416,9 @@ function OpenCSVModal(props){
           }else{
             //setting the values for the rooms
             //console.log(`${key}: ${value}`);
-            let roomPrefix = key.substring(0, 6)
+            let roomPrefix = key.substring(0, 7)
             //if new room - create new empty room and save the new name of the room
+            console.log(roomPrefix);
             if(roomNames.includes(roomPrefix) === false){
               let tempRoom = returnEmptyRoom()
               roomArr.push(tempRoom)

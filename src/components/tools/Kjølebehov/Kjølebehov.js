@@ -51,13 +51,13 @@ export default function Kjølebehov(props) {
         <div className='KJCentered'>
         
         <div >
-        <button className="KJButtons" onClick={() => setPage("InnData")}>Inndata</button>
-        <button className="KJButtons" onClick={() => setPage("vindu")}>Vindu</button>
-        <button className="KJButtons" onClick={() => setPage("ovrige")}>Øvrige laster</button>
-        <button className="KJButtons" onClick={() => setPage("oversikt")}>Oversikt</button>
+        <button className={page==="InnData"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("InnData")}>Inndata</button>
+        <button className={page==="vindu"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("vindu")}>Vindu</button>
+        <button className={page==="ovrige"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("ovrige")}>Øvrige laster</button>
+        <button className={page==="oversikt"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("oversikt")}>Oversikt</button>
         </div>
 
-        {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} /> : null}
+        {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} innDatas={innDatas} /> : null}
         {page === "vindu" ? <Vindu innDatas={innDatas}  vindu_data={vindu_data} vindus={vindus}/> : null}
         {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data}  ovriges={ovriges}/> : null}
 

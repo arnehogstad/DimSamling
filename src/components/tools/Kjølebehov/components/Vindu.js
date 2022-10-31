@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { vindu_rettning, Avsjkermings } from "./StaticData/KJstaticData"
 import * as beregn from "./beregn"
 import { nanoid } from "@reduxjs/toolkit"
@@ -129,7 +129,7 @@ export default function Vindu(props) {
                     </div>
 
 
-                    <label className="label">Vindu Arealet [m2]:
+                    <label className="label">Vindu Arealet [m&#xB2;]:
                         <input
                             className="input"
                             type="number"

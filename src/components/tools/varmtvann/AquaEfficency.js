@@ -75,7 +75,7 @@ export default function AquaEfficency(props) {
             {unit.navn ?    //checks if the unit is defined, not defined means too big  demand.
                 <div>
                     <ul>
-                    <li >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}`}>{unit.navn}</a>. </li>
+                    <li >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}` } target="_blank">{unit.navn}</a>. </li>
                     <li>Artikkelnummer: {unit.artikkelNumber}.</li>
                     <li>Minimum anbefalt akkumulerings tanks volum er {unit.AkVol} liter.</li>
                     <li>Minimum anbefalt effekt av varmepumpe er {unit.Effekt} kW.</li>
@@ -85,8 +85,8 @@ export default function AquaEfficency(props) {
 
 
             {isLeilighet ?
-                <p style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning er basert på Cetetherm methodik for boligblokker.</p>
-                : <p style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning metodik for byggtyper utenom boligblokk er estimater og er ikke basert på veiledende verdier fra Cetetherm, da det ikke er gitt. </p>
+                <p  className="longText"  style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning er basert på Cetetherm methodik for boligblokker.</p>
+                : <p className="longText" style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning metodik for byggtyper utenom boligblokk er estimater og er ikke basert på veiledende verdier fra Cetetherm, da det ikke er gitt. </p>
             }
 
 

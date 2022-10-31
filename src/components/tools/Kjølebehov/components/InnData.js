@@ -7,32 +7,32 @@ import { nanoid } from "@reduxjs/toolkit"
 
 
 export default function InnData(props) {
-  const [formData, setFormData] = React.useState(
-    {
-      Navn: "Prosjekt Navn",
-      Referanse: "Navn",
-      ByggType: "Barnehage",
-      Byggeår: "2017-nå",
-      MaksT: 32,
-      ØnsketT: 21,
-      bra: 200,
-      takhøyde: 3,
-      takmotloft: 0,
-      taktemp: 50,
-      gulvmotluft: 0,
-      veggmotnabo: 0,
-      gjennvinn: 80,
-      ventilasjonType: "Gjennvinner basert på TEK",
-      luftmengde: 0,
-      SikkerhetsMargin: 30,
-      uid: nanoid()
-    }
-  )
 
-  const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, SikkerhetsMargin,uid } = formData
+  let initateInnDatas = props.innDatas.length ? props.innDatas :  {
+    Navn: "Prosjekt Navn",
+    Referanse: "Navn",
+    ByggType: "Barnehage",
+    Byggeår: "2017-nå",
+    MaksT: 32,
+    ØnsketT: 21,
+    bra: 200,
+    takhøyde: 3,
+    takmotloft: 0,
+    taktemp: 50,
+    gulvmotluft: 0,
+    veggmotnabo: 0,
+    gjennvinn: 80,
+    ventilasjonType: "Gjennvinner basert på TEK",
+    luftmengde: 0,
+    SikkerhetsMargin: 30,
+    uid: nanoid()
+  }
+  const [formData, setFormData] = React.useState(initateInnDatas) 
+  
+  const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, SikkerhetsMargin, uid } = formData
 
 
- 
+
   function handleChange(event) {
 
     const { name, value } = event.target
@@ -70,13 +70,13 @@ export default function InnData(props) {
   }
 
 
-  let effekt = [luft_effekt.infiltrasjon, luft_effekt.ventilasjon, trans_effekt.vegg, trans_effekt.tak, trans_effekt.loft, trans_effekt.gulv, annet_effekt.utstyr, annet_effekt.personer,annet_effekt.belysning]
+  let effekt = [luft_effekt.infiltrasjon, luft_effekt.ventilasjon, trans_effekt.vegg, trans_effekt.tak, trans_effekt.loft, trans_effekt.gulv, annet_effekt.utstyr, annet_effekt.personer, annet_effekt.belysning]
 
   return (
     <div className="border">
 
       <form className="formInnData">
-        
+
         <label className="label">Prosjekt Navn:
           <input
             className="input"
@@ -135,27 +135,23 @@ export default function InnData(props) {
             value={SikkerhetsMargin}
           /></label>
 
+        <label className="label">Maks mulig ute Temperatur [{'\u00b0'}C]:
+          <input
+            className="input"
+            type="number"
+            onChange={handleChange}
+            name="MaksT"
+            value={MaksT}
+          /></label>
+        <label className="label">Ønsket Intern Temperatur [{'\u00b0'}C]:
+          <input
+            className="input"
+            type="number"
+            onChange={handleChange}
+            name="ØnsketT"
+            value={ØnsketT}
+          /></label>
 
-        {0 ? (
-          <>
-            <label className="label">Maks mulig ute Temperatur:
-              <input
-                className="input"
-                type="number"
-                onChange={handleChange}
-                name="MaksT"
-                value={MaksT}
-              /></label>
-            <label className="label">Ønsket Intern Temperatur:
-              <input
-                className="input"
-                type="number"
-                onChange={handleChange}
-                name="ØnsketT"
-                value={ØnsketT}
-              /></label>
-          </>
-        ) : null}
 
         <label className="label">Arealet BRA [m&#xB2;]:
           <input

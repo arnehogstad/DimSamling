@@ -8,6 +8,11 @@
     padding: 10px;
 }
 
+.longText {
+    max-width: fit-content;
+    
+}
+
 
 
 .sisteNesteVV {

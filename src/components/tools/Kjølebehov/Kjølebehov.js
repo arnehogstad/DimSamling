@@ -6,7 +6,6 @@ import Vindu from "./components/Vindu"
 import Ovrigelast from './components/Ovrigelast'
 import "../../../styles/kjølebehov/kjølebehov.css"
 import Oversikt from './components/Oversikt'
-
 import { PDFViewer } from "@react-pdf/renderer";
 import Print from './components/printComponents/Print'
 
@@ -14,7 +13,7 @@ export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
 
   const [page, setPage] = useState("InnData");
-  const pageView = (pagelevel) => { setPage(pagelevel) }
+
 
 
   //To move data up a compnonet from a child component for the data in InnData.js
@@ -25,7 +24,7 @@ export default function Kjølebehov(props) {
   const [vindus, setVindus] = useState([]);
   const vindu_data = (vindu) => { setVindus(vindu) }
   // To calculate the total effect of the windows 
-  let vindu_effekt = vindus.reduce((a, b) => a + parseInt(b[3]) + parseInt(b[4]), 0)
+  let totalVindu = vindus.reduce((a, b) => a + parseInt(b.strål) + parseInt(b.trans), 0)
 
 
 
@@ -33,40 +32,44 @@ export default function Kjølebehov(props) {
   const [ovriges, setOvriges] = useState([]);
   const ovrige_data = (ovrige) => { setOvriges(ovrige) }
   //calculate the total of ovriges
-  let ovrige_Effekt = ovriges.reduce((a, b) => a + parseInt(b[1]), 0)
+  let totalOvriges = ovriges.reduce((a, b) => a + parseInt(b.effekt), 0)
 
 
   const [innDatas, setInnDatas] = useState([]);
   const innDatas_data = (data) => { setInnDatas(data) }
-  
-  //calculate the total of the last
-  //let total = ovrige_Effekt + vindu_effekt + lasts.reduce((a, b) => a + parseInt(b), 0)
 
-  let total ={ovrige: ovrige_Effekt , vindu:vindu_effekt , internt: ((lasts.reduce((a, b) => a + parseInt(b), 0)+ovrige_Effekt+vindu_effekt)*(1+innDatas.SikkerhetsMargin/100)) } 
-  
+
+  let total ={ovrige: totalOvriges , vindu:totalVindu , internt: Math.round(((lasts.reduce((a, b) => a + parseInt(b), 0)+totalOvriges+totalVindu)*(1+innDatas.SikkerhetsMargin/100))) } 
+
   return (
     <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
 
       <Banner title={props.toolName} />
       <div className="toolInfo">
 
-        {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} pageView={pageView} /> : null}
-        {page === "vindu" ? <Vindu innDatas={innDatas} vindu_data={vindu_data} pageView={pageView} /> : null}
-        {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data} pageView={pageView} /> : null}
 
+        <div className='KJCentered'>
+        
+        <div >
+        <button className={page==="InnData"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("InnData")}>Inndata</button>
+        <button className={page==="vindu"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("vindu")}>Vindu</button>
+        <button className={page==="ovrige"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("ovrige")}>Øvrige laster</button>
+        <button className={page==="oversikt"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("oversikt")}>Oversikt</button>
+        </div>
 
+        {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} innDatas={innDatas} /> : null}
+        {page === "vindu" ? <Vindu innDatas={innDatas}  vindu_data={vindu_data} vindus={vindus}/> : null}
+        {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data}  ovriges={ovriges}/> : null}
 
        { page === "oversikt" ? (
-          <div className='oversikt'>
-
+         <div className='oversikt'>
             <PDFViewer width={1000} height={1500}>
-              <Print innDatas={innDatas}  vindus={vindus} ovriges={ovriges} lasts={lasts} total={total}/>
+            <Print innDatas={innDatas}  vindus={vindus} ovriges={ovriges} lasts={lasts} total={total}/>
             </PDFViewer>
-          </div>
+             </div>
           ) : null}
 
-
-
+          </div>
       </div>
     </div>
   )

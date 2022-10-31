@@ -1,3 +1,62 @@
+.KJCentered {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+
+.KJButtons {
+    display: flex;
+    justify-content: center;  
+    width: 100px;
+    height: 50px;
+    margin-right: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: #fbab18;
+    color: #333;
+    border-color: #fbab18;
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 5px;
+    margin-bottom: 20px;
+    align-items: center;
+    border: 1px solid #e7e7e7;
+   
+}
+
+.KJButtons:hover{
+    opacity: 1;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+  .KJButtonsActive{
+    
+    display: flex;
+    justify-content: center;  
+    width: 100px;
+    height: 50px;
+    margin-right: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    opacity: 1;
+    background-color: #2a2a2a;
+    color: white;
+    
+    font-size: 12px;
+    letter-spacing: 2px;
+    padding: 5px;
+    margin-bottom: 20px;
+    align-items: center;
+    border: 1px solid #e7e7e7;
+   
+  }
+
+
+
+
+
 
 .input {
     margin-bottom: 15px;
@@ -11,7 +70,7 @@
 
 
 .border {
-    border: 1px solid #444;
+    min-width: 412px;
     padding: 10px;
     margin-bottom: 15px;
     display: block;

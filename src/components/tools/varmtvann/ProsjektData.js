@@ -36,7 +36,7 @@ export default function ProsjektData(props) {
 
     const { Navn, Referanse, ByggType, bra, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, settpunktVP, spissSettpunkt } = prosjketData
 
-
+    const [kWhEnheter, setKWhEnheter] = React.useState({})
 
 
     function handleChange(event) {
@@ -68,29 +68,25 @@ export default function ProsjektData(props) {
         }
     }
 
-    const [kWhEnheter, setKWhEnheter] = React.useState([])
-    const [kWh, setkWh] = React.useState(0) //total kWh 
+
+    
 
 
 
-    function leggtil(e) {
+    function beregn(e) {
         e.preventDefault()
-        setkWh(prev => prev + kWhData(ByggType, antall))
-        setKWhEnheter(prev => [...prev, { Navn: ByggType, Antall: antall, kWh: kWhData(ByggType, antall), uid: nanoid() }])
+        setKWhEnheter( {Navn: ByggType, Antall: antall, kWh: kWhData(ByggType, antall), uid: nanoid()} )
+
     }
 
-    const handleDelete = (item) => {
-        setKWhEnheter(kWhEnheter.filter(i => i !== item))
-        setkWh(prev => prev - item.kWh)
-    }
 
-    let kWTabel = kWhEnheter.map((item) => (
+
+    let kWTabel =(
         <tr key={nanoid()} className="tbro">
-            <td key={nanoid()} className="tbel">{item.Navn}</td>
-            <td key={nanoid()} className="tbel">{item.Antall}</td>
-            <td key={nanoid()} className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
-        </tr>
-    ))
+            <td key={nanoid()} className="tbel">{kWhEnheter.Navn}</td>
+            <td key={nanoid()} className="tbel">{kWhEnheter.Antall}</td>
+               </tr>
+    )
 
     const [systemValg, setSystemValg] = React.useState("None")
 
@@ -210,16 +206,17 @@ export default function ProsjektData(props) {
 
 
 
-                <button className="sisteNeste" onClick={leggtil}>Legg til enhet</button>
+                <button className="sisteNeste" onClick={beregn}>Beregn</button>
 
-                {kWhEnheter.length !== 0 ? (
+                {kWhEnheter.kWh  ? (
                     <div className="VVtable">
+                        <h3 >Beregning for:</h3>
                         <table>
                             <thead>
                                 <tr>
-                                    <th className="tbhr">Navn</th>
+                                    <th className="tbhr">Bygg type:</th>
                                     <th className="tbhr">Antall</th>
-                                    <th className="tbhr">Fjern</th>
+                               
                                 </tr>
                             </thead>
                             <tbody>{kWTabel}</tbody>
@@ -227,17 +224,17 @@ export default function ProsjektData(props) {
                     </div>
                 ) : null}
 
-                {kWhEnheter.length ?
-                    <LøsningTyper kWh={kWh} setSystem={setSystem} />
-                    : null}
+                
+                {kWhEnheter.kWh ?
+                    <LøsningTyper kWh={kWhEnheter.kWh} setSystem={setSystem} /> : null}
 
 
 
-                {systemValg === "Spiral" && kWhEnheter.length !== 0 ? <SpiralSys kWh={kWh} kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+                {systemValg === "Spiral" && kWhEnheter.length !== 0 ? <SpiralSys  kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
                     : null}
-                {systemValg === "Veksler"&& kWhEnheter.length !== 0 ? <SpiralSys kWh={kWh} kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+                {systemValg === "Veksler" && kWhEnheter.length !== 0 ? <SpiralSys  kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
                     : null}
-                {systemValg === "AquaEfficency"&& kWhEnheter.length !== 0 ? <AquaEfficency kWhEnheter={kWhEnheter} kWh={kWh} />
+                {systemValg === "AquaEfficency" && kWhEnheter.length !== 0 ? <AquaEfficency kWhEnheter={kWhEnheter}  />
                     : null}
 
 

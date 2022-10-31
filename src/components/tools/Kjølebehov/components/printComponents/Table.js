@@ -5,7 +5,6 @@ import TableArticles from "./TableArticles";
 
 export default function Table(props) {
   
-
   return (
     <View style={props.styleTable}>
       <TableArticles

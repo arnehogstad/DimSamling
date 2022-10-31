@@ -271,7 +271,7 @@ export default function InnData(props) {
 
       </form>
       <div className="knapper">
-        <button className="sisteNeste" onClick={() => { props.last_data(effekt); props.innDatas_data(formData); props.pageView("vindu") }}>Neste Steg</button>
+        <button className="sisteNeste" onClick={() => { props.last_data(effekt); props.innDatas_data(formData) }}>Lagre data</button>
       </div>
     </div>
   )

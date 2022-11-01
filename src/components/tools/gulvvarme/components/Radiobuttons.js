@@ -9,20 +9,20 @@ export default function Radiobuttons(props){
     display: ""
   }
   const [standard,setStandard] = React.useState(
-    props.unit.termostatType === "ALPHA" ? ["Digital kun på bad","Digital på alle rom"] :
-    props.unit.termostatType !== "Uten termostat" ? ["IR kun på bad","IR i alle rom"] :
+    props.unit.termostatType === "ALPHA" ? ["Digital kun på våtrom","Digital på alle rom"] :
+    props.unit.termostatType !== "Uten termostat" ? ["IR kun på våtrom","IR i alle rom"] :
     ["N/A","N/A"]
   )
 
   function toggleText(event){
     const {value} = event.target
     if (value === "ALPHA"){
-      if(standard[0]!=="Digital kun på bad"){
-        setStandard(["Digital kun på bad","Digital på alle rom"])
+      if(standard[0]!=="Digital kun på våtrom"){
+        setStandard(["Digital kun på våtrom","Digital på alle rom"])
       }
     }else if (value !== "Uten termostat"){
-      if(standard[0]!=="IR kun på bad"){
-        setStandard(["IR kun på bad","IR i alle rom"])
+      if(standard[0]!=="IR kun på våtrom"){
+        setStandard(["IR kun på våtrom","IR i alle rom"])
       }
     }else{
       setStandard(["N/A","N/A"])
@@ -161,13 +161,13 @@ export default function Radiobuttons(props){
           <legend>Termostattype plassering</legend>
           <input
                type="radio"
-               id={`kun på bad ${props.unitId}`}
+               id={`kun på våtrom ${props.unitId}`}
                name={`termostatStandard${props.unitId}`}
-               value="kun på bad"
-               checked={props.unit.termostatStandard === "kun på bad"}
+               value="kun på våtrom"
+               checked={props.unit.termostatStandard === "kun på våtrom"}
                onChange={(event) => props.radioButtonClick(event, props.unitId)}
            />
-          <label htmlFor={`kun på bad ${props.unitId}`}>{standard[0]}</label>
+          <label htmlFor={`kun på våtrom ${props.unitId}`}>{standard[0]}</label>
           <br />
 
           <input

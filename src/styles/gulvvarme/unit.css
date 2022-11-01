@@ -173,6 +173,8 @@
 }
 .project-headline-rightcol{
   width: 20%;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .project-headline-midcol{
@@ -192,10 +194,21 @@
     border-width: 1px;
     border-color: black;
     height: 30px;
-    opacity: 0.8;
-
 }
 
-.project-headline-knapp:hover {
-    opacity: 1;
+
+.project-headline-knapp-div{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  font-size: 12px;
+  padding-right: 20px;
+  font-weight: normal;
+}
+
+.project-headline-knapp-div:hover{
+    opacity: 0.5;
+    cursor: pointer;
+
 }

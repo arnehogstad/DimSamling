@@ -94,7 +94,7 @@ export default function Gulvvarme(props){
         fordelerskap: "På vegg",
         fordelerstokk: "Uten bypass",
         termostatType: "ALPHA",
-        termostatStandard: "kun på bad",
+        termostatStandard: "kun på våtrom",
     }
   }
 

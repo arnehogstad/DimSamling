@@ -17,20 +17,10 @@ export default function Projectheadline(props){
         <div className="project-headline-projectName">
           Prosjektnavn: {props.projectName}
         </div>
-        <div
-          className="project-headline-knapp-div"
-          alt="Legg til ny boenhet"
-          onClick={(event) => props.setShowModal({show:true,modalName:"editNameProject"})}
-        >
-          <img
-          className="project-headline-knapp"
-          src={editNamePic}
-          alt="Legg til ny boenhet"
-          />
-          ENDRE
-        </div>
+
       </div>
       <div className="project-headline-rightcol">
+
         <div
           className="project-headline-knapp-div"
           alt="Legg til ny boenhet"
@@ -66,6 +56,18 @@ export default function Projectheadline(props){
           alt="Legg til ny boenhet"
           />
           LAGRE
+        </div>
+        <div
+          className="project-headline-knapp-div"
+          alt="Legg til ny boenhet"
+          onClick={(event) => props.setShowModal({show:true,modalName:"editNameProject"})}
+        >
+          <img
+          className="project-headline-knapp"
+          src={editNamePic}
+          alt="Legg til ny boenhet"
+          />
+          ENDRE
         </div>
       </div>
     </div>

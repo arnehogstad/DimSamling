@@ -217,7 +217,7 @@ function SaveCSVModal(props){
             filename={`${fileName}.csv`}
             style={cleanLink}
           >
-          Lagre prosjekt
+          Last ned datafil
           </ CSVLink>
         </div>
       </div>
@@ -662,7 +662,7 @@ function RenameProjectModal(props){
     <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
       <div className="modal-content">
         <div className="modal-header">
-          <div className="modal-header-text">Endre prosjektnavn</div>
+          <div className="modal-header-text">Rediger prosjektnavn</div>
           <div className="modal-cancel-div">x</div>
         </div>
         <div className="modal-input-container">
@@ -698,7 +698,7 @@ function RenameProjectModal(props){
         </div>
         <div className="modal-buttons">
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
-          <button onClick={updateProject} className="handlingsKnapp  handlingsKnappFokus">Endre prosjektnavn</button>
+          <button onClick={updateProject} className="handlingsKnapp  handlingsKnappFokus">Lagre prosjektnavn</button>
         </div>
       </div>
     </div>

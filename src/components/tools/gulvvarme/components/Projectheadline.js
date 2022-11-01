@@ -67,7 +67,7 @@ export default function Projectheadline(props){
           src={editNamePic}
           alt="Legg til ny boenhet"
           />
-          ENDRE
+          REDIGER
         </div>
       </div>
     </div>

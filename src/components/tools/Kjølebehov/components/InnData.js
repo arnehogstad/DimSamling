@@ -1,6 +1,6 @@
 import React from "react"
-import { Byggeårs, Byggtypes } from "./StaticData/KJstaticData"
-
+import {inputDesciption, Byggeårs, Byggtypes } from "./StaticData/KJstaticData"
+import MouseOverPopover from "./Popover"
 import * as beregn from "./beregn"
 import "../../../../styles/kjølebehov/kjølebehov.css"
 import { nanoid } from "@reduxjs/toolkit"
@@ -75,16 +75,28 @@ export default function InnData(props) {
   return (
     <div className="border">
 
-      <form className="formInnData">
 
+        <div className="knapper">
+        <button className="KJButtonsActive" onClick={() => {props.last_data(effekt); props.innDatas_data(formData); props.pageModifier("InnData")}}>Inndata</button>
+        <button className="KJButtons" onClick={() => {props.last_data(effekt); props.innDatas_data(formData);props.pageModifier("vindu")}}>Vindu</button>
+        <button className="KJButtons" onClick={() =>  {props.last_data(effekt); props.innDatas_data(formData); props.pageModifier("ovrige")}}>Øvrige laster</button>
+        <button className="KJButtons" onClick={() => {props.last_data(effekt); props.innDatas_data(formData); props.pageModifier("oversikt")}}>Oversikt</button>
+        </div>
+
+
+      <form className="formInnData">
         <label className="label">Prosjekt Navn:
+       
+    
           <input
             className="input"
             type="text"
             onChange={handleChange}
             name="Navn"
             value={Navn}
-          /></label>
+          />
+     
+          </label>
 
         <label className="label">ABK Referanse:
           <input
@@ -96,8 +108,8 @@ export default function InnData(props) {
           /></label>
 
 
-        <div className="selected">
-          <label className="label" htmlFor="ByggType">Bygg Type:</label>
+        <div className="label">
+          <label htmlFor="ByggType">Bygg Type:</label>
           <select
             className="select"
             id="ByggType"
@@ -111,8 +123,8 @@ export default function InnData(props) {
           </select>
         </div>
 
-        <div className="selected">
-          <label className="label" htmlFor="Byggeår">Bygge år:</label>
+        <div className="label">
+          <label  htmlFor="Byggeår">Bygge år:</label>
           <select
             className="select"
             id="Byggeår"
@@ -127,13 +139,17 @@ export default function InnData(props) {
         </div>
 
         <label className="label">Sikkerhets Margin [%]:
+        <div className="flex-end">
+          <MouseOverPopover popoverText={inputDesciption.sikkerhetsMargin}/>
           <input
             className="input"
             type="number"
             onChange={handleChange}
             name="SikkerhetsMargin"
             value={SikkerhetsMargin}
-          /></label>
+         />
+          </div>
+          </label>
 
         <label className="label">Maks mulig ute Temperatur [{'\u00b0'}C]:
           <input
@@ -214,8 +230,8 @@ export default function InnData(props) {
 
 
 
-        <div className="selected">
-          <label className="label" htmlFor="ventilasjonType">Ventilasjon:</label>
+        <div className="label">
+          <label htmlFor="ventilasjonType">Ventilasjon:</label>
           <select
             className="select"
             id="ventilasjonType"
@@ -266,9 +282,7 @@ export default function InnData(props) {
         ) : null}
 
       </form>
-      <div className="knapper">
-        <button className="sisteNeste" onClick={() => { props.last_data(effekt); props.innDatas_data(formData) }}>Lagre data</button>
-      </div>
+      
     </div>
   )
 }

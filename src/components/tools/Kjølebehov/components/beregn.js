@@ -53,7 +53,7 @@ export function Ventilasjon(ventilasjonType, luftmengdeIN, år, byggtype, areal,
         return Math.round(u_gulv * (gulvmotluft) * (MaksT - ØnsketT))
     }
 
-    export function Vindu_trans(år, areal, MaksT, ØnsketT) {
+    export function Vindu_trans(år, areal, MaksT, ØnsketT) {// Not used
         
         let u_vindu = UData.Vindu[år]
         return Math.round(u_vindu * areal * (MaksT - ØnsketT))

@@ -14,7 +14,7 @@ export default function Vindu(props) {
     )
 
     let { vinduRettning, avskjerming, vinduArealet } = vinduData
-    let { MaksT, Byggeår, ØnsketT } = props.innDatas
+   
 
     const avskjerming_type = Object.keys(Avsjkermings)
 
@@ -45,9 +45,8 @@ export default function Vindu(props) {
                 avskjerming: avskjerming,
                 vinduRettning: vinduRettning,
                 strål: strålEffekt(vinduRettning, avskjerming, vinduArealet),
-                trans: beregn.Vindu_trans(Byggeår, vinduData.vinduArealet, MaksT, ØnsketT),
                 uid: nanoid()
-            }])
+                  }])
     }
 
 
@@ -85,8 +84,7 @@ export default function Vindu(props) {
             <td key={nanoid()} className="tbel">{item.vinduArealet}</td>
             <td key={nanoid()} className="tbel">{item.avskjerming}</td>
             <td key={nanoid()} className="tbel">{item.vinduRettning}</td>
-            <td key={nanoid()} className="tbel">{item.trans}</td>
-            <td key={nanoid()} className="tbel">{item.strål}</td>
+                 <td key={nanoid()} className="tbel">{item.strål}</td>
             <td key={nanoid()} className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
         </tr>
     ))
@@ -96,10 +94,18 @@ export default function Vindu(props) {
     return (
         <div >
             <div className="border">
+
+            <div className="knapper" >
+        <button className="KJButtons" onClick={() => {props.vindu_data(vindus) ; props.pageModifier("InnData")}}>Inndata</button>
+        <button className="KJButtonsActive" onClick={() => {props.vindu_data(vindus) ;props.pageModifier("vindu")}}>Vindu</button>
+        <button className="KJButtons" onClick={() =>  {props.vindu_data(vindus) ; props.pageModifier("ovrige")}}>Øvrige laster</button>
+        <button className="KJButtons" onClick={() => {props.vindu_data(vindus) ; props.pageModifier("oversikt")}}>Oversikt</button>
+        </div>
+
                 <form className="formInnData">
 
-                    <div className="selected">
-                        <label className="label" htmlFor="avskjerming">Avsjkerming:</label>
+                    <div className="label">
+                        <label htmlFor="avskjerming">Avsjkerming:</label>
                         <select
                             className="select"
                             id="avskjerming"
@@ -113,8 +119,8 @@ export default function Vindu(props) {
                         </select>
                     </div>
 
-                    <div className="selected">
-                        <label className="label" htmlFor="vinduRettning">Vindu Rettning:</label>
+                    <div className="label">
+                        <label htmlFor="vinduRettning">Vindu Rettning:</label>
                         <select
                             className="select"
                             id="vinduRettning"
@@ -152,8 +158,7 @@ export default function Vindu(props) {
                                     <th className="tbhr">Vindu Arealet [m2]</th>
                                     <th className="tbhr">Avskjerming</th>
                                     <th className="tbhr">Vindu Rettning</th>
-                                    <th className="tbhr">Transmisjon last [W]</th>
-                                    <th className="tbhr">Sol Strål [W]</th>
+                                     <th className="tbhr">Stråling last [W]</th>
                                     <th className="tbhr">Fjern</th>
                                 </tr>
                             </thead>
@@ -167,10 +172,7 @@ export default function Vindu(props) {
 
 
 
-            <div className="knapper">
-
-                <button className="sisteNeste" onClick={() => { props.vindu_data(vindus) }}>Lagre data</button>
-            </div>
+         
 
         </div>
     )

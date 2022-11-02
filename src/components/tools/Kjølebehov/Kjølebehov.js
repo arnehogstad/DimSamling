@@ -12,7 +12,8 @@ import Print from './components/printComponents/Print'
 export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
 
-  const [page, setPage] = useState("InnData");
+  const [page, setPage] = useState("ovrige");
+  const pageModifier = (pageName) => { setPage(pageName) }
 
 
 
@@ -24,7 +25,7 @@ export default function Kjølebehov(props) {
   const [vindus, setVindus] = useState([]);
   const vindu_data = (vindu) => { setVindus(vindu) }
   // To calculate the total effect of the windows 
-  let totalVindu = vindus.reduce((a, b) => a + parseInt(b.strål) + parseInt(b.trans), 0)
+  let totalVindu = vindus.reduce((a, b) => a + parseInt(b.strål) , 0)
 
 
 
@@ -49,24 +50,27 @@ export default function Kjølebehov(props) {
 
 
         <div className='KJCentered'>
-        
-        <div >
-        <button className={page==="InnData"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("InnData")}>Inndata</button>
-        <button className={page==="vindu"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("vindu")}>Vindu</button>
-        <button className={page==="ovrige"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("ovrige")}>Øvrige laster</button>
-        <button className={page==="oversikt"?"KJButtonsActive":"KJButtons"} onClick={() => setPage("oversikt")}>Oversikt</button>
-        </div>
+   
 
-        {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} innDatas={innDatas} /> : null}
-        {page === "vindu" ? <Vindu innDatas={innDatas}  vindu_data={vindu_data} vindus={vindus}/> : null}
-        {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data}  ovriges={ovriges}/> : null}
+        {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} innDatas={innDatas} pageModifier={pageModifier}/> : null}
+        {page === "vindu" ? <Vindu innDatas={innDatas}  vindu_data={vindu_data} vindus={vindus} pageModifier={pageModifier}/> : null}
+        {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data}  ovriges={ovriges} pageModifier={pageModifier}/> : null}
 
        { page === "oversikt" ? (
-         <div className='oversikt'>
+        
+        <div className='border'>
+        <div className="knapper">
+        <button className="KJButtons" onClick={() => { pageModifier("InnData")}}>Inndata</button>
+        <button className="KJButtons" onClick={() => {pageModifier("vindu")}}>Vindu</button>
+        <button className="KJButtons" onClick={() =>  { pageModifier("ovrige")}}>Øvrige laster</button>
+        <button className="KJButtonsActive" onClick={() => { pageModifier("oversikt")}}>Oversikt</button>
+        </div>
+
             <PDFViewer width={1000} height={1500}>
             <Print innDatas={innDatas}  vindus={vindus} ovriges={ovriges} lasts={lasts} total={total}/>
             </PDFViewer>
              </div>
+             
           ) : null}
 
           </div>

@@ -1,6 +1,6 @@
 import React from "react"
 import {inputDesciption, Byggeårs, Byggtypes } from "./StaticData/KJstaticData"
-import MouseOverPopover from "./Popover"
+import MouseOverPopover from "../../../static/Popover"
 import * as beregn from "./beregn"
 import "../../../../styles/kjølebehov/kjølebehov.css"
 import { nanoid } from "@reduxjs/toolkit"
@@ -8,26 +8,7 @@ import { nanoid } from "@reduxjs/toolkit"
 
 export default function InnData(props) {
 
-  let initateInnDatas = props.innDatas.length ? props.innDatas :  {
-    Navn: "Prosjekt Navn",
-    Referanse: "Navn",
-    ByggType: "Barnehage",
-    Byggeår: "2017-nå",
-    MaksT: 32,
-    ØnsketT: 21,
-    bra: 200,
-    takhøyde: 3,
-    takmotloft: 0,
-    taktemp: 50,
-    gulvmotluft: 0,
-    veggmotnabo: 0,
-    gjennvinn: 80,
-    ventilasjonType: "Gjennvinner basert på TEK",
-    luftmengde: 0,
-    SikkerhetsMargin: 30,
-    uid: nanoid()
-  }
-  const [formData, setFormData] = React.useState(initateInnDatas) 
+   const [formData, setFormData] = React.useState(props.innDatas) 
   
   const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, SikkerhetsMargin, uid } = formData
 

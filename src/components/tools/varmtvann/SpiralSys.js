@@ -4,6 +4,8 @@ import { isLeilighetFucntion, sizeVP, minVolSpiss, minVolVP, BeregnEffekt, kWhDa
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { Stack } from "@mui/system"
+import MouseOverPopover from "../../static/Popover";
+import {inputDesciption} from "./StaticData/VVStaticData"
 
 
 export default function SpiralSys(props) {
@@ -78,8 +80,10 @@ return(
                         value={spissElEffekt}
                     /></label>
 
-                <div className="selected">
-                    <label className="label" htmlFor="backUpType">Backup type:</label>
+                <div className="label">
+                    <label htmlFor="backUpType">Backup type:</label>
+                <div className="flex-end">
+                <MouseOverPopover popoverText={inputDesciption.backupType}/>
                     <select
                         className="select"
                         id="backupType"
@@ -91,6 +95,7 @@ return(
                         <option key={nanoid()} value="Spiss el-kolbe">Spiss el-kolbe</option>
                         <option key={nanoid()} value="Spiss el-kolbe plus el-kolbe i forvarming">Spiss el-kolbe plus el-kolbe i forvarming </option>
                     </select>
+                    </div>    
                 </div>
 
 

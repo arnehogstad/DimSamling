@@ -119,8 +119,8 @@ export default function ProsjektData(props) {
                     /></label>
 
 
-                <div className="selected">
-                    <label className="label" htmlFor="ByggType">Bygg Type:</label>
+                <div className="label">
+                    <label  htmlFor="ByggType">Bygg Type:</label>
                     <select
                         className="select"
                         id="ByggType"

@@ -5,7 +5,7 @@ import { nanoid } from "@reduxjs/toolkit"
 export default function Ovrigelast(props) {
     const [last, setLast] = React.useState({
         navn: "Øvrigelast",
-        effekt: 0,
+        effekt: 1000,
         uid: nanoid()
       })
 
@@ -83,7 +83,7 @@ export default function Ovrigelast(props) {
                 </form>
 
                 <div className="knapper">
-                    <button className="handlingsKnapp" onClick={saveData}>Legg inn ekstra last</button>
+                    <button className="sisteNeste" onClick={saveData}>Legg inn ekstra last</button>
                 </div>
                 
                 

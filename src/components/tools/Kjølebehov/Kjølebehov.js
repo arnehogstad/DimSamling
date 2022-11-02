@@ -5,9 +5,10 @@ import InnData from './components/InnData'
 import Vindu from "./components/Vindu"
 import Ovrigelast from './components/Ovrigelast'
 import "../../../styles/kjølebehov/kjølebehov.css"
-import Oversikt from './components/Oversikt'
+
 import { PDFViewer } from "@react-pdf/renderer";
 import Print from './components/printComponents/Print'
+import { nanoid } from "@reduxjs/toolkit"
 
 export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
@@ -36,7 +37,25 @@ export default function Kjølebehov(props) {
   let totalOvriges = ovriges.reduce((a, b) => a + parseInt(b.effekt), 0)
 
 
-  const [innDatas, setInnDatas] = useState([]);
+  const [innDatas, setInnDatas] = useState({
+    Navn: "Prosjekt Navn",
+    Referanse: "Navn",
+    ByggType: "Barnehage",
+    Byggeår: "2017-nå",
+    MaksT: 32,
+    ØnsketT: 21,
+    bra: 200,
+    takhøyde: 3,
+    takmotloft: 0,
+    taktemp: 50,
+    gulvmotluft: 0,
+    veggmotnabo: 0,
+    gjennvinn: 80,
+    ventilasjonType: "Gjennvinner basert på TEK",
+    luftmengde: 0,
+    SikkerhetsMargin: 30,
+    uid: nanoid(),
+  });
   const innDatas_data = (data) => { setInnDatas(data) }
 
 
@@ -58,7 +77,7 @@ export default function Kjølebehov(props) {
 
        { page === "oversikt" ? (
         
-        <div className='border'>
+        <div  >
         <div className="knapper">
         <button className="KJButtons" onClick={() => { pageModifier("InnData")}}>Inndata</button>
         <button className="KJButtons" onClick={() => {pageModifier("vindu")}}>Vindu</button>

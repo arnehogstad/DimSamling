@@ -55,3 +55,9 @@ export const byggTypeVVInnDataType = {
 }
 
 export const kWhDataFraCTC = [58.10, 87.20, 116.30, 174.40, 232.50, 290.70, 348.80, 407.00, 465.10, 581.40, 697.70, 814.00, 930.20, 1046.50, 1162.80, 1279.00, 1395.30,]
+
+
+export const inputDesciption = {
+backupType: ("Spiss el-kolbe som dekker 100% av behov: Det er antatt at forvarming bereder og varmepumpe er frakoblet og derfor spiss bereder med interne el-koblinger må dekke hele behovet. Spiss el-kolbe: el-kolbe i spiss brukt for heving av temperatur brukes som back up men ikke sikkert at kan dekke 100% av behov, relevant for Væske-Vann. Spiss el-kolbe plus el-kolbe i forvarming: Forvarmings volumet kan bli brukt for back up om det finnes el-kolbe i forvarming." )
+
+}

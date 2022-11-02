@@ -81,9 +81,9 @@ export default function Vindu(props) {
     //maps the data from vindus (all the windows) to the jsx
     let vinduTable = vindus.map((item) => (
         <tr key={nanoid()} className="tbro">
-            <td key={nanoid()} className="tbel">{item.vinduArealet}</td>
             <td key={nanoid()} className="tbel">{item.avskjerming}</td>
             <td key={nanoid()} className="tbel">{item.vinduRettning}</td>
+            <td key={nanoid()} className="tbel">{item.vinduArealet}</td>
                  <td key={nanoid()} className="tbel">{item.strål}</td>
             <td key={nanoid()} className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
         </tr>
@@ -147,7 +147,7 @@ export default function Vindu(props) {
 
                 </form>
                 <div className="knapper">
-                    <button className="handlingsKnapp" onClick={saveVindu}>Legg inn vindu</button>
+                    <button className="sisteNeste" onClick={saveVindu}>Legg inn vindu</button>
                 </div>
 
                 {vindus.length !== 0 ? (
@@ -155,9 +155,9 @@ export default function Vindu(props) {
                         <table>
                             <thead>
                                 <tr>
-                                    <th className="tbhr">Vindu Arealet [m2]</th>
                                     <th className="tbhr">Avskjerming</th>
                                     <th className="tbhr">Vindu Rettning</th>
+                                    <th className="tbhr">Vindu Arealet [m2]</th>
                                      <th className="tbhr">Stråling last [W]</th>
                                     <th className="tbhr">Fjern</th>
                                 </tr>

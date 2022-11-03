@@ -11,8 +11,9 @@ import { inputDesciption } from "./StaticData/VVStaticData"
 
 export default function SpiralSys(props) {
 
-    let { netVannTemp, tappeVannTemp, perPersonVV, spissSettpunkt, settpunktVP, isEkonomiInkludert, SCOP, strømpris } = props.prosjektData
-    let { Navn, kWh } = props.kWhEnheter
+    let { ByggType,antall,netVannTemp, tappeVannTemp, perPersonVV, spissSettpunkt, settpunktVP, isEkonomiInkludert, SCOP, strømpris } = props.prosjektData
+    let  kWh  = props.kWhEnheter
+
     const [spiral, setSpiral] = React.useState(
         {
             vpEffekt: 15,
@@ -49,13 +50,13 @@ export default function SpiralSys(props) {
         }
     }
 
-console.log((Navn))
+
 
     let dekningGradMaksProsent = Math.round((settpunktVP - netVannTemp) / (spissSettpunkt - netVannTemp) * 100)
     let minimumVPVol = minVolVP(vpEffekt, kWh, settpunktVP, dekningGradProsent)
     let minimumSpissVol = minVolSpiss(spissElEffekt, kWh, spissSettpunkt, backupType, dekningGradProsent, forvarmingELeffekt, minimumVPVol)
-    let [sizeVpUpper, sizeVpLower] = sizeVP(props.kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
-    let [totalenergiForbruk, spissElForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukFn(props.kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp, dekningGradProsent, SCOP, strømpris)
+    let [sizeVpUpper, sizeVpLower] = sizeVP(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
+    let [totalenergiForbruk, spissElForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukFn(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp, dekningGradProsent, SCOP, strømpris)
 
     //console.log("totalenergiForbruk", totalenergiForbruk, "spissElForbruk", spissElForbruk, "VPEnergibruk", VPEnergibruk, "energiSpart", energiSpart, "energiSpartProsent", energiSpartProsent, "SpartKroner", SpartKroner)
 
@@ -64,7 +65,7 @@ console.log((Navn))
         <Fragment>
             <h3>Spiral:</h3>
 
-            {isLeilighetFucntion(Navn) ?
+            {isLeilighetFucntion(ByggType) ?
                 <p className="longText">Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p>
                 : null}
 
@@ -145,7 +146,7 @@ console.log((Navn))
 
             <p>Volume for forvarmingbereder er {minimumVPVol} liter og for spissbereder er {minimumSpissVol} liter.</p>
            
-            {(isLeilighetFucntion(Navn) && isEkonomiInkludert==="Ja") ?
+            {(isLeilighetFucntion(ByggType) && isEkonomiInkludert==="Ja") ?
                 <Fragment>
                     <h3>Ekonomisk Beregning:</h3>
                     <ul style={{ maxWidth: 500 }}>

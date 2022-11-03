@@ -1,14 +1,14 @@
 import React, { Fragment } from "react"
 import { nanoid } from '@reduxjs/toolkit'
 import * as staticData from "./StaticData/VVStaticData"
-import { kWhData,isLeilighetFucntion } from "./BeregnVV"
+import { kWhData, isLeilighetFucntion } from "./BeregnVV"
 import "../../../styles/varmtvann/VVStyle.css"
 import SpiralSys from "./SpiralSys"
 import LøsningTyper from "./LøsningTyper"
 import AquaEfficency from "./AquaEfficency"
 import { Switch } from "@mui/material"
 import MouseOverPopover from "../../static/Popover"
-import {inputDesciption} from "./StaticData/VVStaticData"
+import { inputDesciption } from "./StaticData/VVStaticData"
 
 export default function ProsjektData(props) {
 
@@ -32,16 +32,16 @@ export default function ProsjektData(props) {
             startTemp: 52,
             spissSettpunkt: 65,
             isEkonomiInkludert: "Nei",
-            strømpris:120,
+            strømpris: 120,
             SCOP: 2.5,
 
 
         }
     )
 
-    const { Navn, Referanse, ByggType, bra, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, settpunktVP, spissSettpunkt,isEkonomiInkludert,strømpris,SCOP } = prosjketData
+    const { Navn, Referanse, ByggType, bra, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, settpunktVP, spissSettpunkt, isEkonomiInkludert, strømpris, SCOP } = prosjketData
 
-    const [kWhEnheter, setKWhEnheter] = React.useState({})
+    const [visBeregning, setVisBeregning] = React.useState(false)
 
 
     function handleChange(event) {
@@ -74,20 +74,13 @@ export default function ProsjektData(props) {
     }
 
 
-    function beregn(e) {
-        e.preventDefault()
-        setKWhEnheter({ Navn: ByggType, Antall: antall, kWh: kWhData(ByggType, antall), uid: nanoid() })
+    // function beregn(e) {
+    // e.preventDefault()
+    //   setKWhEnheter({ Navn: ByggType, Antall: antall, kWh: kWhData(ByggType, antall), uid: nanoid() })
 
-    }
+    //}
 
-   
-
-    let kWTabel = (
-        <tr key={nanoid()} className="tbro">
-            <td key={nanoid()} className="tbel">{kWhEnheter.Navn}</td>
-            <td key={nanoid()} className="tbel">{kWhEnheter.Antall}</td>
-        </tr>
-    )
+    let kWhCTC = kWhData(ByggType, antall)
 
     const [systemValg, setSystemValg] = React.useState("None")
 
@@ -149,7 +142,7 @@ export default function ProsjektData(props) {
                 {ByggType === "Leilighet (3+ personer)" || ByggType === "Leilighet (2-3 personer)" || ByggType === "Leilighet (1-2 personer)" ? (
 
                     <div >
-                        <label className="label">Tappevann forbruk per person per dag [L]:
+                        <label className="label">Tappevann per person per dag [L]:
                             <input
                                 className="input"
                                 type="number"
@@ -209,79 +202,65 @@ export default function ProsjektData(props) {
 
 
 
-          {isLeilighetFucntion(ByggType) ? (
-                <label className="label">Inkluder ekonomisk beregning:
-                <select
-                        className="select"
-                        id="isEkonomiInkludert"
-                        value={isEkonomiInkludert}
-                        onChange={handleChange}
-                        name="isEkonomiInkludert"
-                    >
-                      <option key={nanoid()} value={"Ja"}>Ja</option>
-                      <option key={nanoid()} value={"Nei"}>Nei</option>
-                    </select>
-                </label>
+                {isLeilighetFucntion(ByggType) ? (
+                    <label className="label">Inkluder ekonomisk beregning:
+                        <select
+                            className="select"
+                            id="isEkonomiInkludert"
+                            value={isEkonomiInkludert}
+                            onChange={handleChange}
+                            name="isEkonomiInkludert"
+                        >
+                            <option key={nanoid()} value={"Ja"}>Ja</option>
+                            <option key={nanoid()} value={"Nei"}>Nei</option>
+                        </select>
+                    </label>
                 ) : null}
 
 
-              {(isLeilighetFucntion(ByggType) && isEkonomiInkludert ==="Ja") ?
-               <Fragment>
-               <label className="label">Strøm Pris: [Øre/kWh]
-                <input
-                        className="input"
-                        type="number"
-                        onChange={handleChange}
-                        name="strømpris"
-                        value={strømpris}
-                        min={5}
-                        max={1200}/>
-                </label>   
-                 
-                 <label className="label">SCOP: 
-                 <div className="flex-end">
-                <MouseOverPopover popoverText={inputDesciption.SCOP}/>
-                <input
-                        className="input"
-                        type="number"
-                        onChange={handleChange}
-                        name="SCOP"
-                        value={SCOP}
-                        min={1.5}
-                        max={4}/>
-                </div>
-                </label>   
-                 
-                 </Fragment>
-                         : null} 
+                {(isLeilighetFucntion(ByggType) && isEkonomiInkludert === "Ja") ?
+                    <Fragment>
+                        <label className="label">Strøm Pris: [Øre/kWh]
+                            <input
+                                className="input"
+                                type="number"
+                                onChange={handleChange}
+                                name="strømpris"
+                                value={strømpris}
+                                min={5}
+                                max={1200} />
+                        </label>
 
-                <button className="sisteNeste" onClick={beregn}>Beregn</button>
+                        <label className="label">SCOP:
+                            <div className="flex-end">
+                                <MouseOverPopover popoverText={inputDesciption.SCOP} />
+                                <input
+                                    className="input"
+                                    type="number"
+                                    onChange={handleChange}
+                                    name="SCOP"
+                                    value={SCOP}
+                                    min={1.5}
+                                    max={4} />
+                            </div>
+                        </label>
 
-                {kWhEnheter.kWh ? (
-                    <div className="VVtable">
-                        <h3 >Beregning for:</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="tbhr">Bygg type:</th>
-                                    <th className="tbhr">Antall</th>
-                                </tr>
-                            </thead>
-                            <tbody>{kWTabel}</tbody>
-                        </table>
-                    </div>
-                ) : null}
-
-
-                {kWhEnheter.kWh ? <LøsningTyper kWh={kWhEnheter.kWh} setSystem={setSystem} /> : null}
-
-
-
-                {systemValg === "Spiral" && kWhEnheter.length !== 0 ? <SpiralSys kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+                    </Fragment>
                     : null}
-                {systemValg === "Veksler" && kWhEnheter.length !== 0 ? <SpiralSys kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+
+
+                {visBeregning ? null : <button className="sisteNeste" onClick={(e) => (e.preventDefault, setVisBeregning(true))}>Beregn</button>}
+
+
+                {visBeregning ? <LøsningTyper kWh={kWhCTC} setSystem={setSystem} /> : null}
+
+
+
+                {systemValg === "Spiral" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} />
                     : null}
-                {systemValg === "AquaEfficency" && kWhEnheter.length !== 0 ? <AquaEfficency kWhEnheter={kWhEnheter} />
+                {systemValg === "Veksler" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} />
+                    : null}
+                {systemValg === "AquaEfficency" ? <AquaEfficency kWhEnheter={kWhCTC} prosjektData={prosjketData} />
                     : null}
 
 

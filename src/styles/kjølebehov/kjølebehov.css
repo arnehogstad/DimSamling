@@ -128,8 +128,8 @@
     flex-wrap: wrap;
     padding: 10px;
     margin-bottom: 5px;
-    min-width: 100%;
-    width: max-content;
+    width: 100%;
+ 
     float: none;
     margin: 0 auto;
     

@@ -76,12 +76,11 @@ export function minVolSpiss(kW, kWhIn, settTemp, backUpType, dekningGradProsent,
     }
 
 }
-export function sizeVP(kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp) {
+export function sizeVP(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp) {
     
     
-    let total40Cforbruk = total40CforbrukFn (kWhEnheter.Navn,kWhEnheter.Antall,perPersonVV)
+    let total40Cforbruk = total40CforbrukFn (ByggType,antall,perPersonVV)
     let totalBerederForbruk = (tappeVannTemp * total40Cforbruk - netVannTemp * total40Cforbruk) / (spissSettpunkt - netVannTemp)
-
     let energiForbruk = totalBerederForbruk * (settpunktVP - netVannTemp) * 4.2 / (3600 * 24)  //Energi use in Kj and then divided for 24h
     let [sizeVpUpper, sizeVpLower] = [Math.round(energiForbruk * 24 / 10), Math.round(energiForbruk * 24 / 20)] //10 to 20 hours of working hours considered acceptable 
 
@@ -94,12 +93,11 @@ export function isLeilighetFucntion(navn) {
     return isLeilighet
 }
 
-export function elEnergiForbrukFn (kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp,dekningGradProsent,SCOP,strømpris){
-    let total40Cforbruk = total40CforbrukFn (kWhEnheter.Navn,kWhEnheter.Antall,perPersonVV) //daglig forbruk av vann
+export function elEnergiForbrukFn (ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp,dekningGradProsent,SCOP,strømpris){
+    let total40Cforbruk = total40CforbrukFn (ByggType,antall,perPersonVV) //daglig forbruk av vann
     let SpissStrøm = (tappeVannTemp * total40Cforbruk - netVannTemp * total40Cforbruk) / (spissSettpunkt - netVannTemp)//Flow through the spiss per dag
     let totalenergiForbruk = SpissStrøm * (spissSettpunkt - netVannTemp) * 4.2 / (3600)*365  //divided by 3600 to turn J to Kwh multiplied by 365 to get an annular kwh use
-   console.log("totalenergiForbruk",totalenergiForbruk, "SpissStrøm",SpissStrøm,"total40Cforbruk",total40Cforbruk)
-   let spissElForbruk = totalenergiForbruk * (1-dekningGradProsent/100) //energy [kWh] used by spiss to increase the temperature 
+    let spissElForbruk = totalenergiForbruk * (1-dekningGradProsent/100) //energy [kWh] used by spiss to increase the temperature 
    let VPdekning = totalenergiForbruk * (dekningGradProsent/100)   //energy [kWh] covered by VP to increase the temperature from nettvann to settpunkt
    let VPEnergibruk = VPdekning /SCOP   //electricity use of VP
    let energiSpart = totalenergiForbruk - VPEnergibruk - spissElForbruk  //energy saved by using VP

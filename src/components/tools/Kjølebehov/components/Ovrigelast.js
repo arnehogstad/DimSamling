@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { nanoid } from "@reduxjs/toolkit"
 
 
@@ -7,10 +7,10 @@ export default function Ovrigelast(props) {
         navn: "Øvrigelast",
         effekt: 0,
         uid: nanoid()
+      })
 
-    })
-    const [lasts, setLasts] = React.useState([])
-    const [lastsTable, setLastsTable] = React.useState([])
+    const [lasts, setLasts] = React.useState(props.ovriges)
+
 
     function handleChange(event) {
         const { name, value } = event.target
@@ -18,38 +18,32 @@ export default function Ovrigelast(props) {
             return {
                 ...prev,
                 [name]: value,
+                uid: nanoid()
             }
         })
 
     }
 
     function saveData() {
-        setLast(prev => {
-            return {
-                ...prev,
-                uid: nanoid()
-            }
+       setLast(prev => {
+        return {...prev, uid: nanoid()}////to make sure the uid is unique for each line 
         })
-
-        setLasts(prev => [...prev, last])
+       setLasts(prev => [...prev, last])
     }
 
     const handleDelete = (item) => {
         setLasts(lasts.filter(i => i !== item))
     }
 
-    useEffect(() => {
-        setLastsTable(lasts.map((item) => (
-            <tr key={nanoid()} className="tbro">
-                <td key={nanoid()} className="tbel">{item.navn}</td>
-                <td key={nanoid()} className="tbel">{item.effekt}</td>
-                <td key={nanoid()} className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
-            </tr>
-        )))
-    }, [lasts])
 
+    let lastsTable = lasts.map((item) => (
+        <tr key={nanoid()} className="tbro">
+            <td key={nanoid()} className="tbel">{item.navn}</td>
+            <td key={nanoid()} className="tbel">{item.effekt}</td>
+            <td key={nanoid()} className="tbel"><button className="fjern" onClick={() => handleDelete(item)}>Fjern</button></td>
+        </tr>
+    ))
 
-    let lastPrint = lasts.map((item) => (Object.values(item)))
 
 
     return (
@@ -77,32 +71,31 @@ export default function Ovrigelast(props) {
 
                 </form>
                 <div className="knapper">
-                    <button className="handlingsKnapp" onClick={saveData}>Lagre last</button>
+                    <button className="handlingsKnapp" onClick={saveData}>Legg inn ekstra last</button>
                 </div>
-            {lasts.length !== 0 ? (
-                <>
-                    <div className="table">
-                        <table >
-                            <thead>
-                                <tr>
-                                    <th className="tbhr">Last Navn</th>
-                                    <th className="tbhr">Effekt [W]</th>
-                                    <th className="tbhr">Fjern</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {lastsTable}
-                            </tbody>
-                        </table>
-                    </div>
-                </>
-            ) : null}
+                {lasts.length !== 0 ? (
+                    <>
+                        <div className="table">
+                            <table >
+                                <thead>
+                                    <tr>
+                                        <th className="tbhr">Last Navn</th>
+                                        <th className="tbhr">Effekt [W]</th>
+                                        <th className="tbhr">Fjern</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {lastsTable}
+                                </tbody>
+                            </table>
+                        </div>
+                    </>
+                ) : null}
             </div>
 
 
             <div className="knapper">
-                <button className="sisteNeste" onClick={() => { props.pageView("vindu") }}>Forrige steg</button>
-                <button className="sisteNeste" onClick={() => { props.ovrige_data(lastPrint); props.pageView("oversikt") }}>Ferdigstill beregning</button>
+                <button className="sisteNeste" onClick={() => { props.ovrige_data(lasts) }}>Lagre data</button>
             </div>
 
         </div>

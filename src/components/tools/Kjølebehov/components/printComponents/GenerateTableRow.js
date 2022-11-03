@@ -107,11 +107,11 @@ export function VinduOversikt({ styles, vindus }) {
             <View key={nanoid()} wrap={false}>
                 
                     <View key={nanoid()} style={styles.tableRow} >
-                        <Text key={nanoid()} style={styles.descriptionLarge}> {element[0]}</Text>
-                        <Text key={nanoid()} style={styles.descriptionLarge}>{element[1]}</Text>
-                        <Text key={nanoid()} style={styles.descriptionLarge}>{element[2]}</Text>
-                        <Text key={nanoid()} style={styles.descriptionLarge}>{element[3]}</Text>
-                        <Text key={nanoid()} style={styles.descriptionLarge}>{element[4]}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.vinduArealet}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.avskjerming}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.vinduRettning}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.strål}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.trans}</Text>
                    
                 </View>
             </View>
@@ -153,8 +153,8 @@ export function OvrigeOversikt({ styles, ovriges }) {
             <View key={nanoid()} wrap={false}>
              
                     <View key={nanoid()} style={styles.tableRow} >
-                        <Text key={nanoid()} style={styles.descriptionLarge}>{element[0]}</Text>
-                        <Text key={nanoid()} style={styles.descriptionLarge}>{element[1]}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.navn}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.effekt}</Text>
                     
                 </View>
                 

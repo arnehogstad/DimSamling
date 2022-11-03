@@ -9,8 +9,7 @@ import { Stack } from "@mui/system"
 export default function SpiralSys(props) {
 
 let  {netVannTemp, tappeVannTemp, perPersonVV, spissSettpunkt, settpunktVP} = props.prosjektData
-let {kWh, kWhEnheter} = props
-
+let  {Navn,kWh} = props.kWhEnheter
 const [spiral, setSpiral] = React.useState(
 {
     vpEffekt: 15,
@@ -53,13 +52,14 @@ function handleChange(event) {
 let dekningGradMaksProsent = Math.round((settpunktVP - netVannTemp) / (spissSettpunkt - netVannTemp) * 100)
 let minimumVPVol = minVolVP(vpEffekt, kWh, settpunktVP, dekningGradProsent)
 let minimumSpissVol = minVolSpiss(spissElEffekt, kWh, spissSettpunkt, backupType, dekningGradProsent, forvarmingELeffekt, minimumVPVol)
-let [sizeVpUpper, sizeVpLower] = sizeVP(kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
+let [sizeVpUpper, sizeVpLower] = sizeVP(props.kWhEnheter, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
 
 return(
 
 <Fragment>
     <h3>Spiral:</h3>
-                {isLeilighetFucntion(kWhEnheter) ? <p style={{ fontStyle: "italic", marginBottom: 6 }}>Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p> : null}
+                {isLeilighetFucntion(Navn) ? 
+                <p className="longText">Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p> : null}
                 <label className="label" >VP effekt [kW]:
                     <input
                         className="input"
@@ -109,7 +109,7 @@ return(
                     </div>
                 ) : null}
 
-                <p style={{ fontStyle: "italic",  maxWidth:600 }}> Med slider kan man velge mellom akesptabelle verdier for forvarmingberreder og spissbereder. Merk at med høyere volum kan man bennytte varmepumpen på en mer effektivt måte. </p>
+                <p className="longText"> Med slider kan man velge mellom akesptabelle verdier for forvarmingsbereder og spissbereder. Merk at med høyere volum kan man bennytte varmepumpen på en mer effektivt måte. </p>
 
               
                     <Box sx={{ width: 200, m: 3,  mx: 'auto' }}  >

@@ -13,14 +13,12 @@ export default function Toolinfo(){
 
   return (
     <div className="current-placement">
-      <div>
-        <div className="tool-description">
-          <div>Dette er et verktøy for å automatisk generere en handlekurv basert på faktiske prosjektdata</div>
-          <div>Nedenfor kan du legge inn en eller flere boenheter og rom for rom bestemme rørtype og CC</div>
-          <div>Uttaket beregnes ihht håndbok for gulvvarme. Ettersom føringsveier er ukjente antas 10% av kurslengde til transport</div>
-          <div>Bladibladi andre interessante ting om verktøyet</div>
-        </div>
-      </div>
+          <div className="tool-description">
+            Dette er et verktøy for å automatisk generere en handlekurv basert på faktiske prosjektdata.
+            Nedenfor kan du legge inn en eller flere boenheter og rom for rom bestemme rørtype og CC. <br></br>
+            Uttaket beregnes ihht håndbok for gulvvarme. Ettersom føringsveier er ukjente antas 10% av kurslengde til transport<br></br>
+            Bladibladi andre interessante ting om verktøyet
+          </div>
     </div>
 
   )

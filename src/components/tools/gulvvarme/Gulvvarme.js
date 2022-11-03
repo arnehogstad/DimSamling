@@ -94,7 +94,7 @@ export default function Gulvvarme(props){
         fordelerskap: "På vegg",
         fordelerstokk: "Uten bypass",
         termostatType: "ALPHA",
-        termostatStandard: "kun på bad",
+        termostatStandard: "kun på våtrom",
     }
   }
 
@@ -153,8 +153,8 @@ export default function Gulvvarme(props){
     let tempRooms = unitRooms.map(room => (
       {...room,
       floor: floorListText.findIndex((floorname) => floorname === room.floor) > 0 && parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) > 0  && parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) < floorListText.length ?
-        parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) === 2 && 1*floorShift < 0 ?
-        floorListText[1] :floorListText.findIndex((floorname) => floorname === room.floor) === 1 && 1*floorShift > 0 ?
+        parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift) === 3 && 1*floorShift < 0 ?
+        floorListText[2] :floorListText.findIndex((floorname) => floorname === room.floor) === 2 && 1*floorShift > 0 ?
         floorListText[parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1+1*floorShift)] :
         floorListText[parseInt(floorListText.findIndex((floorname) => floorname === room.floor)+1*floorShift)]
         :
@@ -318,10 +318,7 @@ export default function Gulvvarme(props){
 
               <div className="addUnitPrompt" >
                 <div className="addUnitPrompt-line">
-                  Ingen aktive boenheter, start et nytt prosjekt eller jobb videre på et eksisterende prosjekt
-                </div>
-                <div className="addUnitPrompt-line">
-                  <button onClick={(event) => setShowModal({show:true,modalName:"newUnit"})} className="handlingsKnapp">
+                  <button onClick={(event) => setShowModal({show:true,modalName:"newUnit"})} className="handlingsKnapp handlingsKnappFokus">
                     Nytt prosjekt
                   </button>
                   <button onClick={(event) => setShowModal({show:true,modalName:"openCSV"})} className="handlingsKnapp">

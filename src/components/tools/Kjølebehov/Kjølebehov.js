@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { Fragment, React, useState } from 'react'
 import Banner from '../../../components/static/Banner'
 import { useSelector } from 'react-redux'
 import InnData from './components/InnData'
@@ -13,7 +13,7 @@ import { nanoid } from "@reduxjs/toolkit"
 export default function Kjølebehov(props) {
   const showTool = useSelector((state) => state.tool.visibleId)
 
-  const [page, setPage] = useState("ovrige");
+  const [page, setPage] = useState("InnData");
   const pageModifier = (pageName) => { setPage(pageName) }
 
 
@@ -76,20 +76,21 @@ export default function Kjølebehov(props) {
         {page === "ovrige" ? <Ovrigelast ovrige_data={ovrige_data}  ovriges={ovriges} pageModifier={pageModifier}/> : null}
 
        { page === "oversikt" ? (
+        <Fragment>
         
-        <div  >
-        <div className="knapper">
+        <div > 
+        <div className="knapper" >
         <button className="KJButtons" onClick={() => { pageModifier("InnData")}}>Inndata</button>
         <button className="KJButtons" onClick={() => {pageModifier("vindu")}}>Vindu</button>
         <button className="KJButtons" onClick={() =>  { pageModifier("ovrige")}}>Øvrige laster</button>
         <button className="KJButtonsActive" onClick={() => { pageModifier("oversikt")}}>Oversikt</button>
         </div>
 
-            <PDFViewer width={1000} height={1500}>
+            <PDFViewer width={700} height={1000}>
             <Print innDatas={innDatas}  vindus={vindus} ovriges={ovriges} lasts={lasts} total={total}/>
             </PDFViewer>
-             </div>
-             
+        </div>
+             </Fragment>
           ) : null}
 
           </div>

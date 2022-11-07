@@ -176,7 +176,7 @@ export default function Result(props){
     let returArr = []
     let loopStart = 0
     let wetCount = nWetRooms
-    if (termostatStandard !== "kun på bad"){
+    if (termostatStandard !== "kun på våtrom"){
       loopStart = 1
       wetCount = nRooms
     }

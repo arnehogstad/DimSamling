@@ -209,16 +209,16 @@ function SaveCSVModal(props){
           </div>
         </div>
         <div className="modal-buttons">
+          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
           <CSVLink
-            className="handlingsKnapp"
+            className="handlingsKnapp  handlingsKnappFokus"
             data={data}
             onClick={(event) => updateDataExitModal()}
             filename={`${fileName}.csv`}
             style={cleanLink}
           >
-          Lagre prosjekt
+          Last ned datafil
           </ CSVLink>
-          <button className="handlingsKnapp avbrytknapp">Avbryt</button>
         </div>
       </div>
     </div>
@@ -280,8 +280,8 @@ function DeleteUnitModal(props){
           </div>
         </div>
         <div className="modal-buttons">
-          <button onClick={delUnit} className="handlingsKnapp">Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+          <button onClick={delUnit} className="handlingsKnapp slettknapp">Slett boenhet</button>
         </div>
       </div>
     </div>
@@ -315,8 +315,8 @@ function OpenProjectModal(props){
           </div>
         </div>
         <div className="modal-buttons">
-          <button onClick={delProject} className="handlingsKnapp">Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+          <button onClick={delProject} className="handlingsKnapp  handlingsKnappFokus">Åpne prosjekt</button>
         </div>
       </div>
     </div>
@@ -509,8 +509,8 @@ function OpenCSVModal(props){
 
         </div>
         <div className="modal-buttons">
-          <button className="handlingsKnapp" onClick={(e) => {if(csvFile)submit()}} >Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+          <button className="handlingsKnapp  handlingsKnappFokus" onClick={(e) => {if(csvFile)submit()}} >Hent inndata</button>
         </div>
       </div>
     </div>
@@ -544,8 +544,8 @@ function NewProjectModal(props){
           </div>
         </div>
         <div className="modal-buttons">
-          <button onClick={delProject} className="handlingsKnapp">Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+          <button onClick={delProject} className="handlingsKnapp  handlingsKnappFokus">Nytt prosjekt</button>
         </div>
       </div>
     </div>
@@ -622,8 +622,8 @@ function RenameUnitModal(props){
           </div>
         </div>
         <div className="modal-buttons">
-          <button onClick={updateUnitName} className="handlingsKnapp">Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+          <button onClick={updateUnitName} className="handlingsKnapp  handlingsKnappFokus">Lagre nytt navn</button>
         </div>
       </div>
     </div>
@@ -662,7 +662,7 @@ function RenameProjectModal(props){
     <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
       <div className="modal-content">
         <div className="modal-header">
-          <div className="modal-header-text">Endre prosjektnavn</div>
+          <div className="modal-header-text">Rediger prosjektnavn</div>
           <div className="modal-cancel-div">x</div>
         </div>
         <div className="modal-input-container">
@@ -697,8 +697,8 @@ function RenameProjectModal(props){
           </div>
         </div>
         <div className="modal-buttons">
-          <button onClick={updateProject} className="handlingsKnapp">Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+          <button onClick={updateProject} className="handlingsKnapp  handlingsKnappFokus">Lagre prosjektnavn</button>
         </div>
       </div>
     </div>
@@ -876,8 +876,8 @@ function AddUnitModal(props){
         }
         </div>
         <div className="modal-buttons">
-          <button onClick={updateUnits} className="handlingsKnapp">Bekreft</button>
           <button className="handlingsKnapp avbrytknapp">Avbryt</button>
+          <button onClick={updateUnits} className="handlingsKnapp handlingsKnappFokus">Legg til boenhet</button>
         </div>
       </div>
     </div>

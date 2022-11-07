@@ -46,10 +46,14 @@ main {
 }
 
 .tool-description{
+  display:  flex;
+  justify-content: center;
   line-height: 2;
   font-size: 14px;
-  padding-top: 20px;
   letter-spacing: 1px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
 }
 
 .addUnitPrompt{
@@ -58,9 +62,9 @@ main {
 }
 .addUnitPrompt-line{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100px;
 
 }
 
@@ -84,10 +88,16 @@ main {
   padding: 0;
   margin-bottom: 20px;
   width: calc((98% - 50px) / 6);
-  min-width: 120px;
+  min-width: 200px;
   align-self: center;
   border: 1px solid #e7e7e7;
+}
+.handlingsKnappFokus{
+  background-color: #fbab18;
+}
 
+.slettknapp{
+  background-color: #d73232;
 }
 
 .hiddenBtn{

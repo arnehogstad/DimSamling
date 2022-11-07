@@ -6,7 +6,6 @@ import "../../../styles/varmtvann/VVStyle.css"
 import SpiralSys from "./SpiralSys"
 import LøsningTyper from "./LøsningTyper"
 import AquaEfficency from "./AquaEfficency"
-import { Switch } from "@mui/material"
 import MouseOverPopover from "../../static/Popover"
 import { inputDesciption } from "./StaticData/VVStaticData"
 
@@ -33,7 +32,7 @@ export default function ProsjektData(props) {
             spissSettpunkt: 65,
             isEkonomiInkludert: "Nei",
             strømpris: 120,
-            SCOP: 2.5,
+            SCOP: "2,5",
 
 
         }
@@ -55,13 +54,14 @@ export default function ProsjektData(props) {
                 }
             })
         } else {
-            if (type === "number") {
+            if (type === "number" ) {
                 setProsjektData(prevFormData => {
                     return {
                         ...prevFormData,
-                        [name]: parseInt(value),
+                        [name]: parseFloat(value),
                     }
                 })
+                
             } else {
                 setProsjektData(prevFormData => {
                     return {
@@ -74,15 +74,9 @@ export default function ProsjektData(props) {
     }
 
 
-    // function beregn(e) {
-    // e.preventDefault()
-    //   setKWhEnheter({ Navn: ByggType, Antall: antall, kWh: kWhData(ByggType, antall), uid: nanoid() })
-
-    //}
-
     let kWhCTC = kWhData(ByggType, antall)
 
-    const [systemValg, setSystemValg] = React.useState("None")
+    const [systemValg, setSystemValg] = React.useState("None")///Updates the page based on the type of system soloution 
 
     const setSystem = (e, text) => {
         e.preventDefault()
@@ -236,12 +230,12 @@ export default function ProsjektData(props) {
                                 <MouseOverPopover popoverText={inputDesciption.SCOP} />
                                 <input
                                     className="input"
-                                    type="number"
+                                    type="text"
                                     onChange={handleChange}
                                     name="SCOP"
                                     value={SCOP}
-                                    min={1.5}
-                                    max={4} />
+                               
+                                    />
                             </div>
                         </label>
 

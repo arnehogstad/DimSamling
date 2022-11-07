@@ -1,11 +1,12 @@
-import React from "react"
-import { isLeilighetFucntion } from "./BeregnVV"
+import React, { Fragment } from "react"
+import {elEnergiForbrukAquaefficency , isLeilighetFucntion } from "./BeregnVV"
 import { AquaEfficencyData } from "./StaticData/VVStaticData"
+
 
 export default function AquaEfficency(props) {
 
     let kWh = props.kWhEnheter
-    let { ByggType, antall,isEkonomiInkludert, SCOP, strømpris } = props.prosjektData
+    let { ByggType, antall,isEkonomiInkludert, SCOP, strømpris, perPersonVV, netVannTemp, tappeVannTemp} = props.prosjektData
     
 
     let isLeilighet = isLeilighetFucntion(ByggType) ///Decides if all of the units are apartments or not
@@ -67,8 +68,10 @@ export default function AquaEfficency(props) {
     }
 
 
+    let [totalenergiForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukAquaefficency(ByggType,antall, perPersonVV, netVannTemp, tappeVannTemp, SCOP,strømpris)
+    
 
-
+   
     return (
         <div>
             <h3>AquaEfficency</h3>
@@ -89,6 +92,21 @@ export default function AquaEfficency(props) {
                 <p  className="longText"  style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning er basert på Cetetherm methodik for boligblokker.</p>
                 : <p className="longText" style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning metodik for byggtyper utenom boligblokk er estimater og er ikke basert på veiledende verdier fra Cetetherm, da det ikke er gitt. </p>
             }
+
+
+            {(isLeilighetFucntion(ByggType) && isEkonomiInkludert==="Ja") ?
+                <Fragment>
+                    <h3>Ekonomisk Beregning:</h3>
+                    <ul style={{ maxWidth: 500 }}>
+                        <li>Årlig strømforbruk ved bruk av el-kjell ville ha vært {totalenergiForbruk} kWh.</li>
+                        <li>Årlig strømforbruk av varmepumpe vil være {VPEnergibruk} kWh.</li>
+                        <li>Strømforbruk er redusert med {energiSpartProsent} % ved bruk av varmepumpe .</li>
+                        <li>Årlig energisparing ved bruk av varmepumpe er {energiSpart} kWh.</li>
+                        <li>Årlig sparing ved bruk av varmepumpe er {SpartKroner} NOK.</li>
+                    </ul>
+
+               </Fragment>
+                : null}
 
 
         </div>

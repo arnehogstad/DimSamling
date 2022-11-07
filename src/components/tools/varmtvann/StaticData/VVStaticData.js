@@ -59,5 +59,5 @@ export const kWhDataFraCTC = [58.10, 87.20, 116.30, 174.40, 232.50, 290.70, 348.
 
 export const inputDesciption = {
 backupType: "Spiss el-kolbe som dekker 100% av behov: Det er antatt at forvarming bereder og varmepumpe er frakoblet og derfor spiss bereder med interne el-koblinger må dekke hele behovet. Spiss el-kolbe: el-kolbe i spiss brukt for heving av temperatur brukes som back up men ikke sikkert at kan dekke 100% av behov, relevant for Væske-Vann. Spiss el-kolbe plus el-kolbe i forvarming: Forvarmings volumet kan bli brukt for back up om det finnes el-kolbe i forvarming.", 
-SCOP: "COP (Seasonal Coefficient of Performance) beskriver hvor mye mer varmeeffekt du får ut av varmepumpen enn hva den bruker av strøm over et år. Dette kan være 2,5 for væske-vann systemer og 2,3 for luft-vannsystemer med mildere klima."
+SCOP: "SCOP (Seasonal Coefficient of Performance) beskriver hvor mye mer varmeeffekt du får ut av varmepumpen enn hva den bruker av strøm over et år. Dette kan være 2,5 for væske-vann systemer og 2,3 for luft-vannsystemer med mildere klima."
 }

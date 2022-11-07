@@ -51,15 +51,13 @@ export default function SpiralSys(props) {
     }
 
 
-
     let dekningGradMaksProsent = Math.round((settpunktVP - netVannTemp) / (spissSettpunkt - netVannTemp) * 100)
     let minimumVPVol = minVolVP(vpEffekt, kWh, settpunktVP, dekningGradProsent)
     let minimumSpissVol = minVolSpiss(spissElEffekt, kWh, spissSettpunkt, backupType, dekningGradProsent, forvarmingELeffekt, minimumVPVol)
     let [sizeVpUpper, sizeVpLower] = sizeVP(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
-    let [totalenergiForbruk, spissElForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukFn(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp, dekningGradProsent, SCOP, strømpris)
+    let [totalenergiForbruk, spissElForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukFn(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, tappeVannTemp, dekningGradProsent, SCOP, strømpris)
 
-    //console.log("totalenergiForbruk", totalenergiForbruk, "spissElForbruk", spissElForbruk, "VPEnergibruk", VPEnergibruk, "energiSpart", energiSpart, "energiSpartProsent", energiSpartProsent, "SpartKroner", SpartKroner)
-
+    
     return (
 
         <Fragment>
@@ -121,7 +119,7 @@ export default function SpiralSys(props) {
                 </div>
             ) : null}
 
-            <p className="longText"> Med slider kan man velge mellom akesptabelle verdier for forvarmingsbereder og spissbereder. Merk at med høyere volum kan man bennytte varmepumpen på en mer effektivt måte. </p>
+            <p className="longText"> Med slider kan man velge mellom akesptabelle verdier for volum av forvarmingsbereder og spissbereder. Merk at med høyere volum kan man bennytte varmepumpen på en mer effektivt måte. </p>
 
 
             <Box sx={{ width: 200, m: 3, mx: 'auto' }}  >

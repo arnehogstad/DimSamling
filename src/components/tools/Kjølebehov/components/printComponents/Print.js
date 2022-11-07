@@ -25,6 +25,9 @@ export default function Print(props) {
   )
 
   return (
+   
+
+
     <Document>
       <Page size="A4" style={styles.page}>
         <Header />
@@ -36,10 +39,11 @@ export default function Print(props) {
           ovriges={props.ovriges}
           total={props.total}
           styleTable={styles.table}
-        />
+          />
 
         <Footer />
       </Page>
     </Document>
+      
   )
 }

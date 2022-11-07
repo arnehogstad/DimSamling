@@ -1,12 +1,13 @@
-import React from "react"
+import React, { Fragment } from "react"
 import { nanoid } from '@reduxjs/toolkit'
 import * as staticData from "./StaticData/VVStaticData"
-import { kWhData } from "./BeregnVV"
+import { kWhData, isLeilighetFucntion } from "./BeregnVV"
 import "../../../styles/varmtvann/VVStyle.css"
 import SpiralSys from "./SpiralSys"
 import LøsningTyper from "./LøsningTyper"
 import AquaEfficency from "./AquaEfficency"
-
+import MouseOverPopover from "../../static/Popover"
+import { inputDesciption } from "./StaticData/VVStaticData"
 
 export default function ProsjektData(props) {
 
@@ -29,14 +30,17 @@ export default function ProsjektData(props) {
             startVolume: 200,
             startTemp: 52,
             spissSettpunkt: 65,
+            isEkonomiInkludert: "Nei",
+            strømpris: 120,
+            SCOP: "2,5",
 
 
         }
     )
 
-    const { Navn, Referanse, ByggType, bra, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, settpunktVP, spissSettpunkt } = prosjketData
+    const { Navn, Referanse, ByggType, bra, antall, årsforbruk, netVannTemp, tappeVannTemp, perPersonVV, settpunktVP, spissSettpunkt, isEkonomiInkludert, strømpris, SCOP } = prosjketData
 
-    const [kWhEnheter, setKWhEnheter] = React.useState({})
+    const [visBeregning, setVisBeregning] = React.useState(false)
 
 
     function handleChange(event) {
@@ -50,13 +54,14 @@ export default function ProsjektData(props) {
                 }
             })
         } else {
-            if (type === "number") {
+            if (type === "number" ) {
                 setProsjektData(prevFormData => {
                     return {
                         ...prevFormData,
-                        [name]: parseInt(value),
+                        [name]: parseFloat(value),
                     }
                 })
+                
             } else {
                 setProsjektData(prevFormData => {
                     return {
@@ -69,31 +74,16 @@ export default function ProsjektData(props) {
     }
 
 
-    
+    let kWhCTC = kWhData(ByggType, antall)
 
-
-
-    function beregn(e) {
-        e.preventDefault()
-        setKWhEnheter( {Navn: ByggType, Antall: antall, kWh: kWhData(ByggType, antall), uid: nanoid()} )
-
-    }
-
-
-
-    let kWTabel =(
-        <tr key={nanoid()} className="tbro">
-            <td key={nanoid()} className="tbel">{kWhEnheter.Navn}</td>
-            <td key={nanoid()} className="tbel">{kWhEnheter.Antall}</td>
-               </tr>
-    )
-
-    const [systemValg, setSystemValg] = React.useState("None")
+    const [systemValg, setSystemValg] = React.useState("None")///Updates the page based on the type of system soloution 
 
     const setSystem = (e, text) => {
         e.preventDefault()
         setSystemValg(text)
     }
+
+
 
     return (
         <div className="border">
@@ -119,8 +109,8 @@ export default function ProsjektData(props) {
                     /></label>
 
 
-                <div className="selected">
-                    <label className="label" htmlFor="ByggType">Bygg Type:</label>
+                <div className="label">
+                    <label htmlFor="ByggType">Bygg Type:</label>
                     <select
                         className="select"
                         id="ByggType"
@@ -146,7 +136,7 @@ export default function ProsjektData(props) {
                 {ByggType === "Leilighet (3+ personer)" || ByggType === "Leilighet (2-3 personer)" || ByggType === "Leilighet (1-2 personer)" ? (
 
                     <div >
-                        <label className="label">Tappevann forbruk per person per dag [L]:
+                        <label className="label">Tappevann per person per dag [L]:
                             <input
                                 className="input"
                                 type="number"
@@ -169,6 +159,17 @@ export default function ProsjektData(props) {
                             /></label>
                     </div>
                 ) : null}
+
+                <label className="label" >Nett vann  temperatur [{'\u00b0'}C]:
+                    <input
+                        className="input"
+                        type="number"
+                        onChange={handleChange}
+                        name="netVannTemp"
+                        value={netVannTemp}
+                        min={4}
+                        max={20}
+                    /></label>
 
 
                 <label className="label">Spiss settpunkt [{'\u00b0'}C]:
@@ -193,179 +194,72 @@ export default function ProsjektData(props) {
                         max={75}
                     /></label>
 
-                <label className="label" >Nett vann  temperatur [{'\u00b0'}C]:
-                    <input
-                        className="input"
-                        type="number"
-                        onChange={handleChange}
-                        name="netVannTemp"
-                        value={netVannTemp}
-                        min={4}
-                        max={20}
-                    /></label>
 
 
-
-                <button className="sisteNeste" onClick={beregn}>Beregn</button>
-
-                {kWhEnheter.kWh  ? (
-                    <div className="VVtable">
-                        <h3 >Beregning for:</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th className="tbhr">Bygg type:</th>
-                                    <th className="tbhr">Antall</th>
-                               
-                                </tr>
-                            </thead>
-                            <tbody>{kWTabel}</tbody>
-                        </table>
-                    </div>
+                {isLeilighetFucntion(ByggType) ? (
+                    <label className="label">Inkluder ekonomisk beregning:
+                        <select
+                            className="select"
+                            id="isEkonomiInkludert"
+                            value={isEkonomiInkludert}
+                            onChange={handleChange}
+                            name="isEkonomiInkludert"
+                        >
+                            <option key={nanoid()} value={"Ja"}>Ja</option>
+                            <option key={nanoid()} value={"Nei"}>Nei</option>
+                        </select>
+                    </label>
                 ) : null}
 
-                
-                {kWhEnheter.kWh ?
-                    <LøsningTyper kWh={kWhEnheter.kWh} setSystem={setSystem} /> : null}
 
+                {(isLeilighetFucntion(ByggType) && isEkonomiInkludert === "Ja") ?
+                    <Fragment>
+                        <label className="label">Strøm Pris: [Øre/kWh]
+                            <input
+                                className="input"
+                                type="number"
+                                onChange={handleChange}
+                                name="strømpris"
+                                value={strømpris}
+                                min={5}
+                                max={1200} />
+                        </label>
 
+                        <label className="label">SCOP:
+                            <div className="flex-end">
+                                <MouseOverPopover popoverText={inputDesciption.SCOP} />
+                                <input
+                                    className="input"
+                                    type="text"
+                                    onChange={handleChange}
+                                    name="SCOP"
+                                    value={SCOP}
+                               
+                                    />
+                            </div>
+                        </label>
 
-                {systemValg === "Spiral" && kWhEnheter.length !== 0 ? <SpiralSys  kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+                    </Fragment>
                     : null}
-                {systemValg === "Veksler" && kWhEnheter.length !== 0 ? <SpiralSys  kWhEnheter={kWhEnheter} prosjektData={prosjketData} handleChange={handleChange} />
+
+
+                {visBeregning ? null : <button className="sisteNeste" onClick={(e) => (e.preventDefault, setVisBeregning(true))}>Beregn</button>}
+
+
+                {visBeregning ? <LøsningTyper kWh={kWhCTC} setSystem={setSystem} /> : null}
+
+
+
+                {systemValg === "Spiral" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} />
                     : null}
-                {systemValg === "AquaEfficency" && kWhEnheter.length !== 0 ? <AquaEfficency kWhEnheter={kWhEnheter}  />
+                {systemValg === "Veksler" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} />
+                    : null}
+                {systemValg === "AquaEfficency" ? <AquaEfficency kWhEnheter={kWhCTC} prosjektData={prosjketData} />
                     : null}
 
 
 
-                {/*
 
-<label className="label">Antall leiligheter:
-    <input
-        className="input"
-        type="text"
-        onChange={handleChange}
-        name="leiligheter"
-        value={leiligheter}
-    /></label>
-
-
-
-<label className="label">Antall personer per leilighet:
-    <input
-        className="input"
-        type="text"
-        onChange={handleChange}
-        name="antall"
-        value={antall}
-    /></label>
-
-
-
-
-                <label className="label">Års energiforbruk [kWh]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="årsforbruk"
-                        value={årsforbruk}
-                    /></label>
-
-
-
-
-
-                <label className="label">Net vann temperatur [{'\u00b0'}C]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="netVannTemp"
-                        value={netVannTemp}
-                    /></label>
-
-
-
-
-
-                <label className="label">Ønsket tappevann temperatur [{'\u00b0'}C]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="tappeVannTemp"
-                        value={tappeVannTemp}
-                    /></label>
-
-
-
-                <label className="label">Settpunkt på bereder [{'\u00b0'}C]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="berederTemp"
-                        value={berederTemp}
-                    /></label>
-
-
-                <label className="label">Varmepumpe effekt [kW]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="vpEffekt"
-                        value={vpEffekt}
-                    /></label>
-
-
-
-
-                <label className="label">Start volume spiralbereder [l]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="startVolume"
-                        value={startVolume}
-                    /></label>
-
-
-                <label className="label">Temperatur på startvolum [{'\u00b0'}C]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="startTemp"
-                        value={startTemp}
-                    /></label>
-
-
-                <label className="label">Effekt av spissbereder el-kolbe[kW]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="spissElEffekt"
-                        value={spissElEffekt}
-                    /></label>
-
-
-
-                <label className="label">Volume of spissbereder [l]:
-                    <input
-                        className="input"
-                        type="text"
-                        onChange={handleChange}
-                        name="spissVolume"
-                        value={spissVolume}
-                    /></label>
-
-
-
-*/}
 
             </form>
         </div>

@@ -8,18 +8,15 @@
 .KJButtons {
     display: flex;
     justify-content: center;  
-    width: 100px;
+    width: 100%;
     height: 50px;
-    margin-right: 20px;
     font-weight: bold;
     text-transform: uppercase;
-    background-color: #fbab18;
+    background-color: white;
     color: #333;
-    border-color: #fbab18;
+    border-color: white;
     font-size: 12px;
     letter-spacing: 2px;
-    padding: 5px;
-    margin-bottom: 20px;
     align-items: center;
     border: 1px solid #e7e7e7;
    
@@ -35,9 +32,9 @@
     
     display: flex;
     justify-content: center;  
-    width: 100px;
+    width: 100%;
     height: 50px;
-    margin-right: 20px;
+
     font-weight: bold;
     text-transform: uppercase;
     opacity: 1;
@@ -46,7 +43,7 @@
     
     font-size: 12px;
     letter-spacing: 2px;
-    padding: 5px;
+    
     margin-bottom: 20px;
     align-items: center;
     border: 1px solid #e7e7e7;
@@ -59,7 +56,7 @@
 
 
 .input {
-    margin-bottom: 15px;
+    margin: 5px;
     height: 30px;
     text-indent: 10px;
     border: 1px solid #444;
@@ -70,8 +67,8 @@
 
 
 .border {
-    min-width: 412px;
-    padding: 10px;
+    width: 550px;
+       padding: 10px;
     margin-bottom: 15px;
     display: block;
     border-radius: 5px;
@@ -88,18 +85,18 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
+   
     width: 100%;
 }
 
 .select {
-    margin-bottom: 15px;
+    margin: 5px;
     height: 30px;
     text-indent: 10px;
     border: 1px solid #444;
     display: flex;
     flex-direction: row;
-   width: 200px;
+  width: 200px;
 
 
 }
@@ -111,8 +108,18 @@
     align-items: center;
     margin-bottom: 5px;
     font-weight: bold;
+    min-width: 100%;
+}
+
+.flex-end {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+
 
 }
+
 .formInnData {
     display: flex;
     justify-content: space-between;
@@ -121,10 +128,11 @@
     flex-wrap: wrap;
     padding: 10px;
     margin-bottom: 5px;
-    max-width: 100%;
-    width: max-content;
+    width: 100%;
+ 
     float: none;
     margin: 0 auto;
+    
 
 }
 
@@ -132,18 +140,17 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    margin: 10px;
-    font-weight: bold;
-
+    align-items: stretch;
+    width: 100%;
+   
 }
 
 .sisteNeste {
 
     width: max-content;
     height: 50px;
-    margin-right: 20px;
-    font-weight: bold;
+    width: 200px;
+       font-weight: bold;
     text-transform: uppercase;
     background-color: #fbab18;
     color: #333;
@@ -151,8 +158,7 @@
     border-color: #fbab18;
     font-size: 12px;
     letter-spacing: 2px;
-    padding: 5px;
-    margin-bottom: 20px;
+    margin-right: 15px;
     align-self: center;
     border: 1px solid #e7e7e7;
 }
@@ -191,27 +197,28 @@
     flex-direction: row;
 	justify-content:center;
 	align-items:center;
-    max-width: 95%;
+    max-width: 100%;
     float: none;
     margin: 0 auto;
-    padding:  5px;
-
+    padding-top:  10px;
 
 }
 
 .tbhr{
    	max-width: fit-content;
+       height: 50px;
 	background:#000;
-	padding: 10px  0;
+	padding: 5px  5px;
     color:#fff;
     border: 1px solid #444;
 }
 
 .tbel{
     border: #444 1px solid;
-    padding: 10px;
+    padding: 5px;
     text-align:center;
-
+    max-height: 80%;
+    height: 50px;
 }
 
 .tbro{

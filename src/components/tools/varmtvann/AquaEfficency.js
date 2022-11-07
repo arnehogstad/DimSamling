@@ -1,13 +1,15 @@
-import React from "react"
-import { isLeilighetFucntion } from "./BeregnVV"
+import React, { Fragment } from "react"
+import {elEnergiForbrukAquaefficency , isLeilighetFucntion } from "./BeregnVV"
 import { AquaEfficencyData } from "./StaticData/VVStaticData"
+
 
 export default function AquaEfficency(props) {
 
-    let { Navn,Antall,kWh } = props.kWhEnheter
+    let kWh = props.kWhEnheter
+    let { ByggType, antall,isEkonomiInkludert, SCOP, strømpris, perPersonVV, netVannTemp, tappeVannTemp} = props.prosjektData
+    
 
-
-    let isLeilighet = isLeilighetFucntion(Navn) ///Decides if all of the units are apartments or not
+    let isLeilighet = isLeilighetFucntion(ByggType) ///Decides if all of the units are apartments or not
 
     let antallSmåLeilighet = 0
     let antallStorLeilighet = 0
@@ -18,9 +20,9 @@ export default function AquaEfficency(props) {
 
     if (isLeilighet === true) {
 
-            if (Navn === "Leilighet (3+ personer)")  antallStorLeilighet += Antall
-            if (Navn === "Leilighet (2-3 personer)") antallSmåLeilighet += Antall
-            if (Navn === "Leilighet (1-2 personer)") antallSmåLeilighet += Antall
+            if (ByggType === "Leilighet (3+ personer)")  antallStorLeilighet += antall
+            if (ByggType === "Leilighet (2-3 personer)") antallSmåLeilighet += antall
+            if (ByggType === "Leilighet (1-2 personer)") antallSmåLeilighet += antall
         
         let kWTotal = (kWhData(antallSmåLeilighet, "små") ** 2 + kWhData(antallStorLeilighet, "store") ** 2) ** 0.5  ///estimert effekt med samtidighet faktor
         unit = unitVelger(kWTotal) ///velger riktig unit 
@@ -61,21 +63,23 @@ export default function AquaEfficency(props) {
         const isLarger = (arrayElement) => arrayElement >= kWTotal
         let arrayIndex = kW.findIndex(isLarger)
 
-        let unit = { navn: artikkel[arrayIndex], AkVol: volume[arrayIndex], Effekt: vpEffekt[arrayIndex], artikkelNumber: artikkelNr[arrayIndex] }
+        let unit = { ByggType: artikkel[arrayIndex], AkVol: volume[arrayIndex], Effekt: vpEffekt[arrayIndex], artikkelNumber: artikkelNr[arrayIndex] }
         return unit
     }
 
 
+    let [totalenergiForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukAquaefficency(ByggType,antall, perPersonVV, netVannTemp, tappeVannTemp, SCOP,strømpris)
+    
 
-
+   
     return (
         <div>
             <h3>AquaEfficency</h3>
 
-            {unit.navn ?    //checks if the unit is defined, not defined means too big  demand.
+            {unit.ByggType ?    //checks if the unit is defined, not defined means too big  demand.
                 <div>
                     <ul>
-                    <li >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}` } target="_blank">{unit.navn}</a>. </li>
+                    <li >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}` } target="_blank">{unit.ByggType}</a>. </li>
                     <li>Artikkelnummer: {unit.artikkelNumber}.</li>
                     <li>Minimum anbefalt akkumulerings tanks volum er {unit.AkVol} liter.</li>
                     <li>Minimum anbefalt effekt av varmepumpe er {unit.Effekt} kW.</li>
@@ -88,6 +92,21 @@ export default function AquaEfficency(props) {
                 <p  className="longText"  style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning er basert på Cetetherm methodik for boligblokker.</p>
                 : <p className="longText" style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning metodik for byggtyper utenom boligblokk er estimater og er ikke basert på veiledende verdier fra Cetetherm, da det ikke er gitt. </p>
             }
+
+
+            {(isLeilighetFucntion(ByggType) && isEkonomiInkludert==="Ja") ?
+                <Fragment>
+                    <h3>Ekonomisk Beregning:</h3>
+                    <ul style={{ maxWidth: 500 }}>
+                        <li>Årlig strømforbruk ved bruk av el-kjell ville ha vært {totalenergiForbruk} kWh.</li>
+                        <li>Årlig strømforbruk av varmepumpe vil være {VPEnergibruk} kWh.</li>
+                        <li>Strømforbruk er redusert med {energiSpartProsent} % ved bruk av varmepumpe .</li>
+                        <li>Årlig energisparing ved bruk av varmepumpe er {energiSpart} kWh.</li>
+                        <li>Årlig sparing ved bruk av varmepumpe er {SpartKroner} NOK.</li>
+                    </ul>
+
+               </Fragment>
+                : null}
 
 
         </div>

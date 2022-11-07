@@ -5,7 +5,7 @@ import { nanoid } from "@reduxjs/toolkit"
 export default function Ovrigelast(props) {
     const [last, setLast] = React.useState({
         navn: "Øvrigelast",
-        effekt: 0,
+        effekt: 1000,
         uid: nanoid()
       })
 
@@ -47,10 +47,21 @@ export default function Ovrigelast(props) {
 
 
     return (
-        <div>
+  
             <div className="border">
 
-                <form className="formInnData">
+        <div className="knapper">
+        <button className="KJButtons" onClick={() => {props.ovrige_data(lasts); props.pageModifier("InnData")}}>Inndata</button>
+        <button className="KJButtons" onClick={() => {props.ovrige_data(lasts);props.pageModifier("vindu")}}>Vindu</button>
+        <button className="KJButtonsActive" onClick={() =>  {props.ovrige_data(lasts); props.pageModifier("ovrige")}}>Øvrige laster</button>
+        <button className="KJButtons" onClick={() => {props.ovrige_data(lasts); props.pageModifier("oversikt")}}>Oversikt</button>
+        </div>
+
+
+
+
+                <form  className="formInnData">
+
                     <label className="label">Last Navn:
                         <input
                             className="input"
@@ -70,9 +81,12 @@ export default function Ovrigelast(props) {
                         /></label>
 
                 </form>
+
                 <div className="knapper">
-                    <button className="handlingsKnapp" onClick={saveData}>Legg inn ekstra last</button>
+                    <button className="sisteNeste" onClick={saveData}>Legg inn ekstra last</button>
                 </div>
+                
+                
                 {lasts.length !== 0 ? (
                     <>
                         <div className="table">
@@ -91,13 +105,13 @@ export default function Ovrigelast(props) {
                         </div>
                     </>
                 ) : null}
+                
+
             </div>
 
 
-            <div className="knapper">
-                <button className="sisteNeste" onClick={() => { props.ovrige_data(lasts) }}>Lagre data</button>
-            </div>
+          
 
-        </div>
+      
     )
 }

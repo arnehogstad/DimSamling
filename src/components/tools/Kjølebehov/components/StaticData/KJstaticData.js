@@ -37,3 +37,6 @@ export const vindu_rettning = ["Sør", "Vest-Øst", "Nord"]
 
 
 
+export const inputDesciption = {
+sikkerhetsMargin: "Sikkerhetsmargin er en faktor som brukes for å ta høyde for usikkerhet i beregningene. Denne faktoren er valgt til 30% for å dekke usikkerhet i beregningene. Denne faktoren kan endres"
+}

@@ -62,8 +62,7 @@ export function HeaderType({ styles, headerType }) {
                         <Text key={nanoid()} style={styles.descriptionLarge}>Avskjerming type</Text>
                         <Text key={nanoid()} style={styles.descriptionLarge}>Himmel rettning</Text>
                         <Text key={nanoid()} style={styles.descriptionLarge}>Stråling last [W]</Text>
-                        <Text key={nanoid()} style={styles.descriptionLarge}>Transmisjon last [W]</Text>
-                    
+                                     
                 </View>
             </View>)
     } else if (headerType === "lasts") {
@@ -111,8 +110,7 @@ export function VinduOversikt({ styles, vindus }) {
                         <Text key={nanoid()} style={styles.descriptionLarge}>{element.avskjerming}</Text>
                         <Text key={nanoid()} style={styles.descriptionLarge}>{element.vinduRettning}</Text>
                         <Text key={nanoid()} style={styles.descriptionLarge}>{element.strål}</Text>
-                        <Text key={nanoid()} style={styles.descriptionLarge}>{element.trans}</Text>
-                   
+                                           
                 </View>
             </View>
         )

@@ -10,7 +10,7 @@ export default function InnData(props) {
 
    const [formData, setFormData] = React.useState(props.innDatas) 
   
-  const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, SikkerhetsMargin, uid } = formData
+  const { Navn, Referanse, ByggType, Byggeår, MaksT, ØnsketT, bra, takhøyde, takmotloft, taktemp, gulvmotluft, veggmotnabo, gjennvinn, ventilasjonType, luftmengde, SikkerhetsMargin } = formData
 
 
 

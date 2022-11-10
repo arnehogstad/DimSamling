@@ -1,5 +1,5 @@
 import React from "react"
-import { byggTypeVVInnDataType, kWhDataFraCTC } from "./StaticData/VVStaticData"
+import { byggTypeVVInnDataType, kWhDataFraCTC } from "./components/StaticData/VVStaticData"
 
 
 
@@ -98,17 +98,42 @@ export function elEnergiForbrukFn (ByggType,antall, perPersonVV, spissSettpunkt,
     let SpissStrøm = (tappeVannTemp * total40Cforbruk - netVannTemp * total40Cforbruk) / (spissSettpunkt - netVannTemp)//Flow through the spiss per dag
     let totalenergiForbruk = SpissStrøm * (spissSettpunkt - netVannTemp) * 4.2 / (3600)*365  //divided by 3600 to turn J to Kwh multiplied by 365 to get an annular kwh use
     let spissElForbruk = totalenergiForbruk * (1-dekningGradProsent/100) //energy [kWh] used by spiss to increase the temperature 
-   let VPdekning = totalenergiForbruk * (dekningGradProsent/100)   //energy [kWh] covered by VP to increase the temperature from nettvann to settpunkt
+    let VPdekning = totalenergiForbruk * (dekningGradProsent/100)   //energy [kWh] covered by VP to increase the temperature from nettvann to settpunkt
    
    let cop = parseFloat(SCOP.replace(',', '.'))
 
-   let VPEnergibruk = VPdekning /cop   //electricity use of VP
+   let VPEnergibruk = VPdekning /cop   //electricity use of VP   
+   let totalVPenergiForbruk = VPEnergibruk + spissElForbruk //total electricity use of VP and spiss
    let energiSpart = totalenergiForbruk - VPEnergibruk - spissElForbruk  //energy saved by using VP
    let energiSpartProsent = energiSpart / totalenergiForbruk * 100 //energy saved in percent
    let SpartKroner = energiSpart * strømpris/100 //energy saved in kroner divided by 100 to change from øre to kroner
-    return [Math.round(totalenergiForbruk), Math.round(spissElForbruk), Math.round(VPEnergibruk), Math.round(energiSpart), Math.round(energiSpartProsent), Math.round(SpartKroner)]
+   
+    return [simplifyNumber(totalenergiForbruk), simplifyNumber(spissElForbruk), simplifyNumber(VPEnergibruk),simplifyNumber(totalVPenergiForbruk), simplifyNumber(energiSpart), simplifyNumber(energiSpartProsent), simplifyNumber(SpartKroner)]
 }
 
+
+
+
+
+export function elEnergiForbrukAquaefficency (ByggType,antall, perPersonVV, netVannTemp, tappeVannTemp,SCOP,strømpris){
+        //ENergi used by an equivalent SPiss is independent av the SPiss temp as with higher temp there will be lower flow 
+    let total40Cforbruk = total40CforbrukFn (ByggType,antall,perPersonVV) //daglig forbruk av vann
+    let totalenergiForbruk = total40Cforbruk * (tappeVannTemp - netVannTemp) * 4.2 / (3600)*365  //divided by 3600 to turn J to Kwh multiplied by 365 to get an annular kwh use
+    
+    let VPdekning = total40Cforbruk*(tappeVannTemp-netVannTemp)* 4.2 / (3600)*365   //energy [kWh] provided by the VP to the tanks 
+    
+    let cop = parseFloat(SCOP.replace(',', '.')) // to change the comma to a dot for the cop value 
+    
+
+    let VPEnergibruk = VPdekning / cop   //electricity use of VP
+        
+    let energiSpart = totalenergiForbruk - VPEnergibruk   //energy saved by using VP
+    let energiSpartProsent = energiSpart / totalenergiForbruk * 100 //energy saved in percent
+    let SpartKroner = energiSpart * strømpris/100 //energy saved in kroner divided by 100 to change from øre to kroner
+    
+    
+    return [simplifyNumber(totalenergiForbruk), simplifyNumber(VPEnergibruk), simplifyNumber(energiSpart), simplifyNumber(energiSpartProsent), simplifyNumber(SpartKroner)]
+}
 
 function total40CforbrukFn(Navn,Antall,perPersonVV) {
     let antallPersoner = 0
@@ -122,24 +147,9 @@ return antallPersoner * perPersonVV
 
 
 
-export function elEnergiForbrukAquaefficency (ByggType,antall, perPersonVV, netVannTemp, tappeVannTemp,SCOP,strømpris){
-   
-   //ENergi used by an equivalent SPiss is independent av the SPiss temp as with higher temp there will be lower flow 
+function simplifyNumber (number) {
+    let roundedNumber = Math.round(number)
 
-    let total40Cforbruk = total40CforbrukFn (ByggType,antall,perPersonVV) //daglig forbruk av vann
-    let totalenergiForbruk = total40Cforbruk * (tappeVannTemp - netVannTemp) * 4.2 / (3600)*365  //divided by 3600 to turn J to Kwh multiplied by 365 to get an annular kwh use
-   
-    let VPdekning = total40Cforbruk*(tappeVannTemp-netVannTemp)* 4.2 / (3600)*365   //energy [kWh] provided by the VP to the tanks 
-    
-    let cop = parseFloat(SCOP.replace(',', '.')) // to change the comma to a dot for the cop value 
-    
-    let VPEnergibruk = VPdekning / cop   //electricity use of VP
-   
-    
-    let energiSpart = totalenergiForbruk - VPEnergibruk   //energy saved by using VP
-   let energiSpartProsent = energiSpart / totalenergiForbruk * 100 //energy saved in percent
-   let SpartKroner = energiSpart * strømpris/100 //energy saved in kroner divided by 100 to change from øre to kroner
-   
-   
-   return [Math.round(totalenergiForbruk),  Math.round(VPEnergibruk), Math.round(energiSpart), Math.round(energiSpartProsent), Math.round(SpartKroner)]
+    return roundedNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
 }

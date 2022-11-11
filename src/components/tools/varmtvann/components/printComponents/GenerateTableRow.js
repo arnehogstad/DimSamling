@@ -54,6 +54,7 @@ export function SystemløsningPrint({ styles, valgtdata }) {
 
     const systemløsningPrintObj = [
         ["Varmepumpe Effekt " ,valgtdata.vpEffekt,"[kW]"],
+        
         ["El-kolbe i forvarming effekt ",valgtdata.forvarmingELeffekt,"[kW]"],
         ["El-kolbe i spissbereder effekt ",valgtdata.spissElEffekt,"[kW]"],
         ["Back Up Type",valgtdata.backupType,""],
@@ -64,7 +65,7 @@ export function SystemløsningPrint({ styles, valgtdata }) {
             <View key={nanoid()} wrap={false}>
               
                     <View key={nanoid()} style={styles.tableRow} >
-                        <Text key={nanoid()} style={styles.descriptionLarge}> {element[0]}</Text>
+                        <Text key={nanoid()} style={styles.descriptionLarge}>{element[0]}</Text>
                         <Text key={nanoid()} style={styles.descriptionLarge}>{element[1]}</Text>
                         <Text key={nanoid()} style={styles.descriptionLarge}>{element[2]}</Text>
                 </View>

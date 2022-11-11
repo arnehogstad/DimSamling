@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { Text, View, StyleSheet, Link } from "@react-pdf/renderer";
 import { nanoid } from 'nanoid'
 import { EkonomiskBeregning, InnDataOversikt, SystemløsningPrint } from './GenerateTableRow'
+import { isLeilighetFucntion } from "../../BeregnVV";
 
 const styles = StyleSheet.create({
   row: {
@@ -146,7 +147,7 @@ export default function TableArticles(props) {
 
       ) : null}
 
-      {props.prosjektData.isEkonomiInkludert === "Ja" ? (
+      {isLeilighetFucntion(props.prosjektData.ByggType) &&  props.prosjektData.isEkonomiInkludert === "Ja" ? (
         <Fragment>
 
           <View><Text style={styles.unitName}> Ekonomisk Beregning: </Text> </View>

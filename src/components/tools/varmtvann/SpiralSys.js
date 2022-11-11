@@ -74,11 +74,11 @@ export default function SpiralSys(props) {
         "Spart kroner": SpartKroner,
     }
     
-   
+   console.log(props)
     return (
 
         <Fragment>
-            <h3>Spiral:</h3>
+            
 
             {isLeilighetFucntion(ByggType) ?
                 <p className="longText">Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p>

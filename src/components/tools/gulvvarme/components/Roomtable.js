@@ -88,7 +88,7 @@ function Row(props){
       const manualEvent =
       {
         name:"wetroom",
-        value: result > 0 ? true : false
+        value: result > 0 ? true : tempWet
       }
       if (tempWet !== manualEvent.value){
         props.autoFillFunc("",props.unit.unitId,props.indeks,manualEvent)

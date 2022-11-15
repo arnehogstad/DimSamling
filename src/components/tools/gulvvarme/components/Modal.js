@@ -418,7 +418,7 @@ function OpenCSVModal(props){
             //console.log(`${key}: ${value}`);
             let roomPrefix = key.substring(0, 7)
             //if new room - create new empty room and save the new name of the room
-            console.log(roomPrefix);
+
             if(roomNames.includes(roomPrefix) === false){
               let tempRoom = returnEmptyRoom()
               roomArr.push(tempRoom)
@@ -441,7 +441,7 @@ function OpenCSVModal(props){
             }else if (key.includes("circuits")){
               roomArr[roomPos].circuits=value
             }else if (key.includes("wetroom")){
-              roomArr[roomPos].wetroom=value
+              roomArr[roomPos].wetroom= true
             }else if (key.includes("id")){
               roomArr[roomPos].id=value
             }
@@ -456,6 +456,7 @@ function OpenCSVModal(props){
           room.cc !== "" ||
           room.circuits !== ""
         ))
+
         //defines the room object
         let lastRoom = returnEmptyRoom()
         finalRoomArr.push(lastRoom)

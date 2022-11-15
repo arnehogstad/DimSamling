@@ -102,6 +102,7 @@ export default function Gulvvarme(props){
   function addUnit(nRooms,unitName, loadedUnit){
     let tempRooms = nRooms === undefined ? 11 : nRooms
     let newUnit = loadedUnit === undefined ? emptyUnit(tempRooms,units.length+1,unitName) : loadedUnit
+
     setUnits(oldUnits => [...oldUnits,newUnit ])
     setCurrentUnitId(newUnit.unitId)
   }

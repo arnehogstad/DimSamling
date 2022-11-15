@@ -211,6 +211,16 @@ function Row(props){
           className="text-center"
         />
       </td>
+      <td className="area-col ">
+        <input
+          name="wetroom"
+          type="checkbox"
+          onChange={props.roomDataInput}
+          value={props.item.wetroom}
+          checked={props.item.wetroom}
+          className="text-center"
+        />
+      </td>
       <td className={"pipe-type-col " + (props.item.missingdata ? props.item.pipetype === "" ? "missing-data-col" : null : null)}>
         <select
           name="pipetype"
@@ -260,6 +270,7 @@ function Tableheader(){
       <th className="floor-col">Etasje</th>
       <th className="room-name-col">Romnavn</th>
       <th className="area-col">Areal</th>
+      <th className="area-col">Våtrom</th>
       <th className="pipe-type-col">Rørtype</th>
       <th className="cc-col">CC</th>
       <th className="circuit-col">Kurser</th>
@@ -274,6 +285,7 @@ function Ghostrow(props){
       <td className="button-col ghostCell"></td>
       <td className="floor-col ghostCell"></td>
       <td className="room-name-col ghostCell"></td>
+      <td className="area-col ghostCell"></td>
       <td className="area-col ghostCell"></td>
       <td className="pipe-type-col ghostCell"></td>
       <td className="cc-col ghostCell"></td>

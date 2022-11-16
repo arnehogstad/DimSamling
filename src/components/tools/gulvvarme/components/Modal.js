@@ -185,7 +185,7 @@ function SaveCSVModal(props){
     <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
       <div className="modal-content">
         <div className="modal-header">
-          <div className="modal-header-text">Lagre prosjekt</div>
+          <div className="modal-header-text">Last ned prosjektdata</div>
           <div className="modal-cancel-div">x</div>
         </div>
         <div className="modal-input-container">
@@ -441,7 +441,7 @@ function OpenCSVModal(props){
             }else if (key.includes("circuits")){
               roomArr[roomPos].circuits=value
             }else if (key.includes("wetroom")){
-              roomArr[roomPos].wetroom= true
+              roomArr[roomPos].wetroom= (value === 'true')
             }else if (key.includes("id")){
               roomArr[roomPos].id=value
             }

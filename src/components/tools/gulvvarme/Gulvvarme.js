@@ -244,8 +244,6 @@ export default function Gulvvarme(props){
     //function updating state of units with values from input
     function roomDataInput(event, unitId, roomIndex,manualCall) {
         const {name, value, type, checked} = manualCall === undefined ? event.target : manualCall
-        console.log(name);
-        console.log(checked);
         setUnits(oldUnits => oldUnits.map(unit =>
           (
             unit.unitId === unitId ?

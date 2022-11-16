@@ -2,6 +2,8 @@ import React from 'react'
 import { CSVLink } from "react-csv"
 import { PDFViewer } from "@react-pdf/renderer";
 import Print from "./printComponents/Print";
+import PrintIcon from '@mui/icons-material/Print';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 export default function Result(props){
   //array for all units in project
@@ -482,19 +484,59 @@ export default function Result(props){
 
   return (
     <div className="result-part">
-      {unitElements}
+      {unitElements[0]}
     </div>
   )
 }
 
 function ResultForUnit(props){
 
-  const [showProducts,setShowProducts] = React.useState(false)
+  const deepCopyFunction = (inObject) => {
+    let outObject, value, key
+    if (typeof inObject !== "object" || inObject === null) {
+      return inObject // Return the value if inObject is not an object
+    }
+    // Create an array or object to hold the values
+    outObject = Array.isArray(inObject) ? [] : {}
+    for (key in inObject) {
+      value = inObject[key]
+      // Recursively (deep) copy for nested objects, including arrays
+      outObject[key] = deepCopyFunction(value)
+    }
+    return outObject
+  }
 
-  const lineElements = props.articleList.map((article,index) =>
+  let tempArticleList = deepCopyFunction(props.articleList)
+  let tempUnitItems = deepCopyFunction(props.unit.unititems)
+  let mergedArticleList = []
+  let roundedUnitItems = tempUnitItems.map(article => ({...article, artcount: Math.ceil(article.artcount)}))
+
+
+  tempArticleList.forEach(function(item) {
+  var existing = mergedArticleList.filter(function(v, i) {
+    return v.artname == item.artname;
+  });
+  if (existing.length) {
+    var existingIndex = mergedArticleList.indexOf(existing[0]);
+    mergedArticleList[existingIndex].artnmbr = `${mergedArticleList[existingIndex].artnmbr} ${'\n'} ${item.artnmbr}`;
+    mergedArticleList[existingIndex].artdim = `${mergedArticleList[existingIndex].artdim} ${'\n'} ${item.artcount} stk ${item.artdim}`
+    mergedArticleList[existingIndex].korrigertAntall = parseFloat(mergedArticleList[existingIndex].korrigertAntall+item.artdim.replace(/\D/g,'')*item.artcount)
+  } else {
+    item.artcount = Math.ceil(item.artcount)
+    item.korrigertAntall = parseFloat(item.artdim.replace(/\D/g,'')*item.artcount)
+    item.artdim = `${item.artcount} stk ${item.artdim}`
+    mergedArticleList.push(item);
+  }
+  });
+
+  const [showProducts,setShowProducts] = React.useState(true)
+
+  const lineElements = mergedArticleList.map((article,index) =>
     <ResultArticleLines
       key = {`row${index}${props.unit.unitid}`}
       article = {article}
+      roundedUnitItems = {roundedUnitItems}
+      index={index}
     />
   )
 
@@ -506,24 +548,19 @@ function ResultForUnit(props){
         unitObjectIndex = {props.unitObjectIndex}
         showProducts = {showProducts}
         toggleShowProducts = {() => setShowProducts(!showProducts)}
+        mergedArticleList = {mergedArticleList}
+        roundedUnitItems = {roundedUnitItems}
         articleList = {props.articleList}
         projectName={props.projectName}
       />
       {showProducts === true ?
       <div className="result-article-line-wrapper">
         <div className="result-article-line topline">
-          <div className="result-article-line-headline">
-            Artikkelnummer
-          </div>
-          <div className="result-article-line-headline">
-            Artikkelnavn
-          </div>
-          <div className="result-article-line-headline text-center">
-            Antall
-          </div>
-          <div className="result-article-line-headline text-center">
-            Benevning
-          </div>
+          <div className="result-article-line-headline result-headline-small">Artikkelnummer</div>
+          <div className="result-article-line-headline result-headline-large">Artikkelnavn</div>
+          <div className="result-article-line-headline result-headline-small text-center">Antall</div>
+          <div className="result-article-line-headline result-headline-small text-center">Korrigert antall</div>
+          <div className="result-article-line-headline result-headline-small text-center">Forpakning</div>
         </div>
         {lineElements}
       </div>
@@ -592,7 +629,8 @@ function ResultHeader(props){
             <Print
               data={props.unitObjects}
               unitInfo={props.unit}
-              articleList = {props.articleList}
+              articleList = {props.mergedArticleList}
+              roundedUnitItems = {props.roundedUnitItems}
               dataIndex={props.unitObjectIndex}
               headline={`Materialliste - ${props.projectName}`}
               footerText = {tempFooterText}
@@ -606,8 +644,8 @@ function ResultHeader(props){
     }
 
 
-      <div className="result-header-line">
-        <div className="result-header-headline">
+      <div className="result-header-headline headline-content">
+        <div className="result-header-line">
           <h4>
             {props.unit.unitname} - gulvvarmeutstyr
           </h4>
@@ -617,36 +655,44 @@ function ResultHeader(props){
           <p>
           {props.unit.unitname} består av {props.unit.unitzones} rom og har {props.unit.unitcircuits} kurser
           </p>
+          <br></br>
+          <div className="result-header-toggleContents">
+            <button className="toggleContentsButton" onClick={props.toggleShowProducts}>
+              <span>
+                {props.showProducts === true ?
+                  "Skjul produkter" :
+                  "Vis produkter"
+                }
+              </span>
+            </button>
+          </div>
         </div>
         <div className="result-header-actionbutton">
-          <button className="toggleContentsButton" onClick={(event) => toggleModal(true)}>
-          Last ned romoversikt
-          </button>
-          <br></br>
-          <button className="add-to-basket-button">
+          <div
+            className="project-headline-knapp-div"
+            alt="Skriv ut"
+            onClick={(event) => toggleModal(true)}
+          >
+            <PrintIcon />
+            LAST NED
+          </div>
+
             <CSVLink
               data={props.articleList}
               filename={`Handleliste-${props.unit.unitname}.csv`}
               style={cleanLink}
               headers={headers}
             >
-              Last ned handleliste
+            <div
+            className="project-headline-knapp-div"
+            alt="Legg i handlekurv"
+            >
+              <ShoppingCartIcon />
+              LEGG I HANDLEKURV
+              </div>
             </CSVLink>
 
-          </button>
 
-        </div>
-      </div>
-      <div className="result-header-line">
-        <div className="result-header-toggleContents">
-          <button className="toggleContentsButton" onClick={props.toggleShowProducts}>
-            <span>
-              {props.showProducts === true ?
-                "Skjul produkter" :
-                "Vis produkter"
-              }
-            </span>
-          </button>
         </div>
       </div>
     </div>
@@ -657,18 +703,36 @@ function ResultArticleLines(props){
 
   return(
     <div className="result-article-line">
-      <div className="result-article-line-datapoint">
+      <div className="result-article-line-datapoint result-headline-small">
         {props.article.artnmbr}
       </div>
-      <div className="result-article-line-datapoint">
+      <div className="result-article-line-datapoint result-headline-large">
         {props.article.artname}
       </div>
-      <div className="result-article-line-datapoint text-center">
-        {props.article.artcount}
-      </div>
-      <div className="result-article-line-datapoint text-center">
-        {props.article.artdim}
-      </div>
+      {props.roundedUnitItems.filter(item => item.artname === props.article.artname).reduce((prev,curr)=>prev+curr.artcount,0) !== Math.ceil(props.article.artcount) ?
+      <>
+        <div className="result-article-line-datapoint result-headline-small text-center">
+          {props.roundedUnitItems[props.index].artcount}
+        </div>
+        <div className="result-article-line-datapoint result-headline-small text-center">
+          {props.article.korrigertAntall}
+        </div>
+        <div className="result-article-line-datapoint result-headline-small text-center">
+          {props.article.artdim}
+        </div>
+      </>
+      :
+      <>
+        <div className="result-article-line-datapoint result-headline-small text-center">
+          {props.article.artcount}
+        </div>
+        <div className="result-article-line-datapoint result-headline-small text-center">
+          {props.article.artcount}
+        </div>
+        <div className="result-article-line-datapoint result-headline-small text-center">
+        </div>
+      </>
+      }
     </div>
   )
 }

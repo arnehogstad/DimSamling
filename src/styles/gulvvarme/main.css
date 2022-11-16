@@ -47,7 +47,6 @@ main {
 
 .tool-description{
   display:  flex;
-  justify-content: center;
   line-height: 2;
   font-size: 14px;
   letter-spacing: 1px;

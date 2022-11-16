@@ -677,21 +677,16 @@ function ResultHeader(props){
             UTSKRIFT
           </div>
 
+          <button className="add-to-basket-button">
             <CSVLink
               data={props.articleList}
               filename={`Handleliste-${props.unit.unitname}.csv`}
               style={cleanLink}
               headers={headers}
             >
-            <div
-            className="project-headline-knapp-div"
-            alt="Legg i handlekurv"
-            >
-              <ShoppingCartIcon />
-              LEGG I HANDLEKURV
-              </div>
+              LEGG TIL I HANDLEKURVEN
             </CSVLink>
-
+          </button>
 
         </div>
       </div>

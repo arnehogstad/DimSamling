@@ -25,7 +25,7 @@ export default function Kjølebehov(props) {
   //To move data up a compnonet from a child component for the data in Vindus.js
   const [vindus, setVindus] = useState([]);
   const vindu_data = (vindu) => { setVindus(vindu) }
-  // To calculate the total effect of the windows 
+  // To calculate the total effect of the windows
   let totalVindu = vindus.reduce((a, b) => a + parseInt(b.strål) , 0)
 
 
@@ -40,7 +40,7 @@ export default function Kjølebehov(props) {
   const [innDatas, setInnDatas] = useState({
     Navn: "Prosjekt Navn",
     Referanse: "Navn",
-    ByggType: "Barnehage",
+    ByggType: "Kontorbygning",
     Byggeår: "2017-nå",
     MaksT: 32,
     ØnsketT: 21,
@@ -59,7 +59,7 @@ export default function Kjølebehov(props) {
   const innDatas_data = (data) => { setInnDatas(data) }
 
 
-  let total ={ovrige: totalOvriges , vindu:totalVindu , internt: Math.round(((lasts.reduce((a, b) => a + parseInt(b), 0)+totalOvriges+totalVindu)*(1+innDatas.SikkerhetsMargin/100))) } 
+  let total ={ovrige: totalOvriges , vindu:totalVindu , internt: Math.round(((lasts.reduce((a, b) => a + parseInt(b), 0)+totalOvriges+totalVindu)*(1+innDatas.SikkerhetsMargin/100))) }
 
   return (
     <div className={props.toolId === showTool ? "toolArea" : "hiddenTool"}>
@@ -69,7 +69,7 @@ export default function Kjølebehov(props) {
 
 
         <div className='KJCentered'>
-   
+
 
         {page === "InnData" ? <InnData last_data={last_data} innDatas_data={innDatas_data} innDatas={innDatas} pageModifier={pageModifier}/> : null}
         {page === "vindu" ? <Vindu innDatas={innDatas}  vindu_data={vindu_data} vindus={vindus} pageModifier={pageModifier}/> : null}
@@ -77,8 +77,8 @@ export default function Kjølebehov(props) {
 
        { page === "oversikt" ? (
         <Fragment>
-        
-        <div > 
+
+        <div >
         <div className="knapper" >
         <button className="KJButtons" onClick={() => { pageModifier("InnData")}}>Inndata</button>
         <button className="KJButtons" onClick={() => {pageModifier("vindu")}}>Vindu</button>

@@ -700,11 +700,12 @@ function ResultHeader(props){
 }
 
 function ResultArticleLines(props){
-
+  let artNmbr = typeof props.article.artnmbr === 'string' ?  props.article.artnmbr.replace(' ',', ') : props.article.artnmbr
+  console.log(typeof props.article.artnmbr);
   return(
     <div className="result-article-line">
       <div className="result-article-line-datapoint result-headline-small">
-        {props.article.artnmbr}
+        {artNmbr}
       </div>
       <div className="result-article-line-datapoint result-headline-large">
         {props.article.artname}

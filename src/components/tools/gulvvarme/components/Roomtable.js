@@ -1,6 +1,8 @@
 import React from 'react'
 import delPic from '../../../../images/Slett.jpg'
 import nyLinjePic from '../../../../images/nyLinjeBilde.jpg'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AddIcon from '@mui/icons-material/Add'
 
 const wetRoomNames = ["bad", "wc","våtrom","vask","vaskerom","teknisk rom","dusj","toalett"]
 
@@ -175,11 +177,9 @@ function Row(props){
   return(
     <tr>
       <td className="button-col">
-        <img
+        <DeleteIcon
           className="button-col-img"
-          src={delPic}
           onClick={props.delRowClick}
-          alt="Sletter rad"
         />
       </td>
       <td className={"floor-col " + (props.item.missingdata ? props.item.floor === "" ? "missing-data-col" : null : null)}>
@@ -252,11 +252,9 @@ function Row(props){
         />
       </td>
       <td className="button-col">
-        <img
+        <AddIcon
           className="button-col-img"
-          src={nyLinjePic}
           onClick={props.newRowClick}
-          alt="Legger til ny rad"
         />
       </td>
     </tr>
@@ -291,11 +289,9 @@ function Ghostrow(props){
       <td className="cc-col ghostCell"></td>
       <td className="circuit-col ghostCell"></td>
       <td className="button-col">
-        <img
+        <AddIcon
           className="button-col-img"
-          src={nyLinjePic}
           onClick={props.newRowClick}
-          alt="Legger til ny rad"
           />
       </td>
     </tr>

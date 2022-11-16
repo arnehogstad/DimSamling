@@ -4,6 +4,11 @@ import editNamePic from '../../../../images/redigerInverted.png'
 import lagrePic from '../../../../images/lagreIcon.png'
 import openPic from '../../../../images/openFileIcon.png'
 import newPic from '../../../../images/nyttProsjekt.png'
+import EditIcon from '@mui/icons-material/Edit'
+import SaveAltIcon from '@mui/icons-material/SaveAlt'
+import UploadIcon from '@mui/icons-material/Upload';
+import DownloadIcon from '@mui/icons-material/Download';
+import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
 export default function Projectheadline(props){
 
@@ -26,10 +31,8 @@ export default function Projectheadline(props){
           alt="Legg til ny boenhet"
           onClick={(event) => props.setShowModal({show:true,modalName:"newProject"})}
         >
-          <img
+          <NoteAddIcon
           className="project-headline-knapp"
-          src={newPic}
-          alt="Legg til ny boenhet"
           />
           NYTT
         </div>
@@ -38,10 +41,8 @@ export default function Projectheadline(props){
           alt="Legg til ny boenhet"
           onClick={(event) => props.setShowModal({show:true,modalName:"openProject"})}
         >
-          <img
+          <UploadIcon
           className="project-headline-knapp"
-          src={openPic}
-          alt="Legg til ny boenhet"
           />
           ÅPNE
         </div>
@@ -50,22 +51,18 @@ export default function Projectheadline(props){
           alt="Legg til ny boenhet"
           onClick={(event) => props.setShowModal({show:true,modalName:"saveProject"})}
         >
-          <img
+          <DownloadIcon
           className="project-headline-knapp"
-          src={lagrePic}
-          alt="Legg til ny boenhet"
           />
-          LAGRE
+          LAST NED
         </div>
         <div
           className="project-headline-knapp-div"
           alt="Legg til ny boenhet"
           onClick={(event) => props.setShowModal({show:true,modalName:"editNameProject"})}
         >
-          <img
+          <EditIcon
           className="project-headline-knapp"
-          src={editNamePic}
-          alt="Legg til ny boenhet"
           />
           REDIGER
         </div>

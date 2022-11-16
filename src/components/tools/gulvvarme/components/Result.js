@@ -674,7 +674,7 @@ function ResultHeader(props){
             onClick={(event) => toggleModal(true)}
           >
             <PrintIcon />
-            LAST NED
+            UTSKRIFT
           </div>
 
             <CSVLink

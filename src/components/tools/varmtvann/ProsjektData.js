@@ -17,8 +17,8 @@ export default function ProsjektData(props) {
         {
             Navn: "Prosjekt Navn",
             Referanse: "Navn",
-            ByggType: "Leilighet (3+ personer)",
-            antall: 10, // For CTC file to caculate kWh, can be number of students, guests or dusje
+            ByggType: "Leilighet (2-3 personer)",
+            antall: 47, // For CTC file to caculate kWh, can be number of students, guests or dusje
 
             netVannTemp: 7,
             tappeVannTemp: 40,
@@ -32,7 +32,6 @@ export default function ProsjektData(props) {
             isEkonomiInkludert: "Nei",
             strømpris: 120,
             SCOP: "2,5",
-
 
         }
     )

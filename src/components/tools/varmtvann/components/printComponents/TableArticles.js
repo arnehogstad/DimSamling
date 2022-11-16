@@ -94,6 +94,14 @@ const styles = StyleSheet.create({
     letterSpacing: 0.5,
     
   },
+
+  resultsDescription: {
+    fontSize: 10,
+    marginTop: 20,
+    letterSpacing: 0.5,
+    fontFamily: 'Helvetica-Oblique',
+    
+  },
 });
 
 
@@ -111,6 +119,19 @@ export default function TableArticles(props) {
       break;
     default: break;
   }
+
+
+
+ let CetethermDIMMethod = null
+
+if (isLeilighetFucntion(props.prosjektData.ByggType)) {
+    CetethermDIMMethod= <Text style={styles.resultsDescription}> Beregning er basert på Cetetherm methodik for boligblokker.</Text>
+        
+}else{
+  CetethermDIMMethod= <Text style={styles.resultsDescription}> Beregning metodik for byggtyper utenom boligblokk er estimater og er ikke basert på veiledende verdier fra Cetetherm, da det ikke er gitt.   </Text>
+}
+
+console.log(props)
 
 
   return (
@@ -134,7 +155,7 @@ export default function TableArticles(props) {
       )
         : null}
 
-      {props.systemValg === "AquaEfficency" ? (
+      {props.systemValg === "AquaEfficency" ? 
         <Fragment>
 
           <View>
@@ -142,10 +163,13 @@ export default function TableArticles(props) {
             <Text style={styles.unitDescription}> Artikkelnummer: {props.løsningResultat.unit.artikkelNumber} </Text>
             <Text style={styles.unitDescription}> Minimum anbefalt akkumulerings tanks volum er {props.løsningResultat.unit.AkVol} liter. </Text>
             <Text style={styles.unitDescription}> Minimum anbefalt effekt av varmepumpe er {props.løsningResultat.unit.Effekt} kW.</Text>
+          {CetethermDIMMethod}
           </View>
         </Fragment>
+        
+        : null}
 
-      ) : null}
+      
 
       {isLeilighetFucntion(props.prosjektData.ByggType) &&  props.prosjektData.isEkonomiInkludert === "Ja" ? (
         <Fragment>

@@ -74,7 +74,7 @@ export default function SpiralSys(props) {
         "Spart kroner": SpartKroner,
     }
     
-   console.log(props)
+   
     return (
 
         <Fragment>
@@ -162,7 +162,7 @@ export default function SpiralSys(props) {
             {(isLeilighetFucntion(ByggType) && isEkonomiInkludert==="Ja") ?
                 <Fragment>
                     <h3>Ekonomisk Beregning:</h3>
-                    <ul style={{ maxWidth: 500 }}>
+                    <ul >
                         <li>Årlig strømforbruk ved bruk av el-kjell ville ha vært {totalenergiForbruk} kWh.</li>
                         <li>Årlig strømforbruk av varmepumpe og spissbereder vil være {totalVPenergiForbruk} kWh.</li>
                         <li>Strømforbruk er redusert med {energiSpartProsent} % ved bruk av varmepumpe .</li>

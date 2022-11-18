@@ -626,6 +626,7 @@ function ResultHeader(props){
           </div>
         <>
           <PDFViewer width="100%" height="100%">
+
             <Print
               data={props.unitObjects}
               unitInfo={props.unit}

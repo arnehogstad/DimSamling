@@ -172,7 +172,7 @@ export default function SpiralSys(props) {
                </Fragment>
                 : null}
                 
-               <button className="KJButtons" onClick={(e) => {props.spiralResultat(e,resultstoPrint); props.isPrintFn(e)}}> Print data </button>
+               <button className="KJButtons" onClick={(e) => {props.spiralResultat(e,resultstoPrint); props.handleVisning(e,{name:"print",value:true})}}> Print data </button>
             
             </Fragment>
     )

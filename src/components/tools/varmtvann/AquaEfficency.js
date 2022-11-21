@@ -118,7 +118,7 @@ export default function AquaEfficency(props) {
                 </Fragment>
                 : null}
 
-            <button className="KJButtons" onClick={(e) => { props.AquaEfficencyResultat(e, resultstoPrint); props.isPrintFn(e) }}> Print data </button>
+            <button className="KJButtons" onClick={(e) => { props.AquaEfficencyResultat(e, resultstoPrint); props.handleVisning(e,{name:"print",value:true}) }}> Print data </button>
 
 
         </div>

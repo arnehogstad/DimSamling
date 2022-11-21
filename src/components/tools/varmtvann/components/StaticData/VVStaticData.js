@@ -1,5 +1,3 @@
-import React from "react"
-
 
 export const AquaEfficencyData = {
     storeLeilighet: [10, 20, 25, 30, 35, 50, 60, 70, 85, 100, 110],

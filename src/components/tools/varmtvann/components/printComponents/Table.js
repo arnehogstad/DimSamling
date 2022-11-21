@@ -1,5 +1,5 @@
 import React from "react";
-import { Page, Document, Image, View,Text } from "@react-pdf/renderer";
+import {  View } from "@react-pdf/renderer";
 import TableArticles from "./TableArticles";
 
 

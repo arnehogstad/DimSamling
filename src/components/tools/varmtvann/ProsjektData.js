@@ -22,8 +22,7 @@ export default function ProsjektData(props) {
 
             netVannTemp: 7,
             tappeVannTemp: 40,
-            perPersonVV: 70,
-
+            perPersonVV: 75,
 
             vpEffekt: 11,
             settpunktVP: 55,
@@ -38,9 +37,8 @@ export default function ProsjektData(props) {
 
     const { Navn, Referanse, ByggType, antall, netVannTemp, tappeVannTemp, perPersonVV, settpunktVP, spissSettpunkt, isEkonomiInkludert, strømpris, SCOP } = prosjketData
 
-    const [visBeregning, setVisBeregning] = React.useState(false)
-
-
+    
+    
     function handleChange(event) {
         const { name, value, type } = event.target
         if (name === "ByggType") {
@@ -59,7 +57,7 @@ export default function ProsjektData(props) {
                         [name]: parseFloat(value),
                     }
                 })
-
+                
             } else {
                 setProsjektData(prevFormData => {
                     return {
@@ -70,41 +68,64 @@ export default function ProsjektData(props) {
             }
         }
     }
-
-
+    
+    
     let kWhCTC = kWhData(ByggType, antall)
-
+    
     const [systemValg, setSystemValg] = React.useState("None")///Updates the page based on the type of system soloution 
-
+    
     const setSystem = (e, text) => {
         e.preventDefault()
         setSystemValg(text)
     }
-
+    
     const [løsningResultat, setLøsningResultat] = React.useState()
     const printResultat = (e, results) => {
         e.preventDefault()
         setLøsningResultat(results)
     }
+    
+    
+    const [isVisning, setIsVisning] = React.useState( ///Which part of the page is to be shown
+        {
+            Beregning:true,
+            løsning:false,
+            print: false,
+            avanserteStillinger: false,
+        }
+    )
 
 
-
-    const [isShowPrint, setSShowPrint] = React.useState(false)
-    const isPrintFn = (e) => {
-        e.preventDefault()
-        setSShowPrint(true)
+    function handleVisning(event, {name, value}) {//Deals with the isVisning of the page
+       event.preventDefault()
+       
+        setIsVisning(prevFormData => {
+            return {
+                ...prevFormData,
+                [name]: value,
+            }
+        })
     }
 
+   
+    
 
+    
+    
     return (
         <div className="border">
 
-            {isShowPrint ?  //If the user wants to print the result remove everytghing else
+            {isVisning.print ?  //If the user wants to print the result remove everytghing else
                     <Fragment>
+                    <button className="sisteNeste" onClick={(e)=>handleVisning(e,{name:"print",value:false}) }>Tilbake</button>
+                  
                     <PDFViewer width={700} height={1000}>
                         <Print prosjektData={prosjketData} systemValg={systemValg} løsningResultat={løsningResultat} />
                     </PDFViewer >
-                </Fragment>: 
+                
+                      </Fragment>
+                
+                : 
 
 
                 <form className="formInnData">
@@ -262,18 +283,19 @@ export default function ProsjektData(props) {
                         : null}
 
 
-                    {visBeregning ? null : <button className="sisteNeste" onClick={(e) => (e.preventDefault, setVisBeregning(true))}>Beregn</button>}
+                 
 
 
-                    {visBeregning ? <LøsningTyper kWh={kWhCTC} setSystem={setSystem} /> : null}
+                    {isVisning.løsning ?    <LøsningTyper kWh={kWhCTC} setSystem={setSystem} />
+                    : <button className="sisteNeste" onClick={(e)=>handleVisning(e,{name:"løsning",value:true}) }>Beregn</button> }
 
 
 
-                    {systemValg === "Spiral" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} spiralResultat={printResultat} isPrintFn={isPrintFn} />
+                    {systemValg === "Spiral" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} spiralResultat={printResultat} handleVisning={handleVisning} />
                         : null}
-                    {systemValg === "Veksler" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} spiralResultat={printResultat} isPrintFn={isPrintFn} />
+                    {systemValg === "Veksler" ? <SpiralSys kWhEnheter={kWhCTC} prosjektData={prosjketData} handleChange={handleChange} spiralResultat={printResultat} handleVisning={handleVisning} />
                         : null}
-                    {systemValg === "AquaEfficency" ? <AquaEfficency kWhEnheter={kWhCTC} prosjektData={prosjketData} AquaEfficencyResultat={printResultat} isPrintFn={isPrintFn} />
+                    {systemValg === "AquaEfficency" ? <AquaEfficency kWhEnheter={kWhCTC} prosjektData={prosjketData} AquaEfficencyResultat={printResultat} handleVisning={handleVisning} />
                         : null}
 
 

@@ -1,4 +1,7 @@
-import React from "react"
+
+
+
+
 import { byggTypeVVInnDataType, kWhDataFraCTC } from "./components/StaticData/VVStaticData"
 
 
@@ -92,6 +95,7 @@ export function isLeilighetFucntion(navn) {
     navn === "Leilighet (3+ personer)" || navn === "Leilighet (2-3 personer)" || navn === "Leilighet (1-2 personer)" ? isLeilighet = true : isLeilighet = false
     return isLeilighet
 }
+
 
 export function elEnergiForbrukFn (ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, tappeVannTemp,dekningGradProsent,SCOP,strømpris){
     let total40Cforbruk = total40CforbrukFn (ByggType,antall,perPersonVV) //daglig forbruk av vann

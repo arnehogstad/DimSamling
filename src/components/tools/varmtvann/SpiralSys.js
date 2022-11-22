@@ -78,7 +78,7 @@ export default function SpiralSys(props) {
     return (
 
         <Fragment>
-            <h3>Spiral:</h3>
+            
 
             {isLeilighetFucntion(ByggType) ?
                 <p className="longText">Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p>
@@ -162,7 +162,7 @@ export default function SpiralSys(props) {
             {(isLeilighetFucntion(ByggType) && isEkonomiInkludert==="Ja") ?
                 <Fragment>
                     <h3>Ekonomisk Beregning:</h3>
-                    <ul style={{ maxWidth: 500 }}>
+                    <ul >
                         <li>Årlig strømforbruk ved bruk av el-kjell ville ha vært {totalenergiForbruk} kWh.</li>
                         <li>Årlig strømforbruk av varmepumpe og spissbereder vil være {totalVPenergiForbruk} kWh.</li>
                         <li>Strømforbruk er redusert med {energiSpartProsent} % ved bruk av varmepumpe .</li>
@@ -172,7 +172,7 @@ export default function SpiralSys(props) {
                </Fragment>
                 : null}
                 
-               <button className="KJButtons" onClick={(e) => {props.spiralResultat(e,resultstoPrint); props.isPrintFn(e)}}> Print data </button>
+               <button className="KJButtons" onClick={(e) => {props.spiralResultat(e,resultstoPrint); props.handleVisning(e,{name:"print",value:true})}}> Print data </button>
             
             </Fragment>
     )

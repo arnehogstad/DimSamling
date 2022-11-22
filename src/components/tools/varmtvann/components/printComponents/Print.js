@@ -1,9 +1,9 @@
 import React from 'react';
-import { Page, Document, StyleSheet, Image, Text } from '@react-pdf/renderer';
+import { Page, Document, StyleSheet } from '@react-pdf/renderer';
 import Table from './Table'
 import Header from './Header'
 import Footer from './Footer'
-import logo from "../../../../../images/abkqvillerlogo.jpg"
+
 
 export default function Print(props) {
 

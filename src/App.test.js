@@ -1,8 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import {isLeilighetFucntion} from './components/tools/varmtvann/BeregnVV'
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+
+test('true test', () => {
+  expect(isLeilighetFucntion("Leilighet (3+ personer)")).toBeTruthy();
+  expect(isLeilighetFucntion("Leilighet (2-3 personer)")).toBeTruthy();
+    
 });

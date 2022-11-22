@@ -107,7 +107,7 @@ export default function AquaEfficency(props) {
             {(isLeilighetFucntion(ByggType) && isEkonomiInkludert === "Ja") ?
                 <Fragment>
                     <h3>Ekonomisk Beregning:</h3>
-                    <ul style={{ maxWidth: 500 }}>
+                    <ul >
                         <li>Årlig strømforbruk ved bruk av el-kjell ville ha vært {totalenergiForbruk} kWh.</li>
                         <li>Årlig strømforbruk av varmepumpe vil være {totalVPenergiForbruk} kWh.</li>
                         <li>Strømforbruk er redusert med {energiSpartProsent} % ved bruk av varmepumpe .</li>
@@ -118,7 +118,7 @@ export default function AquaEfficency(props) {
                 </Fragment>
                 : null}
 
-            <button className="KJButtons" onClick={(e) => { props.AquaEfficencyResultat(e, resultstoPrint); props.isPrintFn(e) }}> Print data </button>
+            <button className="KJButtons" onClick={(e) => { props.AquaEfficencyResultat(e, resultstoPrint); props.handleVisning(e,{name:"print",value:true}) }}> Print data </button>
 
 
         </div>

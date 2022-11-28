@@ -185,7 +185,7 @@ function SaveCSVModal(props){
     <div className="modal" style={props.styles} onClick={(event) => props.toggleVisibility(event)}>
       <div className="modal-content">
         <div className="modal-header">
-          <div className="modal-header-text">Lagre prosjekt</div>
+          <div className="modal-header-text">Last ned prosjektdata</div>
           <div className="modal-cancel-div">x</div>
         </div>
         <div className="modal-input-container">
@@ -418,7 +418,7 @@ function OpenCSVModal(props){
             //console.log(`${key}: ${value}`);
             let roomPrefix = key.substring(0, 7)
             //if new room - create new empty room and save the new name of the room
-            console.log(roomPrefix);
+
             if(roomNames.includes(roomPrefix) === false){
               let tempRoom = returnEmptyRoom()
               roomArr.push(tempRoom)
@@ -441,7 +441,7 @@ function OpenCSVModal(props){
             }else if (key.includes("circuits")){
               roomArr[roomPos].circuits=value
             }else if (key.includes("wetroom")){
-              roomArr[roomPos].wetroom=value
+              roomArr[roomPos].wetroom= (value === 'true')
             }else if (key.includes("id")){
               roomArr[roomPos].id=value
             }
@@ -456,6 +456,7 @@ function OpenCSVModal(props){
           room.cc !== "" ||
           room.circuits !== ""
         ))
+
         //defines the room object
         let lastRoom = returnEmptyRoom()
         finalRoomArr.push(lastRoom)

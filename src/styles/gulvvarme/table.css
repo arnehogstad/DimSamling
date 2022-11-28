@@ -22,7 +22,7 @@ td{
   padding-bottom: 10px;
   text-align:center;
   flex-direction:column;
-  background-color: #ececec;
+  border-bottom: 4px solid #ececec;
   font-weight: bold;
 }
 

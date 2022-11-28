@@ -2,6 +2,11 @@ import React from 'react'
 import nyLinjePic from '../../../../images/nyLinjeBilde.png'
 import editNamePic from '../../../../images/rediger.png'
 import delUnitPic from '../../../../images/Slett.jpg'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+
+
+
 
 export default function Unitlist(props){
 
@@ -14,10 +19,8 @@ export default function Unitlist(props){
         >
           <div className="unit-list-item-name">{unit.unitName}</div>
           <button className="delete-btn">
-            <img
+            <EditIcon
               className="button-col-img"
-              src={editNamePic}
-              alt="Endrer navn på boenhet"
               onClick={(event) => props.setShowModal({show:true,modalName:"editNameUnit"})}
               />
           </button>
@@ -25,10 +28,8 @@ export default function Unitlist(props){
               className="delete-btn"
               onClick={(event) => props.setShowModal({show:true,modalName:"deleteUnit"})}
           >
-            <img
+            <DeleteIcon
               className="button-col-img"
-              src={delUnitPic}
-              alt="Sletter boenhet"
               />
           </button>
         </div>

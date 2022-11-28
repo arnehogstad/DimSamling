@@ -25,6 +25,7 @@ export default function Table(props){
       <TableArticles
         articleList = {props.articleList}
         unitInfo={props.unitInfo}
+        roundedUnitItems = {props.roundedUnitItems}
     />
     </View>
   )

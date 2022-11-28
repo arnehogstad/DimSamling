@@ -65,7 +65,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     vertical-align: bottom;
-    background-color: #ececec;
+    border-bottom: 4px solid #ececec;
 
 }
 
@@ -92,7 +92,7 @@
   display: none;
   background: none;
   border: none;
-  opacity: 0.8;
+  opacity: 0.7;
 }
 
 .delete-btn:hover{
@@ -205,6 +205,7 @@
   font-size: 12px;
   padding-right: 20px;
   font-weight: normal;
+  align-items: center;
 }
 
 .project-headline-knapp-div:hover{

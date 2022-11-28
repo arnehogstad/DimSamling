@@ -88,54 +88,15 @@ const styles = StyleSheet.create({
 export default function TableArticles(props){
 
 
-  const deepCopyFunction = (inObject) => {
-    let outObject, value, key
-    if (typeof inObject !== "object" || inObject === null) {
-      return inObject // Return the value if inObject is not an object
-    }
-    // Create an array or object to hold the values
-    outObject = Array.isArray(inObject) ? [] : {}
-    for (key in inObject) {
-      value = inObject[key]
-      // Recursively (deep) copy for nested objects, including arrays
-      outObject[key] = deepCopyFunction(value)
-    }
-    return outObject
-  }
-
-  let tempArticleList = deepCopyFunction(props.articleList)
-  let tempUnitItems = deepCopyFunction(props.unitInfo.unititems)
-  let mergedArticleList = []
-  let roundedUnitItems = tempUnitItems.map(article => ({...article, artcount: Math.ceil(article.artcount)}))
-
-
-  tempArticleList.forEach(function(item) {
-  var existing = mergedArticleList.filter(function(v, i) {
-    return v.artname == item.artname;
-  });
-  if (existing.length) {
-    var existingIndex = mergedArticleList.indexOf(existing[0]);
-    mergedArticleList[existingIndex].artnmbr = `${mergedArticleList[existingIndex].artnmbr} ${'\n'} ${item.artnmbr}`;
-    mergedArticleList[existingIndex].artdim = `${mergedArticleList[existingIndex].artdim} ${'\n'} ${item.artcount} stk ${item.artdim}`
-    mergedArticleList[existingIndex].korrigertAntall = parseFloat(mergedArticleList[existingIndex].korrigertAntall+item.artdim.replace(/\D/g,'')*item.artcount)
-  } else {
-    item.artcount = Math.ceil(item.artcount)
-    item.korrigertAntall = parseFloat(item.artdim.replace(/\D/g,'')*item.artcount)
-    item.artdim = `${item.artcount} stk ${item.artdim}`
-    mergedArticleList.push(item);
-  }
-  });
-
-
-  const rows = mergedArticleList.map((article,index) =>(
+  const rows = props.articleList.map((article,index) =>(
     <Fragment key={nanoid()}>
       <View style={styles.tableRow} key={nanoid()}>
         <Text style={styles.descriptionSmall}>{article.artnmbr}</Text>
         <Text style={styles.descriptionLarge}>{article.artname}</Text>
-        {roundedUnitItems.filter(item => item.artname === article.artname).reduce((prev,curr)=>prev+curr.artcount,0) !== Math.ceil(article.artcount) ?
+        {props.roundedUnitItems.filter(item => item.artname === article.artname).reduce((prev,curr)=>prev+curr.artcount,0) !== Math.ceil(article.artcount) ?
         <>
           <Text style={styles.descriptionNumber}>
-            {roundedUnitItems[index].artcount}
+            {props.roundedUnitItems[index].artcount}
           </Text>
           <Text style={styles.descriptionNumber}>
             {article.korrigertAntall}

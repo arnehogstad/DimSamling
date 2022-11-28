@@ -1,6 +1,8 @@
 import React from 'react'
 import delPic from '../../../../images/Slett.jpg'
 import nyLinjePic from '../../../../images/nyLinjeBilde.jpg'
+import DeleteIcon from '@mui/icons-material/Delete'
+import AddIcon from '@mui/icons-material/Add'
 
 const wetRoomNames = ["bad", "wc","våtrom","vask","vaskerom","teknisk rom","dusj","toalett"]
 
@@ -88,7 +90,7 @@ function Row(props){
       const manualEvent =
       {
         name:"wetroom",
-        value: result > 0 ? true : false
+        value: result > 0 ? true : tempWet
       }
       if (tempWet !== manualEvent.value){
         props.autoFillFunc("",props.unit.unitId,props.indeks,manualEvent)
@@ -175,11 +177,9 @@ function Row(props){
   return(
     <tr>
       <td className="button-col">
-        <img
+        <DeleteIcon
           className="button-col-img"
-          src={delPic}
           onClick={props.delRowClick}
-          alt="Sletter rad"
         />
       </td>
       <td className={"floor-col " + (props.item.missingdata ? props.item.floor === "" ? "missing-data-col" : null : null)}>
@@ -208,6 +208,16 @@ function Row(props){
           min="0"
           onChange={props.roomDataInput}
           value={props.item.area}
+          className="text-center"
+        />
+      </td>
+      <td className="area-col ">
+        <input
+          name="wetroom"
+          type="checkbox"
+          onChange={props.roomDataInput}
+          value={props.item.wetroom}
+          checked={props.item.wetroom}
           className="text-center"
         />
       </td>
@@ -242,11 +252,9 @@ function Row(props){
         />
       </td>
       <td className="button-col">
-        <img
+        <AddIcon
           className="button-col-img"
-          src={nyLinjePic}
           onClick={props.newRowClick}
-          alt="Legger til ny rad"
         />
       </td>
     </tr>
@@ -260,6 +268,7 @@ function Tableheader(){
       <th className="floor-col">Etasje</th>
       <th className="room-name-col">Romnavn</th>
       <th className="area-col">Areal</th>
+      <th className="area-col">Våtrom</th>
       <th className="pipe-type-col">Rørtype</th>
       <th className="cc-col">CC</th>
       <th className="circuit-col">Kurser</th>
@@ -275,15 +284,14 @@ function Ghostrow(props){
       <td className="floor-col ghostCell"></td>
       <td className="room-name-col ghostCell"></td>
       <td className="area-col ghostCell"></td>
+      <td className="area-col ghostCell"></td>
       <td className="pipe-type-col ghostCell"></td>
       <td className="cc-col ghostCell"></td>
       <td className="circuit-col ghostCell"></td>
       <td className="button-col">
-        <img
+        <AddIcon
           className="button-col-img"
-          src={nyLinjePic}
           onClick={props.newRowClick}
-          alt="Legger til ny rad"
           />
       </td>
     </tr>

@@ -102,6 +102,7 @@ export default function Gulvvarme(props){
   function addUnit(nRooms,unitName, loadedUnit){
     let tempRooms = nRooms === undefined ? 11 : nRooms
     let newUnit = loadedUnit === undefined ? emptyUnit(tempRooms,units.length+1,unitName) : loadedUnit
+
     setUnits(oldUnits => [...oldUnits,newUnit ])
     setCurrentUnitId(newUnit.unitId)
   }
@@ -233,6 +234,7 @@ export default function Gulvvarme(props){
     function updateRoomData(rooms,roomIndex,name,value){
       let tempRooms = [...rooms]
       tempRooms[roomIndex][name] = value
+
       if (name !== 'missingdata'){
         tempRooms[roomIndex]['missingdata'] = false
       }
@@ -241,12 +243,12 @@ export default function Gulvvarme(props){
 
     //function updating state of units with values from input
     function roomDataInput(event, unitId, roomIndex,manualCall) {
-        const {name, value} = manualCall === undefined ? event.target : manualCall
+        const {name, value, type, checked} = manualCall === undefined ? event.target : manualCall
         setUnits(oldUnits => oldUnits.map(unit =>
           (
             unit.unitId === unitId ?
              {...unit,
-             rooms: updateRoomData(unit.rooms,roomIndex,name,value)
+             rooms: type === 'checkbox' ? updateRoomData(unit.rooms,roomIndex,name,checked) : updateRoomData(unit.rooms,roomIndex,name,value)
            }
              :
              {...unit}

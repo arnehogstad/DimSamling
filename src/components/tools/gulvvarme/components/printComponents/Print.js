@@ -37,6 +37,7 @@ let tempFooterText = "Test av footer text, vi tar ikke ansvar etc"
           data={props.data}
           unitInfo={props.unitInfo}
           articleList = {props.articleList}
+          roundedUnitItems = {props.roundedUnitItems}
           dataIndex = {props.dataIndex}
           styleTable={styles.table}
         />

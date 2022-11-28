@@ -1,13 +1,13 @@
 import React, { Fragment } from "react"
-import {elEnergiForbrukAquaefficency , isLeilighetFucntion } from "./BeregnVV"
-import { AquaEfficencyData } from "./StaticData/VVStaticData"
+import { elEnergiForbrukAquaefficency, isLeilighetFucntion } from "./BeregnVV"
+import { AquaEfficencyData } from "./components/StaticData/VVStaticData"
 
 
 export default function AquaEfficency(props) {
 
     let kWh = props.kWhEnheter
-    let { ByggType, antall,isEkonomiInkludert, SCOP, strømpris, perPersonVV, netVannTemp, tappeVannTemp} = props.prosjektData
-    
+    let { ByggType, antall, isEkonomiInkludert, SCOP, strømpris, perPersonVV, netVannTemp, tappeVannTemp } = props.prosjektData
+
 
     let isLeilighet = isLeilighetFucntion(ByggType) ///Decides if all of the units are apartments or not
 
@@ -20,17 +20,17 @@ export default function AquaEfficency(props) {
 
     if (isLeilighet === true) {
 
-            if (ByggType === "Leilighet (3+ personer)")  antallStorLeilighet += antall
-            if (ByggType === "Leilighet (2-3 personer)") antallSmåLeilighet += antall
-            if (ByggType === "Leilighet (1-2 personer)") antallSmåLeilighet += antall
-        
+        if (ByggType === "Leilighet (3+ personer)") antallStorLeilighet += antall
+        if (ByggType === "Leilighet (2-3 personer)") antallSmåLeilighet += antall
+        if (ByggType === "Leilighet (1-2 personer)") antallSmåLeilighet += antall
+
         let kWTotal = (kWhData(antallSmåLeilighet, "små") ** 2 + kWhData(antallStorLeilighet, "store") ** 2) ** 0.5  ///estimert effekt med samtidighet faktor
         unit = unitVelger(kWTotal) ///velger riktig unit 
 
-        }else if(isLeilighet === false){ ////if the units are not apartments then KWH from CTC is used
-         unit = unitVelger(kWh)
+    } else if (isLeilighet === false) { ////if the units are not apartments then KWH from CTC is used
+        unit = unitVelger(kWh)
     }
-    
+
     function kWhData(antall, type) {
 
         if (type === "små") {
@@ -68,10 +68,20 @@ export default function AquaEfficency(props) {
     }
 
 
-    let [totalenergiForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukAquaefficency(ByggType,antall, perPersonVV, netVannTemp, tappeVannTemp, SCOP,strømpris)
-    
+    let [totalenergiForbruk, totalVPenergiForbruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukAquaefficency(ByggType, antall, perPersonVV, netVannTemp, tappeVannTemp, SCOP, strømpris)
 
-   
+
+    let resultstoPrint = {
+        unit: unit,
+        "Total energi forbruk": totalenergiForbruk,
+        "Total varmepumpe energi forbruk": totalVPenergiForbruk,
+        "Energi spart": energiSpart,
+        "Energi spart i prosent": energiSpartProsent,
+        "Spart kroner": SpartKroner,
+    }
+
+
+
     return (
         <div>
             <h3>AquaEfficency</h3>
@@ -79,34 +89,36 @@ export default function AquaEfficency(props) {
             {unit.ByggType ?    //checks if the unit is defined, not defined means too big  demand.
                 <div>
                     <ul>
-                    <li >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}` } target="_blank">{unit.ByggType}</a>. </li>
-                    <li>Artikkelnummer: {unit.artikkelNumber}.</li>
-                    <li>Minimum anbefalt akkumulerings tanks volum er {unit.AkVol} liter.</li>
-                    <li>Minimum anbefalt effekt av varmepumpe er {unit.Effekt} kW.</li>
+                        <li >Anbefalt system er  <a href={`https://www.abkqviller.no/sok/?query=${unit.artikkelNumber}`} target="_blank">{unit.ByggType}</a>. </li>
+                        <li>Artikkelnummer: {unit.artikkelNumber}.</li>
+                        <li>Minimum anbefalt akkumulerings tanks volum er {unit.AkVol} liter.</li>
+                        <li>Minimum anbefalt effekt av varmepumpe er {unit.Effekt} kW.</li>
                     </ul>
                 </div>
                 : <p>Tappe vann behov er for stor for en AquaEfficency modul. Må fordeles på 2 stk. </p>}
 
 
             {isLeilighet ?
-                <p  className="longText"  style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning er basert på Cetetherm methodik for boligblokker.</p>
+                <p className="longText" style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning er basert på Cetetherm methodik for boligblokker.</p>
                 : <p className="longText" style={{ fontStyle: "italic", fontWeight: "bold", fontSize: 10 }}>Beregning metodik for byggtyper utenom boligblokk er estimater og er ikke basert på veiledende verdier fra Cetetherm, da det ikke er gitt. </p>
             }
 
 
-            {(isLeilighetFucntion(ByggType) && isEkonomiInkludert==="Ja") ?
+            {(isLeilighetFucntion(ByggType) && isEkonomiInkludert === "Ja") ?
                 <Fragment>
                     <h3>Ekonomisk Beregning:</h3>
-                    <ul style={{ maxWidth: 500 }}>
+                    <ul >
                         <li>Årlig strømforbruk ved bruk av el-kjell ville ha vært {totalenergiForbruk} kWh.</li>
-                        <li>Årlig strømforbruk av varmepumpe vil være {VPEnergibruk} kWh.</li>
+                        <li>Årlig strømforbruk av varmepumpe vil være {totalVPenergiForbruk} kWh.</li>
                         <li>Strømforbruk er redusert med {energiSpartProsent} % ved bruk av varmepumpe .</li>
                         <li>Årlig energisparing ved bruk av varmepumpe er {energiSpart} kWh.</li>
                         <li>Årlig sparing ved bruk av varmepumpe er {SpartKroner} NOK.</li>
                     </ul>
 
-               </Fragment>
+                </Fragment>
                 : null}
+
+            <button className="KJButtons" onClick={(e) => { props.AquaEfficencyResultat(e, resultstoPrint); props.handleVisning(e,{name:"print",value:true}) }}> Print data </button>
 
 
         </div>

@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { Stack } from "@mui/system"
 import MouseOverPopover from "../../static/Popover";
-import { inputDesciption } from "./StaticData/VVStaticData"
+import { inputDesciption } from "./components/StaticData/VVStaticData"
 
 
 
@@ -17,7 +17,7 @@ export default function SpiralSys(props) {
     const [spiral, setSpiral] = React.useState(
         {
             vpEffekt: 15,
-            forvarmingELeffekt: 5,
+            forvarmingELeffekt: 0,
             spissElEffekt: 15,
             spissVolume: 400,
 
@@ -55,13 +55,30 @@ export default function SpiralSys(props) {
     let minimumVPVol = minVolVP(vpEffekt, kWh, settpunktVP, dekningGradProsent)
     let minimumSpissVol = minVolSpiss(spissElEffekt, kWh, spissSettpunkt, backupType, dekningGradProsent, forvarmingELeffekt, minimumVPVol)
     let [sizeVpUpper, sizeVpLower] = sizeVP(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, settpunktVP, tappeVannTemp)
-    let [totalenergiForbruk, spissElForbruk, VPEnergibruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukFn(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, tappeVannTemp, dekningGradProsent, SCOP, strømpris)
+    let [totalenergiForbruk, spissElForbruk, VPEnergibruk,totalVPenergiForbruk, energiSpart, energiSpartProsent, SpartKroner] = elEnergiForbrukFn(ByggType,antall, perPersonVV, spissSettpunkt, netVannTemp, tappeVannTemp, dekningGradProsent, SCOP, strømpris)
 
+    let resultstoPrint = {
+        "valgtdata" : spiral,
+        "Dekningsgrad": dekningGradProsent,
+        "Maksimal dekningsgrad": dekningGradMaksProsent,
+        "Minimum forvarming volum": minimumVPVol,
+        "Minimum Spiss volum": minimumSpissVol,
+        "Total varmepumpe energi forbruk": totalVPenergiForbruk,
+        "Anbefalt Maks Varmepumpe størrelse": sizeVpUpper,
+        "Anbefalt Min Varmepumpe størrelse": sizeVpLower,
+        "Total energi forbruk": totalenergiForbruk,
+        "Spiss El forbruk": spissElForbruk,
+        "Varmepumpe energi forbruk": VPEnergibruk,
+        "Energi spart": energiSpart,
+        "Energi spart i prosent": energiSpartProsent,
+        "Spart kroner": SpartKroner,
+    }
     
+   
     return (
 
         <Fragment>
-            <h3>Spiral:</h3>
+            
 
             {isLeilighetFucntion(ByggType) ?
                 <p className="longText">Anbefalt varmepumpe størelse basert på driftstid er minst {sizeVpLower} kW og maks {sizeVpUpper} kW. </p>
@@ -127,9 +144,7 @@ export default function SpiralSys(props) {
                     <Slider
                         name="dekningGradProsent"
                         value={dekningGradProsent}
-                        sx={{
-                            color: '#fbab18'
-                        }}
+                        sx={{ color: '#fbab18' }}
                         min={60}
                         max={dekningGradMaksProsent}
                         marks={[{ value: 60, label: "Mindre volum og effekt fra VP" }, { value: dekningGradMaksProsent, label: "Mer volum og effekt fra VP" }]}
@@ -147,17 +162,18 @@ export default function SpiralSys(props) {
             {(isLeilighetFucntion(ByggType) && isEkonomiInkludert==="Ja") ?
                 <Fragment>
                     <h3>Ekonomisk Beregning:</h3>
-                    <ul style={{ maxWidth: 500 }}>
+                    <ul >
                         <li>Årlig strømforbruk ved bruk av el-kjell ville ha vært {totalenergiForbruk} kWh.</li>
-                        <li>Årlig strømforbruk av varmepumpe og spissbereder vil være {VPEnergibruk+spissElForbruk} kWh.</li>
+                        <li>Årlig strømforbruk av varmepumpe og spissbereder vil være {totalVPenergiForbruk} kWh.</li>
                         <li>Strømforbruk er redusert med {energiSpartProsent} % ved bruk av varmepumpe .</li>
                         <li>Årlig energisparing ved bruk av varmepumpe er {energiSpart} kWh.</li>
                         <li>Årlig sparing ved bruk av varmepumpe er {SpartKroner} NOK.</li>
                     </ul>
-
                </Fragment>
                 : null}
-        </Fragment>
-
+                
+               <button className="KJButtons" onClick={(e) => {props.spiralResultat(e,resultstoPrint); props.handleVisning(e,{name:"print",value:true})}}> Print data </button>
+            
+            </Fragment>
     )
 }

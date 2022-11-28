@@ -37,8 +37,8 @@ export default function ProsjektData(props) {
 
     const { Navn, Referanse, ByggType, antall, netVannTemp, tappeVannTemp, perPersonVV, settpunktVP, spissSettpunkt, isEkonomiInkludert, strømpris, SCOP } = prosjketData
 
-    
-    
+
+
     function handleChange(event) {
         const { name, value, type } = event.target
         if (name === "ByggType") {
@@ -57,7 +57,7 @@ export default function ProsjektData(props) {
                         [name]: parseFloat(value),
                     }
                 })
-                
+
             } else {
                 setProsjektData(prevFormData => {
                     return {
@@ -68,37 +68,37 @@ export default function ProsjektData(props) {
             }
         }
     }
-    
-    
+
+
     let kWhCTC = kWhData(ByggType, antall)
-    
+
     const [systemValg, setSystemValg] = React.useState("None")///Updates the page based on the type of system soloution 
-    
+
     const setSystem = (e, text) => {
         e.preventDefault()
         setSystemValg(text)
     }
-    
+
     const [løsningResultat, setLøsningResultat] = React.useState()
     const printResultat = (e, results) => {
         e.preventDefault()
         setLøsningResultat(results)
     }
-    
-    
+
+
     const [isVisning, setIsVisning] = React.useState( ///Which part of the page is to be shown
         {
-            Beregning:true,
-            løsning:false,
+            Beregning: true,
+            løsning: false,
             print: false,
             avanserteStillinger: false,
         }
     )
 
 
-    function handleVisning(event, {name, value}) {//Deals with the isVisning of the page
-       event.preventDefault()
-       
+    function handleVisning(event, { name, value }) {//Deals with the isVisning of the page
+        event.preventDefault()
+
         setIsVisning(prevFormData => {
             return {
                 ...prevFormData,
@@ -107,25 +107,25 @@ export default function ProsjektData(props) {
         })
     }
 
-   
-    
 
-    
-    
+
+
+
+
     return (
         <div className="border">
 
             {isVisning.print ?  //If the user wants to print the result remove everytghing else
-                    <Fragment>
-                    <button className="sisteNeste" onClick={(e)=>handleVisning(e,{name:"print",value:false}) }>Tilbake</button>
-                  
+                <Fragment>
+                    <button className="sisteNeste" onClick={(e) => handleVisning(e, { name: "print", value: false })}>Tilbake</button>
+
                     <PDFViewer width={700} height={1000}>
                         <Print prosjektData={prosjketData} systemValg={systemValg} løsningResultat={løsningResultat} />
                     </PDFViewer >
-                
-                      </Fragment>
-                
-                : 
+
+                </Fragment>
+
+                :  ////data entry form to show when
 
 
                 <form className="formInnData">
@@ -170,6 +170,7 @@ export default function ProsjektData(props) {
                             type="number"
                             onChange={handleChange}
                             name="antall"
+
                             value={antall}
                         /></label>
 
@@ -283,11 +284,11 @@ export default function ProsjektData(props) {
                         : null}
 
 
-                 
 
 
-                    {isVisning.løsning ?    <LøsningTyper kWh={kWhCTC} setSystem={setSystem} />
-                    : <button className="sisteNeste" onClick={(e)=>handleVisning(e,{name:"løsning",value:true}) }>Beregn</button> }
+
+                    {isVisning.løsning ? <LøsningTyper kWh={kWhCTC} setSystem={setSystem} />
+                        : <button className="sisteNeste" onClick={(e) => handleVisning(e, { name: "løsning", value: true })}>Beregn</button>}
 
 
 
@@ -303,7 +304,7 @@ export default function ProsjektData(props) {
 
 
 
-                }
+            }
 
 
         </div>

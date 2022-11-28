@@ -1,0 +1,15 @@
+.TTspan{
+    font-size: 1.5em;
+    font-style: italic;
+    color: gray;
+    background-color: #fff;
+    padding: 0.5em;
+    border: 1px solid #000;
+    border-radius: 0.5em;
+    box-shadow: 0 0 0.5em #000;
+    position: absolute;
+    z-index: 100;
+    display: none;
+
+
+}

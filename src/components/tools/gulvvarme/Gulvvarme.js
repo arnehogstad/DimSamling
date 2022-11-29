@@ -262,6 +262,10 @@ export default function Gulvvarme(props){
       }
     },[units])
 
+    console.log("gulvvarmetest");
+    console.log(showTool);
+    console.log(props.toolId);
+    console.log("gulvvarmetest");
   return(
     <div className= {props.toolId === showTool ? "toolArea" : "hiddenTool"}>
       <Banner title={props.toolName} />

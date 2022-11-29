@@ -14,5 +14,5 @@ code {
 }
 
 .contentWrapper{
-  min-height: calc( 100vh - 100px );
+  min-height: calc( 100vh - 500px );
 }

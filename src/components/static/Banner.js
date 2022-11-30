@@ -8,12 +8,12 @@ export default function Banner(props){
   const dispatch = useDispatch()
 
   //getting the picture for the card
-  let tempPic = require(`../../images/${props.title.replaceAll(" ","-")}.png`)
+  let tempPic = require(`../../images/${props.title.replaceAll(" ","-")}banner.png`)
 
   return(
     <div className="banner"
       style={{
-        backgroundImage: `linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url(${tempPic})`,
+        backgroundImage: `url(${tempPic})`,
         backgroundPosition: 'center',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat'

@@ -1,5 +1,5 @@
 .toolCard{
-  height: 200px;
+  height: 220px;
   width: 200px;
   margin: 20px 20px 20px 20px;
   background-color: none;
@@ -28,6 +28,8 @@
   width: 280px;
   letter-spacing: 1px;
   text-align: center;
+  color: white;
+  font-weight: bold;
 }
 .toolCardBack:hover{
   cursor: pointer;
@@ -39,7 +41,9 @@
 .cardTitle{
   font-weight: bold;
   text-align: center;
-  padding-top: 5px;
+  padding-top: 20px;
+  letter-spacing: 1px;
+
 }
 
 .cardInfo{
@@ -61,9 +65,11 @@
 .banner{
   padding-top: 20px;
   padding-bottom: 20px;
+  height: 150px;
   background-color: white;
   display: flex;
   justify-content: flex-start;
+  align-items: center;
 }
 
 .bigbanner{
@@ -77,7 +83,8 @@
 
 .toolHeadLine{
     font-weight: bold;
-    font-size: 25px;
-    letter-spacing: 2px;
+    font-size: 60px;
+    letter-spacing: 1px;
+    color: white;
     margin: auto;
 }

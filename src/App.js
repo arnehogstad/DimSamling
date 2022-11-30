@@ -14,17 +14,18 @@ import { nanoid } from 'nanoid'
 import Varmtvann from './components/tools/varmtvann/Varmtvann'
 
 
+
 export default function App() {
 
   //liste over verktøy
   const toolNames = [
-  "Gulvvarmevelger",
-  "Ekspansjonskarsvelger",
-  "Beregning varmebehov",
-  "Beregning kjølebehov",
+  "Gulvvarme",
+  "Ekspansjonskar",
+  "Varmebehov",
+  "Kjølebehov",
   "Varmtvann",
-  "Trykktap",
-  "Estimat andre greier"
+  "Trykkfall",
+  "Div"
   ]
   //genererer ID til alle verktøy
   const toolId = toolNames.map((name,index) =>

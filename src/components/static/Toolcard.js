@@ -22,7 +22,7 @@ export default function Toolcard(props){
           src = {tempPic}
         />
       </div>
-      <div className="cardTitle">{props.toolName}</div>
+      <div className="cardTitle">{props.toolName.toUpperCase()}</div>
     </div>
   )
 

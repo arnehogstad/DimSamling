@@ -2,6 +2,7 @@ import React from 'react'
 
 import Topbar from './components/static/Topbar'
 import Toolcard from './components/static/Toolcard'
+import Bigbanner from './components/static/Bigbanner'
 import Footer from './components/static/Footer'
 import Gulvvarme from './components/tools/gulvvarme/Gulvvarme'
 import Ekspansjonskar from './components/tools/ekspansjonskar/Ekspansjonskar'
@@ -13,18 +14,18 @@ import { nanoid } from 'nanoid'
 import Varmtvann from './components/tools/varmtvann/Varmtvann'
 
 
+
 export default function App() {
-  //status om man skal vie tool-list eller ikke
 
   //liste over verktøy
   const toolNames = [
-  "Gulvvarmevelger",
-  "Ekspansjonskarsvelger",
-  "Beregning varmebehov",
-  "Beregning kjølebehov",
+  "Gulvvarme",
+  "Ekspansjonskar",
+  "Varmebehov",
+  "Kjølebehov",
   "Varmtvann",
-  "Trykktap",
-  "Estimat andre greier"
+  "Trykkfall",
+  "Div"
   ]
   //genererer ID til alle verktøy
   const toolId = toolNames.map((name,index) =>
@@ -41,11 +42,11 @@ export default function App() {
     />
   )
 
-
   return (
     <div className="App">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <Topbar />
+        <Bigbanner title='verktøy' />
         <div className="contentWrapper">
           <div className= "toolList" >
             {toolElements}

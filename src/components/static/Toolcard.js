@@ -10,13 +10,11 @@ export default function Toolcard(props){
   //getting the picture for the card
   let tempPic = require(`../../images/${props.picName.replaceAll(" ","-")}.png`)
 
-
   return(
     <div className=
       {showTool === 'all' ? "toolCard" : "hiddenCard"}
       onClick = {() => dispatch(show(props.toolid))}
     >
-      <div className="cardTitle">{props.toolName}</div>
       <div className="cardInfo">
         <img
           className="cardPic"
@@ -24,6 +22,7 @@ export default function Toolcard(props){
           src = {tempPic}
         />
       </div>
+      <div className="cardTitle">{props.toolName.toUpperCase()}</div>
     </div>
   )
 

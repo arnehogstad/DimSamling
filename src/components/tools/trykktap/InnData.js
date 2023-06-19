@@ -4,6 +4,7 @@ import { NIBE, kollektorDimensjoner, påfyllings } from './static/staticData'
 import { nanoid } from '@reduxjs/toolkit'
 import Charts from './Chart'
 import { MouseOverPopover, popoverText } from './static/MouseOverPopover'
+import  '../../../styles/trykktap/trykktap.css'
 
 export default function InnData() {
 
@@ -164,7 +165,7 @@ console.log(nomTrykktap)
                                 <option key={nanoid()} value={item}>{item}</option>
                             ))}
                         </select>
-                        <span> {`${nomTrykktap.påfyllingDp} kPa`}</span>
+                        <span className='TTspan'> {`${nomTrykktap.påfyllingDp} kPa`}</span>
                     </div>
                 </label>
 

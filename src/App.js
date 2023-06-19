@@ -1,4 +1,5 @@
 import React from 'react'
+import abklogo from './abkqvillerlogo.jpg';
 
 import Topbar from './components/static/Topbar'
 import Toolcard from './components/static/Toolcard'
@@ -11,7 +12,29 @@ import Trykktap from './components/tools/trykktap/Trykktap'
 import Diverse from './components/tools/Diverse'
 import { nanoid } from 'nanoid'
 import Varmtvann from './components/tools/varmtvann/Varmtvann'
+import styled from 'styled-components';
 
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #fbac1833;
+`;
+
+const Title = styled.h1`
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+`;
+
+const Description = styled.p`
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+`;
 
 export default function App() {
   //status om man skal vie tool-list eller ikke
@@ -43,7 +66,7 @@ export default function App() {
 
 
   return (
-    <div className="App">
+/*     <div className="App">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
         <Topbar />
         <div className="contentWrapper">
@@ -80,6 +103,21 @@ export default function App() {
           />
         </div>
         <Footer />
-    </div>
+    </div> */
+
+    <Container>
+    <div className="section-white_WO_flex">
+      <img src={abklogo} alt="Logo" style={{ height: "10rem" }} />
+      <Description>
+        Apollo er faset ut, bruk <a href="https://dim.abkqviller.no/">dim.abkqviller.no</a> for å få tilgang til ABKQ-DIM.
+      </Description>
+    
+      </div>
+    
+  </Container>
+
+
+
+    
   );
 }
